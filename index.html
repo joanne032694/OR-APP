@@ -727,12 +727,8 @@ function buildTableBody(dayStr){
   tbody.innerHTML = '';
   const d = new Date(currentDate);
   const todayShifts = getTodayShifts(d.getDate());
-  const eRow   = {r:'小夜',  am:'小夜班',  pm:'', ns:true, isE:true};
-  const nRow   = {r:'大夜',  am:'大夜班',  pm:'', ns:true, isN:true};
-  const s128Row= {r:'12-8',  am:'12-8班',  pm:'', ns:true, is128:true};
   const rows = [...currentRooms,
-    {r:'護理站', am:'護理站', pm:'護理站', ns:true},
-    eRow, nRow, s128Row];
+    {r:'護理站', am:'護理站', pm:'護理站', ns:true, withShifts:true}];
 
   rows.forEach(info=>{
     const tr = document.createElement('tr');
@@ -741,32 +737,7 @@ function buildTableBody(dayStr){
 
     tr.innerHTML = `<td class="td-rm${info.ns?' ns-rm':''}">${info.r}</td>`;
 
-    if(info.isE||info.isN||info.is128){
-      tr.style.cssText='height:28px;';
-      const isE=info.isE, isN=info.isN, is128=info.is128;
-      const lbl = isE?'小夜':isN?'大夜':'12-8';
-      const bg  = isE?'#f3e8ff':isN?'#fdf2f8':'#fef3cd';
-      const col = isE?'#6b21a8':isN?'#be185d':'#b45309';
-      const cls = isE?'chip ch-e':isN?'chip ch-n':'chip ch-128';
-      const list= isE?todayShifts.E:isN?todayShifts.N:todayShifts.S128;
 
-      const tdLbl=document.createElement('td');
-      tdLbl.style.cssText=`background:${bg};color:${col};font-weight:900;font-size:13px;text-align:center;padding:0 4px;white-space:nowrap;width:36px;`;
-      tdLbl.textContent=lbl;
-      tr.appendChild(tdLbl);
-
-      const tdAll=document.createElement('td');
-      tdAll.colSpan=9;
-      tdAll.style.cssText='padding:2px 6px;vertical-align:middle;';
-      list.forEach(s=>{
-        const c=document.createElement('span');
-        c.style.cssText='font-size:15px;font-weight:900;color:#000;margin:0 6px 0 0;white-space:nowrap;';
-        c.textContent=s.name+(s.star?' ★':'');
-        tdAll.appendChild(c);
-      });
-      tr.appendChild(tdAll);
-      tbody.appendChild(tr); return;
-    }
     if(info.ns){
       tr.innerHTML += `<td class="td-dept" colspan="2"><div class="dam" style="background:#0e7490;color:#fff">護理站</div></td>`;
     } else {
@@ -787,6 +758,29 @@ function buildTableBody(dayStr){
       td.className = `td-p${sl.cls?' '+sl.cls:''}`;
       if(sl.span) td.colSpan = sl.span;
       if(sl.dummy){ td.style.background='#f8f8f8'; tr.appendChild(td); return; }
+      if(sl.shifts){
+        td.style.cssText='padding:2px 4px;vertical-align:middle;border-left:2px solid var(--acc);';
+        const makeShiftRow = (lbl, bg, col, list) => {
+          if(!list||!list.length) return;
+          const row = document.createElement('div');
+          row.style.cssText='display:flex;align-items:center;gap:4px;margin-bottom:1px;';
+          const tag = document.createElement('span');
+          tag.style.cssText=`background:${bg};color:${col};font-size:10px;font-weight:900;padding:1px 4px;border-radius:3px;min-width:28px;text-align:center;flex-shrink:0;`;
+          tag.textContent=lbl;
+          row.appendChild(tag);
+          list.forEach(s=>{
+            const c=document.createElement('span');
+            c.style.cssText='font-size:13px;font-weight:900;color:#000;margin-right:8px;white-space:nowrap;';
+            c.textContent=s.name+(s.star?' ★':'');
+            row.appendChild(c);
+          });
+          td.appendChild(row);
+        };
+        makeShiftRow('小夜','#f3e8ff','#6b21a8', todayShifts.E);
+        makeShiftRow('大夜','#fdf2f8','#be185d', todayShifts.N);
+        makeShiftRow('12-8','#fef3cd','#b45309', todayShifts.S128);
+        tr.appendChild(td); return;
+      }
       if(sl.lbl){
         const lb=document.createElement('div');
         lb.style.cssText='font-size:9px;color:var(--t3);font-weight:700;text-align:center;padding-top:1px;';
