@@ -183,17 +183,18 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   /* 房間=1, 科別=2, AM刷=3, AM流=4, PM刷=5, PM流=6, 中午刷=7, 中午流=8, 4PM刷=9, 4PM流=10 */
   table colgroup col:nth-child(1){width:16px!important;}
   table colgroup col:nth-child(2){width:44px!important;}
-  /* 上午刷手/流動最寬，其他縮小 */
-  table colgroup col:nth-child(1){width:18px!important;}
-  table colgroup col:nth-child(2){width:46px!important;}
-  table colgroup col:nth-child(3){width:140px!important;}
-  table colgroup col:nth-child(4){width:140px!important;}
-  table colgroup col:nth-child(5){width:60px!important;}
-  table colgroup col:nth-child(6){width:60px!important;}
-  table colgroup col:nth-child(7){width:60px!important;}
-  table colgroup col:nth-child(8){width:60px!important;}
-  table colgroup col:nth-child(9){width:60px!important;}
-  table colgroup col:nth-child(10){width:60px!important;}
+  /* 表格佔滿整頁 */
+  table{width:100%!important;table-layout:fixed!important;}
+  table colgroup col:nth-child(1){width:2.5%!important;}
+  table colgroup col:nth-child(2){width:7%!important;}
+  table colgroup col:nth-child(3){width:19%!important;}
+  table colgroup col:nth-child(4){width:19%!important;}
+  table colgroup col:nth-child(5){width:8.5%!important;}
+  table colgroup col:nth-child(6){width:8.5%!important;}
+  table colgroup col:nth-child(7){width:8.5%!important;}
+  table colgroup col:nth-child(8){width:8.5%!important;}
+  table colgroup col:nth-child(9){width:8.5%!important;}
+  table colgroup col:nth-child(10){width:8.5%!important;}
   /* drop zone 填滿格子 */
   .dz{min-height:24px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;}
   [id^="zone-as-"], [id^="zone-ac-"]{min-height:28px!important;}
