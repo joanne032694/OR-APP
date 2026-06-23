@@ -103,19 +103,20 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
 /* drop zone */
 .dz{
-  width:100%;min-height:32px;
+  width:100%;min-height:34px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:2px 3px;font-size:11px;color:#bbb;
+  padding:1px 2px;font-size:11px;color:#bbb;
   border:1.5px dashed transparent;border-radius:4px;
-  transition:.12s;cursor:pointer;gap:2px;
+  transition:.12s;cursor:pointer;gap:1px;
 }
 .dz.dragover{border-color:var(--acc2);background:var(--acd);}
 .dz .ci-chip{
   background:transparent;color:#000;
   border:none;
-  padding:1px 3px;border-radius:0;
-  font-size:15px;font-weight:900;white-space:nowrap;
+  padding:1px 2px;border-radius:0;
+  font-size:16px;font-weight:900;white-space:nowrap;
   cursor:grab;
+  line-height:1.2;
 }
 .dz .ci-chip:active{opacity:.6;}
 .dz.empty{color:#ddd;font-size:12px;}
@@ -199,7 +200,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
     </div>
   </div>
   <div class="hdr-r">
-    <button class="btn btn-ghost" onclick="exportData()">📤 匯出</button>
+    <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
     <button class="btn btn-ghost" onclick="clearSave()">🗑 清除</button>
@@ -942,35 +943,17 @@ function clearSave(){
   location.reload();
 }
 
-function exportData(){
-  if(!currentDate){ alert('請先選擇日期'); return; }
-  const d = new Date(currentDate);
+function printToPDF(){
+  // 提示用戶在列印視窗選「另存為PDF」
+  const d = new Date(currentDate||new Date());
   const tw_y = d.getFullYear()-1911;
   const m = String(d.getMonth()+1).padStart(2,'0');
   const dy = String(d.getDate()).padStart(2,'0');
-
-  const data = {
-    version: '1.0',
-    date: currentDate,
-    dateLabel: tw_y+'年'+m+'月'+dy+'日',
-    state,
-    hvNames,
-    spNames,
-    ctrlD: document.getElementById('ctrl-d')?.value||'',
-    handover: document.getElementById('handover')?.value||'',
-    specialHv: document.getElementById('special-handover')?.value||'',
-    otInputs: [...document.querySelectorAll('#otg input')].map(el=>el.value),
-    bxInputs: [...document.querySelectorAll('[id^=bx]')].map(el=>({id:el.id,val:el.value})),
-  };
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'OR派班_'+tw_y+m+dy+'.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  showSaveHint();
+  // 設定預設檔名提示
+  document.title = 'OR派班單_'+tw_y+m+dy;
+  window.print();
+  // 列印後還原標題
+  setTimeout(()=>{ document.title='手術室派班系統'; }, 2000);
 }
 
 function importData(input){
@@ -1197,7 +1180,12 @@ function buildOT(shifts){
     const div=document.createElement('div');
     const val=otList[i]?otList[i].name:'';
     div.className='otc'+(val?' pre':'');
-    div.innerHTML=`<label>${i+1}</label><input value="${val}" placeholder="—"><input placeholder="時間" style="font-size:9px;color:var(--amb);border-top:1px solid var(--bdr);">`;
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;padding:1px 2px;">
+        <span style="font-size:8px;color:#888;font-weight:700;min-width:13px;flex-shrink:0;">${i+1}.</span>
+        <input value="${val}" placeholder="—" style="flex:1;border:none;outline:none;font-family:var(--f);font-size:9px;font-weight:700;background:transparent;color:#000;min-width:0;">
+      </div>
+      <input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#b45309;text-align:center;background:transparent;padding:1px 2px;">`;
     g.appendChild(div);
   }
 }
