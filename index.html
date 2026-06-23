@@ -94,32 +94,31 @@ tbody tr.ns-row{background:#f0fdf4;}
 tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 .td-rm{text-align:center;font-weight:900;font-size:14px;color:var(--acc);width:32px;min-width:32px;}
 .td-rm.ns-rm{color:var(--grn);}
-.td-dept{padding:1px 2px;min-width:44px;max-width:54px;}
+.td-dept{padding:1px 3px;min-width:55px;max-width:68px;}
 .dam{font-size:10.5px;color:#1a6fa8;background:#e8f4fd;padding:1px 4px;border-radius:3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .dpm{font-size:10.5px;color:#b03020;background:#fff0f0;padding:1px 4px;border-radius:3px;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.td-p{min-width:92px;position:relative;}
+.td-p{min-width:88px;position:relative;}
 .bl{border-left:2px solid var(--acc)!important;}
 .bl2{border-left:1.5px solid #93c5fd!important;}
 
 /* drop zone */
 .dz{
-  width:100%;min-height:34px;
+  width:100%;min-height:30px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:1px 2px;font-size:11px;color:#bbb;
+  padding:2px 3px;font-size:11px;color:#bbb;
   border:1.5px dashed transparent;border-radius:4px;
-  transition:.12s;cursor:pointer;gap:1px;
+  transition:.12s;cursor:pointer;gap:2px;
 }
 .dz.dragover{border-color:var(--acc2);background:var(--acd);}
 .dz .ci-chip{
-  background:transparent;color:#000;
-  border:none;
-  padding:1px 2px;border-radius:0;
-  font-size:16px;font-weight:900;white-space:nowrap;
+  background:transparent;color:var(--t1);
+  border:1px solid var(--bdr);
+  padding:2px 6px;border-radius:4px;
+  font-size:13px;font-weight:700;white-space:nowrap;
   cursor:grab;
-  line-height:1.2;
 }
 .dz .ci-chip:active{opacity:.6;}
-.dz.empty{color:#ddd;font-size:12px;}
+.dz.empty{color:#ccc;}
 
 /* ── BOTTOM ── */
 /* .bot removed */
@@ -133,9 +132,9 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 .nl{font-size:11px;font-weight:700;min-width:48px;color:var(--t2);}
 .ssel{border:1px solid var(--bdr);border-radius:4px;padding:2px 4px;font-size:11px;font-family:var(--f);background:#fff;flex:1;}
 .otg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-.otc{border:1px solid var(--bdr);border-radius:3px;padding:1px;text-align:center;}
-.otc label{font-size:8px;color:var(--t3);display:block;text-align:center;}
-.otc input{width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;text-align:center;background:transparent;display:block;font-weight:600;}
+.otc{border:1.5px solid var(--bdr);border-radius:4px;padding:2px;text-align:center;}
+.otc label{font-size:9px;color:var(--t3);display:block;text-align:center;}
+.otc input{width:100%;border:none;outline:none;font-family:var(--f);font-size:11px;text-align:center;background:transparent;display:block;font-weight:600;}
 .otc.pre{background:#fffbea;border-color:#fcd34d;}
 .otc.pre input:first-of-type{font-weight:700;color:var(--amb);}
 .lvr{display:flex;gap:3px;margin-bottom:3px;}
@@ -170,11 +169,11 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .hdr-row2 th{padding:2px 1px;font-size:6.5px;}
   .hdr-row3 th{padding:1px 1px;font-size:6px;}
   .td-rm{width:16px;min-width:16px;font-size:9px;}
-  .td-dept{padding:0 1px;min-width:34px;max-width:42px;}
+  .td-dept{padding:0 1px;min-width:40px;max-width:48px;}
   .dam,.dpm{font-size:6px;padding:0 2px;}
   .td-p{min-width:44px;}
   .dz{min-height:12px;padding:0 1px;}
-  .ci-chip{font-size:9px!important;padding:0 2px!important;border-radius:0!important;background:transparent!important;color:#000!important;border:none!important;font-weight:900!important;}
+  .ci-chip{font-size:7.5px!important;padding:1px 4px!important;border-radius:2px!important;background:transparent!important;color:#000!important;border:1px solid #444!important;font-weight:700!important;}
   .chip{font-size:6px;padding:0 3px;background:transparent!important;color:#000!important;border-color:#888!important;}
   .bch{padding:1px 4px;font-size:7px;font-weight:900!important;}
   .bcb{padding:2px 3px;}
@@ -201,9 +200,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   </div>
   <div class="hdr-r">
     <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
-    <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
-    <button class="btn btn-ghost" onclick="clearSave()">🗑 清除</button>
+    <button class="btn btn-ghost" onclick="clearSave()">🗑 清除暫存</button>
     <button class="btn btn-ghost" onclick="window.print()">🖨 列印</button>
     <button class="btn btn-w" id="installBtn" style="display:none" onclick="installApp()">📲 安裝App</button>
   </div>
@@ -277,9 +274,9 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
   <!-- 加班順位（含時間欄） -->
   <div class="bc">
-    <div class="bch amb" style="padding:2px 8px;font-size:11px;">加班順位</div>
-    <div class="bcb" style="padding:3px 4px;">
-      <div id="otg" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
+    <div class="bch amb">加班順位</div>
+    <div class="bcb" style="padding:4px 6px;">
+      <div id="otg" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
     </div>
   </div>
 
@@ -287,23 +284,20 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   <div class="bc">
     <div class="bch" style="background:#0e7490;padding:2px 8px;font-size:11px;">借休</div>
     <div class="bcb" style="padding:3px 4px;">
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:3px;">
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>1</label><input placeholder="姓名" id="bx0n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>2</label><input placeholder="姓名" id="bx1n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>3</label><input placeholder="姓名" id="bx2n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>4</label><input placeholder="姓名" id="bx3n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>5</label><input placeholder="姓名" id="bx4n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:3px;">
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>6</label><input placeholder="姓名" id="bx5n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>7</label><input placeholder="姓名" id="bx6n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>8</label><input placeholder="姓名" id="bx7n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>9</label><input placeholder="姓名" id="bx8n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-  <div class="otc" style="text-align:left;padding:2px 4px;"><label>10</label><input placeholder="姓名" id="bx9n" style="font-weight:700;"><input placeholder="時間" style="font-size:9px;color:#0e7490;border-top:1px solid var(--bdr);"></div>
-</div>
-
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px;">
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx0n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx1n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx2n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx3n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx4n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx5n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx6n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx7n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx8n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+        <div class="otc" style="padding:2px 3px;"><input placeholder="姓名" id="bx9n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:9.5px;font-weight:700;text-align:center;background:transparent;display:block;"><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;"></div>
+      </div>
     </div>
-  </div>
+  </div></div>
 
   <!-- 特殊交班 + 交班事項 -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;">
@@ -314,7 +308,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
           ondragover="event.preventDefault();document.getElementById('hv-chips').style.borderColor='var(--acc2)';document.getElementById('hv-chips').style.background='var(--acd)';"
           ondragleave="document.getElementById('hv-chips').style.borderColor='transparent';document.getElementById('hv-chips').style.background='transparent';"
           ondrop="dropToHandover(event)"></div>
-        <textarea class="ta" id="handover" placeholder="請輸入交班事項…" style="flex:1;min-height:90px;font-size:13px;" oninput="saveData()"></textarea>
+        <textarea class="ta" id="handover" placeholder="請輸入交班事項…" style="flex:1;min-height:60px;" oninput="saveData()"></textarea>
       </div>
     </div>
     <div class="bc" style="display:flex;flex-direction:column;">
@@ -324,7 +318,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
           ondragover="event.preventDefault();document.getElementById('sp-chips').style.borderColor='var(--acc2)';document.getElementById('sp-chips').style.background='var(--acd)';"
           ondragleave="document.getElementById('sp-chips').style.borderColor='transparent';document.getElementById('sp-chips').style.background='transparent';"
           ondrop="dropToSpecial(event)"></div>
-        <textarea class="ta" id="special-handover" placeholder="請輸入特殊交班事項…" style="flex:1;min-height:90px;font-size:13px;" oninput="saveData()"></textarea>
+        <textarea class="ta" id="special-handover" placeholder="請輸入特殊交班事項…" style="flex:1;min-height:60px;" oninput="saveData()"></textarea>
       </div>
     </div>
   </div>
@@ -748,27 +742,31 @@ function buildTableBody(dayStr){
     tr.innerHTML = `<td class="td-rm${info.ns?' ns-rm':''}">${info.r}</td>`;
 
     if(info.isE){
-      // 小夜行：顯示小夜人員 chips
-      tr.innerHTML += `<td class="td-dept" colspan="2"><div class="dam" style="background:#f3e8ff;color:#6b21a8">小夜班</div></td>`;
+      const tdLbl = document.createElement('td');
+      tdLbl.className='td-dept'; tdLbl.colSpan=1;
+      tdLbl.innerHTML='<div class="dam" style="background:#f3e8ff;color:#6b21a8;font-weight:700;">小夜</div>';
+      tr.appendChild(tdLbl);
       const tdE = document.createElement('td');
-      tdE.colSpan=8; tdE.style.cssText='padding:3px 6px;';
+      tdE.colSpan=9; tdE.style.cssText='padding:2px 5px;vertical-align:middle;';
       todayShifts.E.forEach(s=>{
         const c=document.createElement('span');
-        c.className='chip ch-e'; c.style.margin='1px';
-        c.textContent=s.name+(s.star?' ★':'')+(s.raw&&s.raw!=='E'&&s.raw!=='E★'?' ('+s.raw+')':'');
+        c.className='chip ch-e'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
+        c.textContent=s.name+(s.star?' ★':'');
         tdE.appendChild(c);
       });
       tr.appendChild(tdE);
       tbody.appendChild(tr); return;
     }
     if(info.isN){
-      // 大夜行
-      tr.innerHTML += `<td class="td-dept" colspan="2"><div class="dam" style="background:#fdf2f8;color:#be185d">大夜班</div></td>`;
+      const tdLbl = document.createElement('td');
+      tdLbl.className='td-dept'; tdLbl.colSpan=1;
+      tdLbl.innerHTML='<div class="dam" style="background:#fdf2f8;color:#be185d;font-weight:700;">大夜</div>';
+      tr.appendChild(tdLbl);
       const tdN = document.createElement('td');
-      tdN.colSpan=8; tdN.style.cssText='padding:3px 6px;';
+      tdN.colSpan=9; tdN.style.cssText='padding:2px 5px;vertical-align:middle;';
       todayShifts.N.forEach(s=>{
         const c=document.createElement('span');
-        c.className='chip ch-n'; c.style.margin='1px';
+        c.className='chip ch-n'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
         c.textContent=s.name+(s.star?' ★':'');
         tdN.appendChild(c);
       });
@@ -776,13 +774,15 @@ function buildTableBody(dayStr){
       tbody.appendChild(tr); return;
     }
     if(info.is128){
-      // 12-8行
-      tr.innerHTML += `<td class="td-dept" colspan="2"><div class="dam" style="background:#fef3cd;color:#b45309">12-8班</div></td>`;
+      const tdLbl = document.createElement('td');
+      tdLbl.className='td-dept'; tdLbl.colSpan=1;
+      tdLbl.innerHTML='<div class="dam" style="background:#fef3cd;color:#b45309;font-weight:700;">12-8</div>';
+      tr.appendChild(tdLbl);
       const td128 = document.createElement('td');
-      td128.colSpan=8; td128.style.cssText='padding:3px 6px;';
+      td128.colSpan=9; td128.style.cssText='padding:2px 5px;vertical-align:middle;';
       todayShifts.S128.forEach(s=>{
         const c=document.createElement('span');
-        c.className='chip ch-128'; c.style.margin='1px';
+        c.className='chip ch-128'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
         c.textContent=s.name;
         td128.appendChild(c);
       });
@@ -796,7 +796,7 @@ function buildTableBody(dayStr){
     }
 
     const slots = info.ns
-      ? [{k:'as',cls:'bl',lbl:'窗口',span:4},{k:'ac',cls:'',lbl:'點眼藥',span:4},{k:'dummy1',cls:'',span:2,dummy:true}]
+      ? [{k:'as',cls:'bl',lbl:'窗口',span:1},{k:'ac',cls:'',lbl:'點眼藥',span:1},{k:'dummy1',cls:'',span:3,dummy:true},{k:'dummy2',cls:'',span:3,dummy:true}]
       : [
           {k:'as',cls:'bl'},{k:'ac',cls:''},
           {k:'ps',cls:'bl'},{k:'pc',cls:''},
@@ -936,61 +936,21 @@ function loadData(){
   } catch(e){}
 }
 
+function printToPDF(){
+  const d = new Date(currentDate||new Date());
+  const tw_y = d.getFullYear()-1911;
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dy = String(d.getDate()).padStart(2,'0');
+  document.title = 'OR派班單_'+tw_y+m+dy;
+  window.print();
+  setTimeout(()=>{ document.title='手術室派班系統'; }, 2000);
+}
+
 function clearSave(){
   if(!currentDate) return;
   if(!confirm('確定要清除 '+currentDate+' 的暫存資料？')) return;
   localStorage.removeItem('or_dispatch_'+currentDate);
   location.reload();
-}
-
-function printToPDF(){
-  // 提示用戶在列印視窗選「另存為PDF」
-  const d = new Date(currentDate||new Date());
-  const tw_y = d.getFullYear()-1911;
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const dy = String(d.getDate()).padStart(2,'0');
-  // 設定預設檔名提示
-  document.title = 'OR派班單_'+tw_y+m+dy;
-  window.print();
-  // 列印後還原標題
-  setTimeout(()=>{ document.title='手術室派班系統'; }, 2000);
-}
-
-function importData(input){
-  const file = input.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if(!data.date){ alert('檔案格式錯誤'); return; }
-
-      // 切換到對應日期
-      document.getElementById('dateInput').value = data.date;
-      onDateChange();
-
-      // 還原資料
-      setTimeout(()=>{
-        if(data.state) Object.assign(state, data.state);
-        if(data.hvNames) hvNames = data.hvNames;
-        if(data.spNames) spNames = data.spNames;
-        if(data.ctrlD){ const el=document.getElementById('ctrl-d'); if(el) el.value=data.ctrlD; }
-        if(data.handover){ const el=document.getElementById('handover'); if(el) el.value=data.handover; }
-        if(data.specialHv){ const el=document.getElementById('special-handover'); if(el) el.value=data.specialHv; }
-        if(data.otInputs){ document.querySelectorAll('#otg input').forEach((el,i)=>{ if(data.otInputs[i]!==undefined) el.value=data.otInputs[i]; }); }
-        if(data.bxInputs){ data.bxInputs.forEach(({id,val})=>{ const el=document.getElementById(id); if(el) el.value=val; }); }
-        renderHandover();
-        renderSpecial();
-        renderAll();
-        saveData();
-        alert('✅ 匯入成功！已載入 '+data.dateLabel+' 的排班資料');
-      }, 300);
-    } catch(err) {
-      alert('匯入失敗，請確認檔案格式正確');
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
 }
 
 let saveHintTimer;
@@ -1180,12 +1140,7 @@ function buildOT(shifts){
     const div=document.createElement('div');
     const val=otList[i]?otList[i].name:'';
     div.className='otc'+(val?' pre':'');
-    div.innerHTML=`
-      <div style="display:flex;align-items:center;padding:1px 2px;">
-        <span style="font-size:8px;color:#888;font-weight:700;min-width:13px;flex-shrink:0;">${i+1}.</span>
-        <input value="${val}" placeholder="—" style="flex:1;border:none;outline:none;font-family:var(--f);font-size:9px;font-weight:700;background:transparent;color:#000;min-width:0;">
-      </div>
-      <input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#b45309;text-align:center;background:transparent;padding:1px 2px;">`;
+    div.innerHTML=`<div style="display:flex;align-items:center;padding:1px 2px;"><span style="font-size:8px;color:#888;font-weight:700;min-width:13px;flex-shrink:0;">${i+1}.</span><input value="${val}" placeholder="—" style="flex:1;border:none;outline:none;font-family:var(--f);font-size:9px;font-weight:700;background:transparent;color:#000;min-width:0;"></div><input placeholder="時間" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:7.5px;color:#b45309;text-align:center;background:transparent;padding:1px 2px;">`;
     g.appendChild(div);
   }
 }
