@@ -369,27 +369,19 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
       </div>
     </div>
   </div><!-- 特殊交班 + 交班事項 -->
-  <div class="handover-block" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;">
-    <div class="bc" style="display:flex;flex-direction:column;">
+   <div class="handover-block" style="flex:1;display:flex;flex-direction:column;">
+    <div class="bc" style="flex:1;display:flex;flex-direction:column;">
       <div class="bch blue">交班事項</div>
       <div class="bcb" style="flex:1;display:flex;flex-direction:column;gap:4px;">
         <div id="hv-chips" style="display:flex;flex-wrap:wrap;gap:3px;min-height:8px;padding:2px 3px;border:1.5px dashed transparent;border-radius:5px;transition:.15s;"
           ondragover="event.preventDefault();document.getElementById('hv-chips').style.borderColor='var(--acc2)';document.getElementById('hv-chips').style.background='var(--acd)';"
           ondragleave="document.getElementById('hv-chips').style.borderColor='transparent';document.getElementById('hv-chips').style.background='transparent';"
           ondrop="dropToHandover(event)"></div>
-        <textarea class="ta" id="handover" placeholder="請輸入交班事項…" style="flex:1;min-height:60px;" oninput="saveData()"></textarea>
+        <textarea class="ta" id="handover" placeholder="請輸入交班事項…" style="flex:1;min-height:80px;font-size:13px;" oninput="saveData()"></textarea>
       </div>
     </div>
-    <div class="bc" style="display:flex;flex-direction:column;">
-      <div class="bch" style="background:#6b21a8;">特殊交班</div>
-      <div class="bcb" style="flex:1;display:flex;flex-direction:column;gap:4px;">
-        <div id="sp-chips" style="display:flex;flex-wrap:wrap;gap:3px;min-height:8px;padding:2px 3px;border:1.5px dashed transparent;border-radius:5px;transition:.15s;"
-          ondragover="event.preventDefault();document.getElementById('sp-chips').style.borderColor='var(--acc2)';document.getElementById('sp-chips').style.background='var(--acd)';"
-          ondragleave="document.getElementById('sp-chips').style.borderColor='transparent';document.getElementById('sp-chips').style.background='transparent';"
-          ondrop="dropToSpecial(event)"></div>
-        <textarea class="ta" id="special-handover" placeholder="請輸入特殊交班事項…" style="flex:1;min-height:60px;" oninput="saveData()"></textarea>
-      </div>
-    </div>
+    <div id="sp-chips" style="display:none"></div>
+    <textarea id="special-handover" style="display:none" oninput="saveData()"></textarea>
   </div>
 
 </div>
