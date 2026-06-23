@@ -152,11 +152,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   @page{size:210mm 297mm;margin:3mm;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
   body{background:#fff!important;color:#000!important;margin:0;padding:0;zoom:0.88;}
-  /* 隱藏不需要的 */
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
-  /* 隱藏底部加班借休交班 */
-  .handover-block,.bc{display:none!important;}
-  /* Header */
   .hdr{position:static;padding:1px 4px;background:#1a56a0!important;}
   .hdr h1{font-size:9px;}.hdr .sub{font-size:6px;}
   .main{padding:1px 2px;}
@@ -167,7 +163,6 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .ctrl-row{padding:1px 3px;gap:4px;}
   .ci label{font-size:6px;}
   .csel,.star-fixed{font-size:7px;padding:1px 2px;min-width:45px;}
-  /* 表格 */
   table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:0.5px solid #555!important;}
   tbody td{border:0.3px solid #aaa!important;padding:0;height:15px!important;overflow:hidden!important;}
   thead th{border:0.3px solid rgba(255,255,255,.4)!important;padding:0;}
@@ -191,14 +186,29 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{font-size:13px!important;}
   .ns-row td{border:0.3px solid #aaa!important;height:13px!important;}
   .chip{font-size:7px!important;padding:0 2px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
-  /* 手寫區域 */
-  .write-area{
-    display:block!important;
-    margin-top:4px;
-    border:1px solid #999;
-    width:100%;
-    height:120mm;
+  /* 加班借休 */
+  .bch{padding:1px 4px!important;font-size:7px!important;font-weight:900!important;}
+  .bcb{padding:1px 3px!important;}
+  .bc{display:block!important;}
+  .otg{grid-template-columns:repeat(7,1fr)!important;gap:1px!important;}
+  .otc{border:0.3px solid #aaa!important;padding:1px!important;}
+  .otc label{display:none!important;}
+  .otc input{font-size:7px!important;color:#000!important;font-weight:700!important;border:none!important;padding:0!important;}
+  [id^="bx"]{font-size:7px!important;padding:0!important;}
+  /* 交班事項 */
+  .handover-block{margin-top:2px;}
+  #hv-chips{display:none!important;}
+  #handover{
+    display:block!important;width:100%!important;
+    height:65mm!important;
+    font-size:11px!important;padding:4px!important;
+    border:1px solid #666!important;resize:none!important;
   }
+}
+
+  #hv-chips{display:none!important;}
+}
+
 }
 
 }
