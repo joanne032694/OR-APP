@@ -1117,7 +1117,16 @@ function exportJSON(){
 // ══════════════════════════════════════════
 // 雲端同步（GitHub）
 // ══════════════════════════════════════════
-const GH_TOKEN = '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';
+// Token 存在瀏覽器 localStorage，不寫在程式碼
+function getGHToken(){
+  let t = localStorage.getItem('gh_token');
+  if(!t){
+    t = prompt('請輸入 GitHub Token（只需輸入一次）：');
+    if(t) localStorage.setItem('gh_token', t.trim());
+  }
+  return t;
+}
+const GH_TOKEN = null; // 不用這個，改用 getGHToken()
 const GH_OWNER = 'joanne032694';
 const GH_REPO  = 'OR-APP';
 
@@ -1145,7 +1154,7 @@ async function cloudSave(){
     let sha = '';
     try{
       const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
-        headers:{'Authorization':'token '+GH_TOKEN}
+        headers:{'Authorization':'token '+getGHToken()}
       });
       if(r.ok){ const j=await r.json(); sha=j.sha; }
     }catch(e){}
@@ -1155,7 +1164,7 @@ async function cloudSave(){
 
     const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
       method:'PUT',
-      headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+      headers:{'Authorization':'token '+getGHToken(),'Content-Type':'application/json'},
       body: JSON.stringify(body)
     });
 
@@ -1176,7 +1185,7 @@ async function cloudLoad(){
   try{
     const path = getCloudFileName();
     const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
-      headers:{'Authorization':'token '+GH_TOKEN}
+      headers:{'Authorization':'token '+getGHToken()}
     });
     if(!resp.ok){ alert('❌ 找不到 '+currentDate+' 的雲端資料'); return; }
     const j = await resp.json();
@@ -1555,6 +1564,13 @@ function showPage(id){
 // ══════════════════════════════════════════
 // INIT — 預設今天
 // ══════════════════════════════════════════
+// 預先設定 GitHub Token（存入 localStorage）
+(function(){
+  const stored = localStorage.getItem('gh_token');
+  if(!stored){
+    localStorage.setItem('gh_token', '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');
+  }
+})();
 // 載入已儲存的人員資料
 loadStaffData();
 
