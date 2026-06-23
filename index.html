@@ -112,13 +112,13 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 .dz.dragover{border-color:var(--acc2);background:var(--acd);}
 .dz .ci-chip{
   background:transparent;color:#000;
-  border:1.5px solid #555;
-  padding:2px 6px;border-radius:4px;
-  font-size:14px;font-weight:900;white-space:nowrap;
+  border:none;
+  padding:1px 3px;border-radius:0;
+  font-size:15px;font-weight:900;white-space:nowrap;
   cursor:grab;
 }
 .dz .ci-chip:active{opacity:.6;}
-.dz.empty{color:#ccc;}
+.dz.empty{color:#ddd;font-size:12px;}
 
 /* ── BOTTOM ── */
 /* .bot removed */
@@ -173,7 +173,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .dam,.dpm{font-size:6px;padding:0 2px;}
   .td-p{min-width:44px;}
   .dz{min-height:12px;padding:0 1px;}
-  .ci-chip{font-size:8.5px!important;padding:1px 4px!important;border-radius:2px!important;background:transparent!important;color:#000!important;border:1px solid #333!important;font-weight:900!important;}
+  .ci-chip{font-size:9px!important;padding:0 2px!important;border-radius:0!important;background:transparent!important;color:#000!important;border:none!important;font-weight:900!important;}
   .chip{font-size:6px;padding:0 3px;background:transparent!important;color:#000!important;border-color:#888!important;}
   .bch{padding:1px 4px;font-size:7px;font-weight:900!important;}
   .bcb{padding:2px 3px;}
@@ -795,7 +795,7 @@ function buildTableBody(dayStr){
     }
 
     const slots = info.ns
-      ? [{k:'as',cls:'bl',lbl:'窗口',span:1},{k:'ac',cls:'',lbl:'點眼藥',span:1},{k:'dummy1',cls:'',span:3,dummy:true},{k:'dummy2',cls:'',span:3,dummy:true}]
+      ? [{k:'as',cls:'bl',lbl:'窗口',span:4},{k:'ac',cls:'',lbl:'點眼藥',span:4},{k:'dummy1',cls:'',span:2,dummy:true}]
       : [
           {k:'as',cls:'bl'},{k:'ac',cls:''},
           {k:'ps',cls:'bl'},{k:'pc',cls:''},
