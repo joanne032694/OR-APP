@@ -212,11 +212,9 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   <div class="hdr-r">
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
-    <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入JSON</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
-    <button class="btn btn-ghost" onclick="document.getElementById('photoFile').click()">📷 照片匯入</button>
-    <input type="file" id="photoFile" accept="image/*" style="display:none" onchange="importFromPhoto(this)">
-    <button class="btn btn-ghost" onclick="clearSave()">🗑 清除暫存</button>
+
+
+    <button class="btn btn-ghost" onclick="clearSave()">🗑 清除</button>
     <button class="btn btn-ghost" onclick="window.print()">🖨 列印</button>
     <button class="btn btn-w" id="installBtn" style="display:none" onclick="installApp()">📲 安裝App</button>
   </div>
@@ -993,128 +991,6 @@ function exportJSON(){
   a.href=url; a.download='OR派班_'+tw_y+m+dy+'.json';
   a.click(); URL.revokeObjectURL(url);
   showSaveHint();
-}
-
-async function importFromPhoto(input){
-  const file = input.files[0];
-  if(!file) return;
-
-  // 顯示載入中
-  const btn = document.querySelector('[onclick*="photoFile"]');
-  const origText = btn.textContent;
-  btn.textContent = '⏳ 辨識中...';
-  btn.disabled = true;
-
-  try {
-    // 轉 base64
-    const base64 = await new Promise((res,rej)=>{
-      const r = new FileReader();
-      r.onload = ()=> res(r.result.split(',')[1]);
-      r.onerror = rej;
-      r.readAsDataURL(file);
-    });
-
-    // 呼叫 Claude API 辨識照片
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:2000,
-        messages:[{
-          role:'user',
-          content:[
-            {type:'image', source:{type:'base64', media_type:file.type, data:base64}},
-            {type:'text', text:`這是手術室每日工作分配表照片。請辨識表格內容，回傳 JSON 格式（只回傳 JSON，不要其他文字）：
-{
-  "date": "YYYY-MM-DD格式的日期（民國年+1911=西元年）",
-  "ctrlD": "白班控台姓名",
-  "rooms": {
-    "1":  {"scrub":"刷手姓名","circ":"流動姓名"},
-    "2":  {"scrub":"","circ":""},
-    "3":  {"scrub":"","circ":""},
-    "5":  {"scrub":"","circ":""},
-    "6":  {"scrub":"","circ":""},
-    "7":  {"scrub":"","circ":""},
-    "8":  {"scrub":"","circ":""},
-    "8A": {"scrub":"","circ":""},
-    "9":  {"scrub":"","circ":""},
-    "11": {"scrub":"","circ":""},
-    "12": {"scrub":"","circ":""},
-    "13": {"scrub":"","circ":""}
-  },
-  "nurseStation": {"window":"窗口姓名","eyeDrop":"點眼藥姓名"},
-  "handover": "交班事項文字",
-  "specialHandover": "特殊交班文字"
-}
-名字請對應完整三個字的姓名（例如照片上寫「燕潔」請寫「辜嬿潔」），
-以下是本組護理師名單供對照：
-王玉仙,羅秀如,王嘉羚,林奕辰,張瑋恩,程郁淳,黃淑嬅,李佳容,郭妍伶,林靜子,
-陳玉茹,黃怡婷,林昕澄,謝佩芳,高靖緹,周芳怡,辜嬿潔,黃沂晨,吳婉菁,江嘉琪,
-劉祐呈,陳明瑄,簡晏欣,陳筠心,余宗芸,陳玥汝,鄒昀珊,蕭睬容,盧貞君,朱庭宜,
-鄧邦偉,汪瑄柔,卓湘晴,李宜鵑,黃佩琪,李宜諮,張芸甄,黃予婕,黃玉秀,何尚謙`}
-          ]
-        }]
-      })
-    });
-
-    const data = await resp.json();
-    const text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
-    const clean = text.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(clean);
-
-    // 套入 App
-    if(parsed.date){
-      document.getElementById('dateInput').value = parsed.date;
-      onDateChange();
-    }
-
-    setTimeout(()=>{
-      // 控台
-      if(parsed.ctrlD){
-        const cd = document.getElementById('ctrl-d');
-        if(cd) cd.value = parsed.ctrlD;
-      }
-
-      // 房間
-      const roomMap = {'1':'1','2':'2','3':'3','5':'5','6':'6','7':'7',
-                       '8':'8','8A':'8A','9':'9','11':'11','12':'12','13':'13'};
-      Object.entries(parsed.rooms||{}).forEach(([room,data])=>{
-        const r = roomMap[room];
-        if(!r) return;
-        if(data.scrub) state[`as-${r}`] = [data.scrub];
-        if(data.circ)  state[`ac-${r}`] = [data.circ];
-      });
-
-      // 護理站
-      if(parsed.nurseStation){
-        if(parsed.nurseStation.window)  state['as-窗口']   = [parsed.nurseStation.window];
-        if(parsed.nurseStation.eyeDrop) state['as-點眼藥'] = [parsed.nurseStation.eyeDrop];
-      }
-
-      // 交班
-      if(parsed.handover){
-        const hv = document.getElementById('handover');
-        if(hv) hv.value = parsed.handover;
-      }
-      if(parsed.specialHandover){
-        const sh = document.getElementById('special-handover');
-        if(sh) sh.value = parsed.specialHandover;
-      }
-
-      renderAll();
-      saveData();
-      alert('✅ 照片辨識完成！請確認各房間人員是否正確，如有錯誤可手動調整。');
-    }, 300);
-
-  } catch(err){
-    console.error(err);
-    alert('辨識失敗：' + err.message + '\n請檢查網路連線或改用 📥 匯入JSON');
-  } finally {
-    btn.textContent = origText;
-    btn.disabled = false;
-    input.value = '';
-  }
 }
 
 function importData(input){
