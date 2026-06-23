@@ -249,7 +249,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
 
     <button class="btn btn-ghost" onclick="clearSave()">🗑 清除</button>
-    <button class="btn btn-ghost" onclick="window.print()">🖨 列印</button>
+    <button class="btn btn-ghost" onclick="printToPDF()">🖨 列印</button>
     <button class="btn btn-w" id="installBtn" style="display:none" onclick="installApp()">📲 安裝App</button>
   </div>
 </div>
@@ -1003,8 +1003,23 @@ function printToPDF(){
   const m = String(d.getMonth()+1).padStart(2,'0');
   const dy = String(d.getDate()).padStart(2,'0');
   document.title = 'OR派班單_'+tw_y+m+dy;
+
+  // 列印前強制放大名字
+  const chips = document.querySelectorAll('.ci-chip');
+  chips.forEach(c=>{
+    c.setAttribute('data-orig-style', c.getAttribute('style')||'');
+    c.style.cssText='font-size:13px!important;font-weight:900;color:#000;border:none;background:transparent;width:100%;text-align:center;display:block;padding:0;';
+  });
+
   window.print();
-  setTimeout(()=>{ document.title='手術室派班系統'; }, 2000);
+
+  // 列印後還原
+  setTimeout(()=>{
+    document.title='手術室派班系統';
+    chips.forEach(c=>{
+      c.style.cssText = c.getAttribute('data-orig-style')||'';
+    });
+  }, 1000);
 }
 
 function exportJSON(){
