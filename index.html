@@ -255,6 +255,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   <div class="hdr-r">
     <button class="btn btn-ghost" onclick="cloudSave()">☁️ 雲端存</button>
     <button class="btn btn-ghost" onclick="cloudLoad()">☁️ 雲端取</button>
+    <button class="btn btn-ghost" onclick="setGHToken()" title="設定雲端金鑰">🔑</button>
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
     <input type="file" id="importFile" accept=".json,application/json,*/*" style="display:none" onchange="importData(this)">
@@ -1119,14 +1120,16 @@ function exportJSON(){
 // ══════════════════════════════════════════
 // Token 存在瀏覽器 localStorage，不寫在程式碼
 function getGHToken(){
-  let t = localStorage.getItem('gh_token');
-  if(!t){
-    t = prompt('請輸入 GitHub Token（只需輸入一次）：');
-    if(t) localStorage.setItem('gh_token', t.trim());
-  }
-  return t;
+  return localStorage.getItem('gh_token')||'';
 }
-const GH_TOKEN = null; // 不用這個，改用 getGHToken()
+function setGHToken(){
+  const t = prompt('請輸入 GitHub Token：\n（設定一次，存在這台瀏覽器）');
+  if(t && t.trim()){
+    localStorage.setItem('gh_token', t.trim());
+    alert('✅ Token 設定完成！');
+  }
+}
+const GH_TOKEN = null;
 const GH_OWNER = 'joanne032694';
 const GH_REPO  = 'OR-APP';
 
@@ -1564,13 +1567,6 @@ function showPage(id){
 // ══════════════════════════════════════════
 // INIT — 預設今天
 // ══════════════════════════════════════════
-// 預先設定 GitHub Token（存入 localStorage）
-(function(){
-  const stored = localStorage.getItem('gh_token');
-  if(!stored){
-    localStorage.setItem('gh_token', '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');
-  }
-})();
 // 載入已儲存的人員資料
 loadStaffData();
 
