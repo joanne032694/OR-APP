@@ -149,34 +149,24 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
 /* ── PRINT ── */
 @media print{
-  @page{size:210mm 297mm;margin:4mm;}
-  body{zoom:0.95;}
+  @page{size:210mm 297mm;margin:3mm;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
-  body{background:#fff!important;color:#000!important;margin:0;padding:0;}
-  html{height:289mm;}
-
-  /* ── 隱藏不需要列印的 ── */
+  body{background:#fff!important;color:#000!important;margin:0;padding:0;zoom:0.88;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
-
-  /* ── Header ── */
-  .hdr{position:static;padding:2px 5px;background:#1a56a0!important;}
+  .hdr{position:static;padding:1px 4px;background:#1a56a0!important;}
   .hdr h1{font-size:9px;}.hdr .sub{font-size:6px;}
-
-  /* ── 日期列 ── */
   .main{padding:1px 2px;}
-  .dbar{padding:2px 4px;margin-bottom:2px;gap:6px;flex-wrap:nowrap;}
+  .dbar{padding:1px 3px;margin-bottom:1px;gap:4px;flex-wrap:nowrap;}
   .dinput{font-size:7px;padding:1px 2px;}
   .dbadge{font-size:7px;padding:1px 3px;}
   #twDate{font-size:7px;}
   .ctrl-row{padding:1px 3px;gap:4px;}
   .ci label{font-size:6px;}
   .csel,.star-fixed{font-size:7px;padding:1px 2px;min-width:45px;}
-
-  /* ── 表格 ── */
   table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:0.5px solid #555!important;}
-  tbody td{border:0.3px solid #aaa!important;padding:0;height:16px!important;max-height:16px!important;overflow:hidden!important;}
+  tbody td{border:0.3px solid #aaa!important;padding:0;height:15px!important;max-height:15px!important;overflow:hidden!important;}
   thead th{border:0.3px solid rgba(255,255,255,.4)!important;padding:0;}
-  .hdr-row2 th{font-size:6.5px;padding:1px 0;}
+  .hdr-row2 th{font-size:6px;padding:1px 0;}
   .hdr-row3 th{font-size:5.5px;padding:0;}
   .td-rm{width:2.5%!important;font-size:8px;}
   .td-dept{width:7%!important;padding:0 1px;overflow:hidden;}
@@ -191,17 +181,11 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   table colgroup col:nth-child(8){width:8.5%!important;}
   table colgroup col:nth-child(9){width:8.5%!important;}
   table colgroup col:nth-child(10){width:8.5%!important;}
-
-  /* ── 人員名字 ── */
-  .dz{height:16px!important;min-height:16px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;}
+  .dz{height:15px!important;min-height:15px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;}
   .ci-chip{font-size:10px!important;font-weight:900!important;padding:0!important;border:none!important;background:transparent!important;color:#000!important;width:100%!important;text-align:center!important;display:block!important;line-height:1!important;}
   [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{font-size:13px!important;}
-
-  /* ── 護理站/小夜大夜 ── */
-  .ns-row td{border:0.3px solid #aaa!important;height:14px!important;}
+  .ns-row td{border:0.3px solid #aaa!important;height:13px!important;}
   .chip{font-size:7px!important;padding:0 2px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
-
-  /* ── 底部：加班+借休並排 ── */
   .bch{padding:1px 4px!important;font-size:7px!important;font-weight:900!important;}
   .bcb{padding:1px 3px!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:1px!important;}
@@ -209,19 +193,16 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .otc label{display:none!important;}
   .otc input{font-size:7px!important;color:#000!important;font-weight:700!important;border:none!important;padding:0!important;}
   [id^="bx"]{font-size:7px!important;padding:0!important;}
-
-  /* ── 交班事項 ── */
-  .handover-block{margin-top:3px;}
-  .handover-block .bch{font-size:8px!important;padding:2px 5px!important;}
+  .handover-block{margin-top:2px;}
+  .handover-block .bch{font-size:7px!important;padding:1px 4px!important;}
   #handover{
-    display:block!important;
-    width:100%!important;
-    height:168mm!important;
-    font-size:11px!important;
-    padding:5px!important;
-    border:1px solid #666!important;
-    resize:none!important;
+    display:block!important;width:100%!important;
+    height:190mm!important;
+    font-size:11px!important;padding:4px!important;
+    border:1px solid #666!important;resize:none!important;
   }
+}
+
 }
 </style>
 </head>
