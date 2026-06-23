@@ -741,52 +741,30 @@ function buildTableBody(dayStr){
 
     tr.innerHTML = `<td class="td-rm${info.ns?' ns-rm':''}">${info.r}</td>`;
 
-    if(info.isE){
-      const tdLbl = document.createElement('td');
-      tdLbl.className='td-dept'; tdLbl.colSpan=1;
-      tdLbl.innerHTML='<div class="dam" style="background:#f3e8ff;color:#6b21a8;font-weight:700;">小夜</div>';
+    if(info.isE||info.isN||info.is128){
+      tr.style.cssText='height:28px;';
+      const isE=info.isE, isN=info.isN, is128=info.is128;
+      const lbl = isE?'小夜':isN?'大夜':'12-8';
+      const bg  = isE?'#f3e8ff':isN?'#fdf2f8':'#fef3cd';
+      const col = isE?'#6b21a8':isN?'#be185d':'#b45309';
+      const cls = isE?'chip ch-e':isN?'chip ch-n':'chip ch-128';
+      const list= isE?todayShifts.E:isN?todayShifts.N:todayShifts.S128;
+
+      const tdLbl=document.createElement('td');
+      tdLbl.style.cssText=`background:${bg};color:${col};font-weight:900;font-size:13px;text-align:center;padding:0 4px;white-space:nowrap;width:36px;`;
+      tdLbl.textContent=lbl;
       tr.appendChild(tdLbl);
-      const tdE = document.createElement('td');
-      tdE.colSpan=9; tdE.style.cssText='padding:2px 5px;vertical-align:middle;';
-      todayShifts.E.forEach(s=>{
+
+      const tdAll=document.createElement('td');
+      tdAll.colSpan=9;
+      tdAll.style.cssText='padding:2px 6px;vertical-align:middle;';
+      list.forEach(s=>{
         const c=document.createElement('span');
-        c.className='chip ch-e'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
+        c.style.cssText='font-size:15px;font-weight:900;color:#000;margin:0 6px 0 0;white-space:nowrap;';
         c.textContent=s.name+(s.star?' ★':'');
-        tdE.appendChild(c);
+        tdAll.appendChild(c);
       });
-      tr.appendChild(tdE);
-      tbody.appendChild(tr); return;
-    }
-    if(info.isN){
-      const tdLbl = document.createElement('td');
-      tdLbl.className='td-dept'; tdLbl.colSpan=1;
-      tdLbl.innerHTML='<div class="dam" style="background:#fdf2f8;color:#be185d;font-weight:700;">大夜</div>';
-      tr.appendChild(tdLbl);
-      const tdN = document.createElement('td');
-      tdN.colSpan=9; tdN.style.cssText='padding:2px 5px;vertical-align:middle;';
-      todayShifts.N.forEach(s=>{
-        const c=document.createElement('span');
-        c.className='chip ch-n'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
-        c.textContent=s.name+(s.star?' ★':'');
-        tdN.appendChild(c);
-      });
-      tr.appendChild(tdN);
-      tbody.appendChild(tr); return;
-    }
-    if(info.is128){
-      const tdLbl = document.createElement('td');
-      tdLbl.className='td-dept'; tdLbl.colSpan=1;
-      tdLbl.innerHTML='<div class="dam" style="background:#fef3cd;color:#b45309;font-weight:700;">12-8</div>';
-      tr.appendChild(tdLbl);
-      const td128 = document.createElement('td');
-      td128.colSpan=9; td128.style.cssText='padding:2px 5px;vertical-align:middle;';
-      todayShifts.S128.forEach(s=>{
-        const c=document.createElement('span');
-        c.className='chip ch-128'; c.style.cssText='margin:1px 2px;font-size:12px;font-weight:700;';
-        c.textContent=s.name;
-        td128.appendChild(c);
-      });
-      tr.appendChild(td128);
+      tr.appendChild(tdAll);
       tbody.appendChild(tr); return;
     }
     if(info.ns){
