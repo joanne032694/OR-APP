@@ -209,7 +209,10 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
     </div>
   </div>
   <div class="hdr-r">
+    <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
     <button class="btn btn-ghost" onclick="clearSave()">🗑 清除暫存</button>
     <button class="btn btn-ghost" onclick="window.print()">🖨 列印</button>
     <button class="btn btn-w" id="installBtn" style="display:none" onclick="installApp()">📲 安裝App</button>
@@ -926,6 +929,63 @@ function printToPDF(){
   document.title = 'OR派班單_'+tw_y+m+dy;
   window.print();
   setTimeout(()=>{ document.title='手術室派班系統'; }, 2000);
+}
+
+function exportJSON(){
+  if(!currentDate){ alert('請先選擇日期'); return; }
+  const d = new Date(currentDate);
+  const tw_y = d.getFullYear()-1911;
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dy = String(d.getDate()).padStart(2,'0');
+  const data = {
+    version:'1.0', date:currentDate,
+    dateLabel:tw_y+'年'+m+'月'+dy+'日',
+    state, hvNames, spNames,
+    ctrlD: document.getElementById('ctrl-d')?.value||'',
+    handover: document.getElementById('handover')?.value||'',
+    specialHv: document.getElementById('special-handover')?.value||'',
+    otInputs:[...document.querySelectorAll('#otg input')].map(el=>el.value),
+    bxInputs:[...document.querySelectorAll('[id^=bx]')].map(el=>({id:el.id,val:el.value})),
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='OR派班_'+tw_y+m+dy+'.json';
+  a.click(); URL.revokeObjectURL(url);
+  showSaveHint();
+}
+
+function importData(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(!data.date){ alert('檔案格式錯誤'); return; }
+      document.getElementById('dateInput').value = data.date;
+      onDateChange();
+      setTimeout(()=>{
+        if(data.state) Object.assign(state, data.state);
+        if(data.hvNames) hvNames = data.hvNames;
+        if(data.spNames) spNames = data.spNames;
+        if(data.ctrlD){ const el=document.getElementById('ctrl-d'); if(el) el.value=data.ctrlD; }
+        if(data.handover){ const el=document.getElementById('handover'); if(el) el.value=data.handover; }
+        if(data.specialHv){ const el=document.getElementById('special-handover'); if(el) el.value=data.specialHv; }
+        if(data.otInputs){ document.querySelectorAll('#otg input').forEach((el,i)=>{ if(data.otInputs[i]!==undefined) el.value=data.otInputs[i]; }); }
+        if(data.bxInputs){ data.bxInputs.forEach(({id,val})=>{ const el=document.getElementById(id); if(el) el.value=val; }); }
+        renderHandover();
+        renderSpecial();
+        renderAll();
+        saveData();
+        alert('✅ 匯入成功！');
+      }, 300);
+    } catch(err) {
+      alert('匯入失敗，請確認檔案格式正確');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
 }
 
 function clearSave(){
