@@ -149,6 +149,16 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 /* ── PRINT ── */
 @media print{
   @page{size:A4 portrait;margin:4mm;}
+  /* 讓底部區塊填滿 */
+  #page-dispatch{display:flex;flex-direction:column;min-height:calc(297mm - 8mm);}
+  .tw{flex-shrink:0;}
+  /* 加班+借休壓縮成超緊湊一列 */
+  .bot-compact{display:grid;grid-template-columns:1fr 1fr;gap:4px;flex-shrink:0;}
+  /* 交班區塊填滿剩餘 */
+  .handover-block{flex:1;display:flex;flex-direction:column;}
+  .handover-block .bc{flex:1;display:flex;flex-direction:column;}
+  .handover-block .bcb{flex:1;display:flex;flex-direction:column;gap:4px;}
+  .handover-block textarea{flex:1!important;min-height:unset!important;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body{background:#fff!important;font-size:7px;color:#000!important;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
@@ -182,7 +192,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .otc{border:0.8px solid #555!important;}
   .otc label{font-size:6px;color:#555!important;font-weight:700;}
   .otc input{font-size:7px;color:#000!important;font-weight:700;}
-  textarea{min-height:25px!important;font-size:6.5px;padding:1px;}
+  textarea{font-size:8px;padding:2px;}
   .lvr input{font-size:6.5px;padding:1px 2px;}
   .lvr .lvt{width:50px!important;}
   .ns-row .chip{font-size:6.5px;padding:1px 4px;background:transparent!important;color:#000!important;border-color:#444!important;font-weight:700!important;}
@@ -300,7 +310,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   </div></div>
 
   <!-- 特殊交班 + 交班事項 -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;">
+  <div class="handover-block" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;">
     <div class="bc" style="display:flex;flex-direction:column;">
       <div class="bch blue">交班事項</div>
       <div class="bcb" style="flex:1;display:flex;flex-direction:column;gap:4px;">
