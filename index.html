@@ -210,15 +210,18 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .otc input{font-size:7px!important;color:#000!important;font-weight:700!important;border:none!important;padding:0!important;}
   [id^="bx"]{font-size:7px!important;padding:0!important;}
 
-  /* ── 交班事項 ── */
-  .handover-block{margin-top:3px;}
+  /* ── 交班事項填滿剩餘頁面 ── */
+  .handover-block{margin-top:3px;page-break-inside:avoid;}
   .handover-block .bch{font-size:8px!important;padding:2px 5px!important;}
   #handover{
-    display:block!important;width:100%!important;
-    height:110mm!important;
-    font-size:11px!important;padding:5px!important;
-    border:1px solid #666!important;resize:none!important;
-    overflow:hidden!important;
+    display:block!important;
+    width:100%!important;
+    min-height:100mm!important;
+    height:calc(297mm - 175mm)!important;
+    font-size:11px!important;
+    padding:5px!important;
+    border:1px solid #666!important;
+    resize:none!important;
   }
 }
 </style>
