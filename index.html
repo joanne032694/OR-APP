@@ -255,7 +255,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   <div class="hdr-r">
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+    <input type="file" id="importFile" accept=".json,application/json,*/*" style="display:none" onchange="importData(this)">
     <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
 
 
