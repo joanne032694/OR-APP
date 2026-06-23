@@ -150,53 +150,72 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 /* ── PRINT ── */
 @media print{
   @page{size:A4 portrait;margin:4mm;}
-  /* 讓底部區塊填滿 */
-  #page-dispatch{display:flex;flex-direction:column;min-height:calc(297mm - 8mm);}
-  .tw{flex-shrink:0;}
-  /* 加班+借休壓縮成超緊湊一列 */
-  .bot-compact{display:grid;grid-template-columns:1fr 1fr;gap:4px;flex-shrink:0;}
-  /* 交班區塊填滿剩餘 */
-  .handover-block{flex:1;display:flex;flex-direction:column;}
-  .handover-block .bc{flex:1;display:flex;flex-direction:column;}
-  .handover-block .bcb{flex:1;display:flex;flex-direction:column;gap:4px;}
-  .handover-block textarea{flex:1!important;min-height:unset!important;}
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-  body{background:#fff!important;font-size:7px;color:#000!important;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
+  body{background:#fff!important;font-size:7px;color:#000!important;margin:0;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
-  .hdr{position:static;padding:2px 5px;background:#1a56a0!important;}
-  .hdr h1{font-size:9px;}
+  .hdr{position:static;padding:2px 6px;background:#1a56a0!important;}
+  .hdr h1{font-size:10px;}
   .hdr .sub{font-size:7px;}
   .main{padding:1px 2px;}
   .dbar{padding:2px 4px;margin-bottom:2px;}
   .dinput{font-size:8px;padding:1px 3px;}
-  .dbadge{font-size:7.5px;padding:1px 4px;}
+  .dbadge{font-size:8px;padding:1px 4px;}
   #twDate{font-size:8px;}
-  .ctrl-row{padding:2px 4px;gap:5px;}
+  .ctrl-row{padding:2px 4px;gap:6px;}
   .ci label{font-size:6.5px;}
-  .csel,.star-fixed{font-size:7.5px;padding:1px 3px;min-width:50px;}
-  table{font-size:6.5px;border-radius:0;border:1px solid #333!important;}
-  tbody td{border:0.5px solid #666!important;}
-  thead th{border:0.5px solid rgba(255,255,255,.4)!important;}
-  .hdr-row2 th{padding:2px 1px;font-size:6.5px;}
-  .hdr-row3 th{padding:1px 1px;font-size:6px;}
-  .td-rm{width:16px;min-width:16px;font-size:9px;}
-  .td-dept{padding:0 1px;min-width:40px;max-width:48px;}
-  .dam,.dpm{font-size:6px;padding:0 2px;}
-  .td-p{min-width:44px;}
-  .dz{min-height:12px;padding:0 1px;}
-  .ci-chip{font-size:8px!important;padding:0!important;border:none!important;background:transparent!important;color:#000!important;font-weight:900!important;width:100%!important;text-align:center!important;display:block!important;}
-  .chip{font-size:6px;padding:0 3px;background:transparent!important;color:#000!important;border-color:#888!important;}
-  .bch{padding:1px 4px;font-size:7px;font-weight:900!important;}
-  .bcb{padding:2px 3px;}
-  .otg{grid-template-columns:repeat(7,1fr);gap:1px;}
-  .otc{padding:1px;}
-  .otc{border:0.8px solid #555!important;}
-  .otc label{font-size:6px;color:#555!important;font-weight:700;}
-  .otc input{font-size:7px;color:#000!important;font-weight:700;}
-  textarea{font-size:8px;padding:2px;}
-  .lvr input{font-size:6.5px;padding:1px 2px;}
-  .lvr .lvt{width:50px!important;}
-  .ns-row .chip{font-size:6.5px;padding:1px 4px;background:transparent!important;color:#000!important;border-color:#444!important;font-weight:700!important;}
+  .csel,.star-fixed{font-size:8px;padding:1px 3px;min-width:52px;}
+
+  /* ── 表格：欄位均分 ── */
+  table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:7px;border:1px solid #333!important;}
+  tbody td{border:0.5px solid #888!important;padding:0;}
+  thead th{border:0.5px solid rgba(255,255,255,.5)!important;padding:1px;}
+  .hdr-row2 th{font-size:7px;padding:2px 1px;}
+  .hdr-row3 th{font-size:6.5px;padding:1px;}
+  /* 房間欄固定窄 */
+  .td-rm{width:18px!important;min-width:18px!important;max-width:18px!important;font-size:10px;}
+  /* 科別欄固定窄 */
+  .td-dept{width:48px!important;min-width:48px!important;max-width:48px!important;padding:0 2px;}
+  .dam,.dpm{font-size:6px;padding:0 1px;background:#1a6fa8!important;color:#fff!important;font-weight:700;}
+  .dpm{background:#c0392b!important;}
+  /* 人員欄：剩餘空間均分（8欄） */
+  .td-p{padding:0!important;}
+  /* drop zone 填滿格子 */
+  .dz{min-height:14px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  /* 人員名字：大字清楚 */
+  .ci-chip{
+    font-size:9.5px!important;font-weight:900!important;
+    padding:0!important;border:none!important;
+    background:transparent!important;color:#000!important;
+    width:100%!important;text-align:center!important;
+    display:block!important;line-height:1.2!important;
+  }
+  /* 小夜大夜12-8 */
+  .ns-row td{border:0.5px solid #888!important;}
+  .chip{font-size:7px!important;padding:0 3px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
+
+  /* ── 底部：加班借休單行 ── */
+  .bch{padding:2px 5px;font-size:8px;font-weight:900!important;}
+  .bcb{padding:2px 4px;}
+  .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px;}
+  .otc{border:0.5px solid #888!important;padding:1px 2px;}
+  .otc label{display:none;}  /* 隱藏序號label改用flex顯示 */
+  .otc input{font-size:8px!important;color:#000!important;font-weight:700!important;border:none!important;}
+
+  /* ── 交班事項：填滿剩餘空間，不跑第二頁 ── */
+  #page-dispatch{display:flex;flex-direction:column;}
+  .tw{flex-shrink:0;}
+  .handover-block{flex:1;display:flex;flex-direction:column;min-height:0;}
+  .handover-block .bc{flex:1;display:flex;flex-direction:column;min-height:0;}
+  .handover-block .bcb{flex:1;display:flex;flex-direction:column;gap:3px;min-height:0;}
+  .handover-block textarea{
+    flex:1!important;min-height:0!important;
+    font-size:9px!important;padding:3px!important;
+    border:1px solid #999!important;resize:none!important;
+  }
+  /* 防止跑頁 */
+  .tw table{page-break-inside:avoid;}
+  * {page-break-after:avoid;page-break-before:avoid;}
+  textarea{page-break-inside:avoid;}
 }
 </style>
 </head>
