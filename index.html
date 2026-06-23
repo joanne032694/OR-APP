@@ -253,6 +253,8 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
     </div>
   </div>
   <div class="hdr-r">
+    <button class="btn btn-ghost" onclick="cloudSave()">☁️ 雲端存</button>
+    <button class="btn btn-ghost" onclick="cloudLoad()">☁️ 雲端取</button>
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
     <input type="file" id="importFile" accept=".json,application/json,*/*" style="display:none" onchange="importData(this)">
@@ -1110,6 +1112,89 @@ function exportJSON(){
   showSaveHint();
 }
 
+
+
+// ══════════════════════════════════════════
+// 雲端同步（GitHub）
+// ══════════════════════════════════════════
+const GH_TOKEN = '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';
+const GH_OWNER = 'joanne032694';
+const GH_REPO  = 'OR-APP';
+
+function getCloudFileName(){
+  if(!currentDate) return null;
+  return 'data/dispatch_'+currentDate+'.json';
+}
+
+async function cloudSave(){
+  if(!currentDate){ alert('請先選擇日期'); return; }
+  const btn = document.querySelector('[onclick="cloudSave()"]');
+  btn.textContent='⏳ 存檔中...'; btn.disabled=true;
+  try{
+    const data = {
+      date: currentDate, state, hvNames, spNames,
+      ctrlD: document.getElementById('ctrl-d')?.value||'',
+      handover: document.getElementById('handover')?.value||'',
+      otInputs:[...document.querySelectorAll('#otg input')].map(el=>el.value),
+      bxInputs:[...document.querySelectorAll('[id^=bx]')].map(el=>{return{id:el.id,val:el.value}}),
+    };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    const path = getCloudFileName();
+
+    // 先取得現有檔案的 SHA（更新時需要）
+    let sha = '';
+    try{
+      const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
+        headers:{'Authorization':'token '+GH_TOKEN}
+      });
+      if(r.ok){ const j=await r.json(); sha=j.sha; }
+    }catch(e){}
+
+    const body = {message:'派班資料 '+currentDate, content};
+    if(sha) body.sha = sha;
+
+    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
+      method:'PUT',
+      headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+
+    if(resp.ok){
+      alert('✅ 雲端存檔成功！護理長可以按「☁️ 雲端取」載入');
+    } else {
+      const err = await resp.json();
+      alert('❌ 存檔失敗：'+err.message);
+    }
+  }catch(e){ alert('❌ 錯誤：'+e.message); }
+  finally{ btn.textContent='☁️ 雲端存'; btn.disabled=false; }
+}
+
+async function cloudLoad(){
+  if(!currentDate){ alert('請先選擇日期'); return; }
+  const btn = document.querySelector('[onclick="cloudLoad()"]');
+  btn.textContent='⏳ 載入中...'; btn.disabled=true;
+  try{
+    const path = getCloudFileName();
+    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
+      headers:{'Authorization':'token '+GH_TOKEN}
+    });
+    if(!resp.ok){ alert('❌ 找不到 '+currentDate+' 的雲端資料'); return; }
+    const j = await resp.json();
+    const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))));
+    const data = JSON.parse(text);
+
+    if(data.state) Object.assign(state, data.state);
+    if(data.hvNames) hvNames=data.hvNames;
+    if(data.spNames) spNames=data.spNames;
+    if(data.ctrlD){ const el=document.getElementById('ctrl-d'); if(el) el.value=data.ctrlD; }
+    if(data.handover){ const el=document.getElementById('handover'); if(el) el.value=data.handover; }
+    if(data.otInputs){ document.querySelectorAll('#otg input').forEach((el,i)=>{ if(data.otInputs[i]!==undefined) el.value=data.otInputs[i]; }); }
+    if(data.bxInputs){ data.bxInputs.forEach(({id,val})=>{ const el=document.getElementById(id); if(el) el.value=val; }); }
+    renderHandover(); renderSpecial(); renderAll(); saveData();
+    alert('✅ 雲端載入成功！');
+  }catch(e){ alert('❌ 錯誤：'+e.message); }
+  finally{ btn.textContent='☁️ 雲端取'; btn.disabled=false; }
+}
 
 function clearSave(){
   if(!currentDate) return;
