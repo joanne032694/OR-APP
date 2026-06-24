@@ -223,13 +223,14 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .bcb{padding:2px 4px!important;}
   .bc{display:block!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
-  .otc{border:1px solid #333!important;padding:5px 3px!important;}
+  .otc{border:1px solid #333!important;padding:16px 3px!important;min-height:50px!important;}
   .otc label{display:none!important;}
   .otc input{font-size:11px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
   .otc input:last-child{font-size:10px!important;color:#555!important;border-top:0.5px solid #aaa!important;}
   /* 借休格子 */
-  [id^="bx"]{font-size:11px!important;font-weight:700!important;width:100%!important;display:block!important;text-align:center!important;border:none!important;padding:0!important;}
-  [id$="t"]{font-size:10px!important;color:#0e7490!important;border-top:0.5px solid #ddd!important;}
+  [id^="bx"]{font-size:11px!important;font-weight:700!important;width:100%!important;display:block!important;text-align:center!important;border:none!important;padding:6px 0!important;}
+  [id$="t"]{font-size:10px!important;color:#0e7490!important;border-top:0.5px solid #ddd!important;padding:6px 0!important;}
+  .bcb > div > div{min-height:55px!important;}
 
   /* 借休：字體加大，格子加寬（4欄） */
   [id^="bx"]{font-size:11px!important;padding:1px!important;text-align:center!important;width:100%!important;display:block!important;font-weight:700!important;}
@@ -244,7 +245,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   #handover{
     display:block!important;
     width:100%!important;
-    height:100mm!important;
+    height:130mm!important;
     font-size:13px!important;
     line-height:2!important;
     padding:6px!important;
@@ -1454,11 +1455,9 @@ function buildOT(shifts){
     const val=otList[i]?otList[i].name:'';
     div.className='otc'+(val?' pre':'');
     div.innerHTML=`
-      <div style="display:flex;align-items:center;padding:2px 3px;gap:2px;">
-        <span style="font-size:9px;color:#888;font-weight:700;flex-shrink:0;">${i+1}.</span>
-        <input value="${val}" placeholder="—" style="flex:1;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:900;background:transparent;color:#000;min-width:0;text-align:center;">
-      </div>
-      <input placeholder="" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#b45309;text-align:center;background:transparent;padding:2px;">`;
+      <div style="font-size:9px;color:#888;font-weight:700;text-align:left;padding:2px 3px 0;">${i+1}.</div>
+      <input value="${val}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:14px;font-weight:900;background:transparent;color:#000;text-align:center;padding:4px 2px;display:block;">
+      <input placeholder="" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:12px;color:#b45309;text-align:center;background:transparent;padding:4px;display:block;">`;;
     g.appendChild(div);
   }
 }
