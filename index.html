@@ -156,84 +156,175 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   body{background:#fff!important;color:#000!important;margin:0;padding:0;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
 
-  /* Header */
+  /* ── Header ── */
   .hdr{position:static;padding:2px 6px;background:#1a56a0!important;}
-  .hdr h1{font-size:10px;font-weight:900;}
-  .hdr .sub{font-size:7px;}
-
-  /* 日期控台列 */
+  .hdr h1{font-size:11px;font-weight:900;}
+  .hdr .sub{font-size:8px;}
   .main{padding:1px 3px;}
-  .dbar{padding:2px 4px;margin-bottom:2px;gap:6px;flex-wrap:nowrap;}
-  .dinput{font-size:8px;padding:1px 3px;}
-  .dbadge{font-size:8px;padding:1px 4px;}
-  #twDate{font-size:9px;font-weight:700;}
-  .ctrl-row{padding:2px 4px;gap:6px;}
-  .ci label{font-size:7px;}
-  .csel,.star-fixed{font-size:8px;padding:1px 3px;min-width:55px;}
 
-  /* 表格：科別寬一點，人員格均分 */
-  table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:1px solid #333!important;}
-  tbody td{border:0.5px solid #888!important;padding:0;}
-  thead th{border:0.5px solid rgba(255,255,255,.4)!important;padding:1px 0;}
-  .hdr-row2 th{font-size:7.5px;padding:1px 0;font-weight:700;}
-  .hdr-row3 th{font-size:6.5px;padding:1px 0;}
+  /* ── 日期控台列 ── */
+  .dbar{padding:3px 5px;margin-bottom:2px;gap:8px;flex-wrap:nowrap;border:1px solid #333!important;}
+  .dinput{font-size:10px;padding:1px 3px;font-weight:700;}
+  .dbadge{font-size:10px;padding:1px 5px;font-weight:900;}
+  #twDate{font-size:11px;font-weight:900;}
+  .ctrl-row{padding:3px 6px;gap:8px;border:1px solid #1a56a0!important;}
+  .ci label{font-size:8px;font-weight:700;}
+  .csel,.star-fixed{font-size:10px;padding:2px 4px;min-width:60px;font-weight:700;}
 
-  /* 欄寬：科別12%，上午各15%，其他各8% */
-  .td-rm{width:18px!important;font-size:9px;text-align:center;font-weight:900;}
-  .td-dept{width:12%!important;padding:0 2px;overflow:hidden;}
-  .dam{font-size:7px!important;background:#1a6fa8!important;color:#fff!important;font-weight:700;padding:1px 2px;display:block;line-height:1.3;}
-  .dpm{font-size:7px!important;background:#c0392b!important;color:#fff!important;font-weight:700;padding:1px 2px;display:block;margin-top:1px;line-height:1.3;}
+  /* ── 表格 ── */
+  table{
+    width:100%!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important;
+    border:1.5px solid #000!important;
+    font-size:8px;
+  }
+  tbody td{
+    border:1px solid #555!important;
+    padding:0;
+    vertical-align:middle;
+  }
+  thead th{
+    border:1px solid #555!important;
+    padding:1px 0;
+    font-weight:900;
+  }
+  tbody tr{border-bottom:1px solid #555!important;}
+
+  /* 表頭字大 */
+  .hdr-row2 th{font-size:9px;padding:2px 1px;font-weight:900;}
+  .hdr-row3 th{font-size:8px;padding:2px 1px;font-weight:900;}
+
+  /* 欄寬：房間窄、科別中、上午最寬、其他均分 */
+  .td-rm{width:18px!important;font-size:11px;font-weight:900;text-align:center;border-right:1.5px solid #000!important;}
+  .td-dept{
+    width:13%!important;
+    padding:1px 3px;
+    border-right:1.5px solid #000!important;
+  }
+  .dam{
+    font-size:8px!important;
+    color:#000!important;
+    background:transparent!important;
+    font-weight:900;
+    padding:1px 2px;
+    display:block;
+    line-height:1.3;
+    border-bottom:0.5px solid #aaa;
+  }
+  .dpm{
+    font-size:8px!important;
+    color:#000!important;
+    background:transparent!important;
+    font-weight:700;
+    padding:1px 2px;
+    display:block;
+    line-height:1.3;
+  }
   table colgroup col:nth-child(1){width:18px!important;}
-  table colgroup col:nth-child(2){width:12%!important;}
-  table colgroup col:nth-child(3){width:15%!important;}
-  table colgroup col:nth-child(4){width:15%!important;}
-  table colgroup col:nth-child(5){width:8%!important;}
-  table colgroup col:nth-child(6){width:8%!important;}
-  table colgroup col:nth-child(7){width:8%!important;}
-  table colgroup col:nth-child(8){width:8%!important;}
-  table colgroup col:nth-child(9){width:8%!important;}
-  table colgroup col:nth-child(10){width:8%!important;}
+  table colgroup col:nth-child(2){width:13%!important;}
+  table colgroup col:nth-child(3){width:14%!important;}
+  table colgroup col:nth-child(4){width:14%!important;}
+  table colgroup col:nth-child(5){width:9%!important;}
+  table colgroup col:nth-child(6){width:9%!important;}
+  table colgroup col:nth-child(7){width:9%!important;}
+  table colgroup col:nth-child(8){width:9%!important;}
+  table colgroup col:nth-child(9){width:9%!important;}
+  table colgroup col:nth-child(10){width:9%!important;}
 
-  /* 人員格 */
+  /* 上午欄粗邊線 */
+  .bl{border-left:1.5px solid #000!important;}
+
+  /* 人員名字：填滿格子 */
   .td-p{padding:0!important;}
-  .dz{min-height:20px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;}
-  .dz{position:relative!important;}
+  .dz{
+    min-height:18px!important;
+    padding:0 1px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
   .ci-chip{
-    font-size:0!important;
+    font-size:11px!important;
     font-weight:900!important;
-    padding:0!important;border:none!important;
-    background:transparent!important;color:#000!important;
-    width:100%!important;text-align:center!important;
-    display:flex!important;align-items:center!important;justify-content:center!important;
-    height:100%!important;line-height:1!important;
-    font-size:clamp(8px,2.5vw,16px)!important;
+    padding:0!important;
+    border:none!important;
+    background:transparent!important;
+    color:#000!important;
+    width:100%!important;
+    text-align:center!important;
+    display:block!important;
+    line-height:1.2!important;
   }
-  [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{
-    font-size:clamp(10px,3.5vw,20px)!important;
+  [id^="zone-as-"] .ci-chip,
+  [id^="zone-ac-"] .ci-chip{
+    font-size:13px!important;
+    font-weight:900!important;
   }
 
-  /* 護理站小夜大夜 */
-  .ns-row td{border:0.5px solid #888!important;}
-  .chip{font-size:8px!important;padding:0 3px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
+  /* 護理站 */
+  .ns-row td{border:1px solid #555!important;}
+  .chip{
+    font-size:9px!important;
+    padding:0 3px!important;
+    background:transparent!important;
+    color:#000!important;
+    border:none!important;
+    font-weight:700!important;
+  }
 
-  /* 加班借休 */
-  .bch{padding:2px 5px!important;font-size:8px!important;font-weight:900!important;color:#fff!important;}
+  /* ── 底部：加班借休並排一列 ── */
+  .bch{
+    padding:2px 6px!important;
+    font-size:9px!important;
+    font-weight:900!important;
+    color:#fff!important;
+  }
   .bcb{padding:2px 4px!important;}
   .bc{display:block!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
-  .otc{border:0.5px solid #aaa!important;padding:1px 2px!important;}
+  .otc{border:0.8px solid #555!important;padding:2px!important;}
   .otc label{display:none!important;}
-  .otc input{font-size:7.5px!important;color:#000!important;font-weight:700!important;border:none!important;padding:0!important;text-align:center!important;}
-  [id^="bx"]{font-size:7.5px!important;padding:0!important;text-align:center!important;}
+  .otc input{
+    font-size:9px!important;
+    color:#000!important;
+    font-weight:700!important;
+    border:none!important;
+    padding:0!important;
+    text-align:center!important;
+    width:100%!important;
+    display:block!important;
+  }
+  .otc input:last-child{
+    font-size:8px!important;
+    color:#555!important;
+    border-top:0.5px solid #aaa!important;
+  }
+  [id^="bx"]{
+    font-size:9px!important;
+    padding:0!important;
+    text-align:center!important;
+    width:100%!important;
+    display:block!important;
+  }
 
-  /* 交班事項 */
+  /* ── 交班事項 ── */
   .handover-block{margin-top:3px;}
   #hv-chips{display:none!important;}
   #handover{
-    display:block!important;width:100%!important;
-    height:50mm!important;
-    font-size:11px!important;padding:5px!important;
-    border:1.5px solid #666!important;resize:none!important;
+    display:block!important;
+    width:100%!important;
+    height:55mm!important;
+    font-size:12px!important;
+    line-height:1.8!important;
+    padding:6px!important;
+    border:1.5px solid #333!important;
+    resize:none!important;
+    font-weight:500!important;
+  }
+  .handover-block .bch{
+    font-size:10px!important;
+    padding:3px 6px!important;
   }
 }
 
@@ -255,7 +346,6 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   <div class="hdr-r">
     <button class="btn btn-ghost" onclick="cloudSave()">☁️ 雲端存</button>
     <button class="btn btn-ghost" onclick="cloudLoad()">☁️ 雲端取</button>
-    <button class="btn btn-ghost" onclick="setGHToken()" title="設定雲端金鑰">🔑</button>
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
     <input type="file" id="importFile" accept=".json,application/json,*/*" style="display:none" onchange="importData(this)">
@@ -1115,32 +1205,17 @@ function exportJSON(){
 
 
 
-// ══════════════════════════════════════════
-// 雲端同步（GitHub）
-// ══════════════════════════════════════════
-// Token 存在瀏覽器 localStorage，不寫在程式碼
-function getGHToken(){
-  return localStorage.getItem('gh_token')||'';
-}
-function setGHToken(){
-  const t = prompt('請輸入 GitHub Token：\n（設定一次，存在這台瀏覽器）');
-  if(t && t.trim()){
-    localStorage.setItem('gh_token', t.trim());
-    alert('✅ Token 設定完成！');
-  }
-}
-const GH_TOKEN = null;
-const GH_OWNER = 'joanne032694';
-const GH_REPO  = 'OR-APP';
 
-function getCloudFileName(){
-  if(!currentDate) return null;
-  return 'data/dispatch_'+currentDate+'.json';
-}
+// ══════════════════════════════════════════
+// 雲端同步（Supabase）
+// ══════════════════════════════════════════
+const SB_URL = 'https://zrootfunmrelghclwnmh.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpyb290ZnVubXJlbGdoY2x3bm1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyOTQyMjUsImV4cCI6MjA5Nzg3MDIyNX0.pgx6J_-EoxIuPpKzOJ7aGhBQ2kIah4uFymx9-y77OCo';
 
 async function cloudSave(){
   if(!currentDate){ alert('請先選擇日期'); return; }
   const btn = document.querySelector('[onclick="cloudSave()"]');
+  const orig = btn.textContent;
   btn.textContent='⏳ 存檔中...'; btn.disabled=true;
   try{
     const data = {
@@ -1150,50 +1225,53 @@ async function cloudSave(){
       otInputs:[...document.querySelectorAll('#otg input')].map(el=>el.value),
       bxInputs:[...document.querySelectorAll('[id^=bx]')].map(el=>{return{id:el.id,val:el.value}}),
     };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
-    const path = getCloudFileName();
 
-    // 先取得現有檔案的 SHA（更新時需要）
-    let sha = '';
-    try{
-      const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
-        headers:{'Authorization':'token '+getGHToken()}
-      });
-      if(r.ok){ const j=await r.json(); sha=j.sha; }
-    }catch(e){}
+    // 先查是否已有這天的資料
+    const check = await fetch(
+      SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate+'&select=id',
+      {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}
+    );
+    const existing = await check.json();
 
-    const body = {message:'派班資料 '+currentDate, content};
-    if(sha) body.sha = sha;
-
-    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
-      method:'PUT',
-      headers:{'Authorization':'token '+getGHToken(),'Content-Type':'application/json'},
-      body: JSON.stringify(body)
-    });
-
-    if(resp.ok){
-      alert('✅ 雲端存檔成功！護理長可以按「☁️ 雲端取」載入');
+    if(existing && existing.length > 0){
+      // 更新
+      await fetch(
+        SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate,
+        {
+          method:'PATCH',
+          headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'},
+          body: JSON.stringify({date_key:currentDate, date:JSON.stringify(data)})
+        }
+      );
     } else {
-      const err = await resp.json();
-      alert('❌ 存檔失敗：'+err.message);
+      // 新增
+      await fetch(
+        SB_URL+'/rest/v1/dispatch',
+        {
+          method:'POST',
+          headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+          body: JSON.stringify({date_key:currentDate, date:JSON.stringify(data)})
+        }
+      );
     }
-  }catch(e){ alert('❌ 錯誤：'+e.message); }
-  finally{ btn.textContent='☁️ 雲端存'; btn.disabled=false; }
+    alert('✅ 雲端存檔成功！護理長可以按「☁️ 雲端取」載入');
+  }catch(e){ alert('❌ 存檔失敗：'+e.message); }
+  finally{ btn.textContent=orig; btn.disabled=false; }
 }
 
 async function cloudLoad(){
   if(!currentDate){ alert('請先選擇日期'); return; }
   const btn = document.querySelector('[onclick="cloudLoad()"]');
+  const orig = btn.textContent;
   btn.textContent='⏳ 載入中...'; btn.disabled=true;
   try{
-    const path = getCloudFileName();
-    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,{
-      headers:{'Authorization':'token '+getGHToken()}
-    });
-    if(!resp.ok){ alert('❌ 找不到 '+currentDate+' 的雲端資料'); return; }
-    const j = await resp.json();
-    const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))));
-    const data = JSON.parse(text);
+    const resp = await fetch(
+      SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate+'&select=date',
+      {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}
+    );
+    const rows = await resp.json();
+    if(!rows || rows.length===0){ alert('❌ 找不到 '+currentDate+' 的雲端資料'); return; }
+    const data = JSON.parse(rows[0].date);
 
     if(data.state) Object.assign(state, data.state);
     if(data.hvNames) hvNames=data.hvNames;
@@ -1204,8 +1282,8 @@ async function cloudLoad(){
     if(data.bxInputs){ data.bxInputs.forEach(({id,val})=>{ const el=document.getElementById(id); if(el) el.value=val; }); }
     renderHandover(); renderSpecial(); renderAll(); saveData();
     alert('✅ 雲端載入成功！');
-  }catch(e){ alert('❌ 錯誤：'+e.message); }
-  finally{ btn.textContent='☁️ 雲端取'; btn.disabled=false; }
+  }catch(e){ alert('❌ 載入失敗：'+e.message); }
+  finally{ btn.textContent=orig; btn.disabled=false; }
 }
 
 function clearSave(){
