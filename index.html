@@ -223,10 +223,13 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   .bcb{padding:2px 4px!important;}
   .bc{display:block!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
-  .otc{border:1px solid #333!important;padding:2px!important;}
+  .otc{border:1px solid #333!important;padding:3px!important;}
   .otc label{display:none!important;}
-  .otc input{font-size:10px!important;color:#000!important;font-weight:700!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
-  .otc input:last-child{font-size:9px!important;color:#555!important;border-top:0.5px solid #aaa!important;}
+  .otc input{font-size:11px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
+  .otc input:last-child{font-size:10px!important;color:#555!important;border-top:0.5px solid #aaa!important;}
+  /* 借休格子 */
+  [id^="bx"]{font-size:11px!important;font-weight:700!important;width:100%!important;display:block!important;text-align:center!important;border:none!important;padding:0!important;}
+  [id$="t"]{font-size:10px!important;color:#0e7490!important;border-top:0.5px solid #ddd!important;}
 
   /* 借休：字體加大，格子加寬（4欄） */
   [id^="bx"]{font-size:11px!important;padding:1px!important;text-align:center!important;width:100%!important;display:block!important;font-weight:700!important;}
@@ -241,7 +244,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   #handover{
     display:block!important;
     width:100%!important;
-    height:60mm!important;
+    height:80mm!important;
     font-size:13px!important;
     line-height:2!important;
     padding:6px!important;
@@ -366,16 +369,46 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
     <div class="bch" style="background:#0e7490;padding:3px 8px;font-size:11px;">借休</div>
     <div class="bcb" style="padding:4px 6px;">
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx0n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx1n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx2n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx3n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx4n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx5n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx6n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx7n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx8n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:4px 3px;text-align:center;"><input placeholder="姓名" id="bx9n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx0n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx0t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx1n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx1t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx2n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx2t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx3n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx3t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx4n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx4t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx5n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx5t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx6n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx6t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx7n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx7t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx8n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx8t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;padding:3px;">
+          <input placeholder="姓名" id="bx9n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;text-align:center;background:transparent;display:block;">
+          <input placeholder="" id="bx9t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:11px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
+        </div>
       </div>
     </div>
   </div><!-- 特殊交班 + 交班事項 -->
