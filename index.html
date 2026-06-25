@@ -290,11 +290,8 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
     <button class="btn btn-ghost" onclick="exportJSON()">📤 匯出</button>
     <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📥 匯入</button>
     <input type="file" id="importFile" accept=".json,application/json,*/*" style="display:none" onchange="importData(this)">
-    <button class="btn btn-ghost" onclick="printToPDF()">📄 存PDF</button>
-
-
     <button class="btn btn-ghost" onclick="clearSave()">🗑 清除</button>
-    <button class="btn btn-ghost" onclick="printToPDF()">🖨 列印</button>
+    <button class="btn btn-ghost" onclick="printToPDF()">🖨 列印／存PDF</button>
     <button class="btn btn-w" id="installBtn" style="display:none" onclick="installApp()">📲 安裝App</button>
   </div>
 </div>
@@ -1055,6 +1052,19 @@ function loadData(){
 }
 
 function printToPDF(){
+  // iOS 提示
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(isIOS){
+    const ok = confirm(
+      '📄 存成 PDF 步驟：\n\n' +
+      '1. 點「好」後會跳出列印畫面\n' +
+      '2. 用【兩指撐大】預覽圖\n' +
+      '3. 點左上角【分享】\n' +
+      '4. 選【儲存到檔案】\n\n' +
+      '點「好」開始'
+    );
+    if(!ok) return;
+  }
   const d = new Date(currentDate||new Date());
   const tw_y = d.getFullYear()-1911;
   const m = String(d.getMonth()+1).padStart(2,'0');
