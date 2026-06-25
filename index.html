@@ -60,9 +60,15 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;
 .cpanel{background:var(--sur);border:1.5px solid var(--bdr);border-radius:8px;padding:7px 10px;margin-bottom:8px;}
 .cpanel-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
 .cpanel-hdr h3{font-size:11px;font-weight:700;color:var(--t3);}
-.chips{display:flex;flex-wrap:wrap;gap:3px;align-items:center;}
-.grp-lbl{font-size:10px;color:var(--t3);align-self:center;padding:0 3px;font-weight:700;}
-.chip{font-size:11.5px;padding:3px 9px;border-radius:999px;font-weight:600;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;user-select:none;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.grp-lbl{font-size:11px;color:var(--t3);align-self:center;padding:0 4px;font-weight:700;}
+.chip{font-size:14px;padding:6px 13px;border-radius:999px;font-weight:700;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;user-select:none;min-height:36px;display:inline-flex;align-items:center;}
+@media(max-width:600px){
+  .chip{font-size:15px;padding:8px 15px;min-height:42px;}
+  .chips{gap:6px;}
+  .grp-lbl{font-size:12px;}
+  .cpanel{padding:8px 10px;}
+}
 .chip.selected{background:#1a56a0!important;color:#fff!important;border-color:#1a56a0!important;transform:scale(1.05);box-shadow:0 2px 8px rgba(26,86,160,.4);}
 .dz.ready{border:2px solid #1a56a0!important;background:#e8f0fa!important;cursor:pointer;}
 .chip:active{opacity:.6;transform:scale(.93);}
@@ -106,9 +112,9 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
 /* drop zone */
 .dz{
-  width:100%;min-height:30px;
+  width:100%;min-height:36px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:2px 3px;font-size:11px;color:#bbb;
+  padding:3px 4px;font-size:11px;color:#bbb;
   border:1.5px dashed transparent;border-radius:4px;
   transition:.12s;cursor:pointer;gap:2px;
 }
@@ -116,12 +122,11 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 .dz .ci-chip{
   background:transparent;color:#000;
   border:none;padding:0;border-radius:0;
-  font-size:15px;font-weight:900;
+  font-size:clamp(12px,2vw,18px);font-weight:900;
   white-space:nowrap;cursor:grab;
-  line-height:1.2;display:block;
+  line-height:1.3;display:block;
   width:100%;text-align:center;
   overflow:hidden;
-  text-overflow:ellipsis;
 }
 .dz .ci-chip:active{opacity:.6;}
 .dz.empty{color:#ccc;}
@@ -155,14 +160,16 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 /* ── PRINT ── */
 @media print{
   @page{size:210mm 297mm;margin:3mm;}
+  html{zoom:0.85;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
   body{background:#fff!important;color:#000!important;margin:0;padding:0;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
 
   /* Header */
-  .hdr{position:static;padding:2px 6px;background:#1a56a0!important;}
-  .hdr h1{font-size:11px;font-weight:900;}
-  .hdr .sub{font-size:8px;}
+  .hdr{position:static;padding:4px 6px;background:#1a56a0!important;justify-content:center!important;}
+  .hdr-l{justify-content:center!important;width:100%!important;}
+  .hdr h1{font-size:14px;font-weight:900;text-align:center;}
+  .hdr .sub{display:none!important;}
   .main{padding:1px 3px;}
 
   /* 日期控台列 */
@@ -172,7 +179,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   #twDate{font-size:12px;font-weight:900;}
   .ctrl-row{padding:3px 6px;gap:8px;border:1px solid #1a56a0!important;}
   .ci label{font-size:8px;font-weight:700;}
-  .csel,.star-fixed{font-size:11px;padding:2px 4px;min-width:65px;font-weight:700;}
+  .csel,.star-fixed{font-size:18px!important;padding:3px 6px;min-width:65px;font-weight:900!important;}
 
   /* 表格：清楚的粗邊線 */
   table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:2px solid #000!important;}
@@ -202,32 +209,35 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   table colgroup col:nth-child(7){width:9%!important;}
   table colgroup col:nth-child(8){width:9%!important;}
   table colgroup col:nth-child(9){width:9%!important;}
-  table colgroup col:nth-child(10){width:auto!important;}
+  table colgroup col:nth-child(10){width:9%!important;}
 
   /* 上午欄粗邊線區隔 */
   .bl{border-left:2px solid #000!important;}
 
   /* 人員格 */
   .td-p{padding:0!important;}
-  .dz{min-height:20px!important;padding:0 1px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;}
+  .dz{min-height:28px!important;padding:1px 2px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;}
 
-  /* 名字大小：上午最大，其他稍小，格子固定高度均等 */
-  .ci-chip{font-size:10px!important;font-weight:900!important;padding:0!important;border:none!important;background:transparent!important;color:#000!important;width:100%!important;text-align:center!important;display:block!important;line-height:1.2!important;}
-  [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{font-size:13px!important;font-weight:900!important;}
+  /* 名字填滿格子 */
+  .dz{min-height:0!important;height:100%!important;padding:1px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  .ci-chip{font-size:16px!important;font-weight:900!important;padding:0!important;border:none!important;background:transparent!important;color:#000!important;width:100%!important;text-align:center!important;display:block!important;line-height:1.2!important;}
+  [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{font-size:18px!important;font-weight:900!important;}
 
   /* 護理站 */
   .ns-row td{border:1px solid #333!important;}
   .chip{font-size:9px!important;padding:0 3px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
 
-  /* 加班 */
-  .bch{padding:2px 6px!important;font-size:9px!important;font-weight:900!important;color:#fff!important;}
+  /* 加班+借休並排置中 */
+  .bch{padding:3px 6px!important;font-size:10px!important;font-weight:900!important;color:#fff!important;text-align:center!important;}
   .bcb{padding:2px 4px!important;}
   .bc{display:block!important;}
+  /* 加班借休並排 */
+  #page-dispatch > div[style*="flex-direction:column"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-items:start!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
-  .otc{border:1px solid #333!important;padding:16px 3px!important;min-height:50px!important;}
+  .otc{border:1px solid #333!important;padding:4px 2px!important;min-height:50px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;}
   .otc label{display:none!important;}
-  .otc input{font-size:11px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
-  .otc input:last-child{font-size:10px!important;color:#555!important;border-top:0.5px solid #aaa!important;}
+  .otc input{font-size:18px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
+  .otc input:last-child{font-size:11px!important;color:#555!important;border-top:0.5px solid #aaa!important;padding-top:3px!important;}
   /* 借休格子 */
   [id^="bx"]{font-size:11px!important;font-weight:700!important;width:100%!important;display:block!important;text-align:center!important;border:none!important;padding:6px 0!important;}
   [id$="t"]{font-size:10px!important;color:#0e7490!important;border-top:0.5px solid #ddd!important;padding:6px 0!important;}
@@ -363,7 +373,7 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
   <!-- 加班順位（含時間欄） -->
   <div class="bc">
-    <div class="bch amb">加班順位</div>
+    <div class="bch amb" style="text-align:center;font-size:16px;letter-spacing:6px;padding:8px;">加班順位</div>
     <div class="bcb" style="padding:4px 6px;">
       <div id="otg" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
     </div>
@@ -371,52 +381,27 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
   <!-- 借休 -->
   <div class="bc">
-    <div class="bch" style="background:#0e7490;padding:3px 8px;font-size:11px;">借休</div>
+    <div class="bch" style="background:#0e7490;text-align:center;font-size:16px;letter-spacing:6px;padding:8px;">借休</div>
     <div class="bcb" style="padding:4px 6px;">
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx0n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx0t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx1n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx1t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx2n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx2t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx3n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx3t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx4n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx4t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx5n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx5t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx6n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx6t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx7n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx7t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx8n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx8t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
-        <div style="border:1.5px solid #ddd;border-radius:4px;padding:10px 3px;">
-          <input placeholder="姓名" id="bx9n" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:700;text-align:center;background:transparent;display:block;">
-          <input placeholder="" id="bx9t" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:13px;color:#0e7490;text-align:center;background:transparent;display:block;padding:1px;">
-        </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
+        <div style="border:1.5px solid #ddd;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #ddd;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#f0f9ff;display:block;padding:6px 2px;min-height:32px;"></div>
       </div>
     </div>
-  </div><!-- 特殊交班 + 交班事項 -->
+  </div>
+    </div><!-- 特殊交班 + 交班事項 -->
    <div class="write-area" style="display:none;"></div>
    <div class="handover-block" style="flex:1;display:flex;flex-direction:column;">
     <div class="bc" style="flex:1;display:flex;flex-direction:column;">
@@ -880,13 +865,10 @@ function buildTableBody(dayStr){
     if(info.ns) tr.className='ns-row';
 
 
-    tr.innerHTML = `<td class="td-rm${info.ns?' ns-rm':''}">${info.r}</td>`;
-
-
     if(info.ns){
-      tr.innerHTML += `<td class="td-rm" style="font-size:8px;color:#fff;background:#0e7490;text-align:center;font-weight:900;padding:0;width:20px;min-width:20px;">護理站</td>`;
+      tr.innerHTML = `<td class="td-rm" style="font-size:10px;color:#fff;background:#0e7490;text-align:center;font-weight:900;padding:2px 0;vertical-align:middle;writing-mode:vertical-rl;text-orientation:upright;width:32px;min-width:32px;">護理站</td>`;
     } else {
-      tr.innerHTML += `<td class="td-dept"><div class="dam">${info.am||''}</div><div class="dpm">${info.pm||''}</div></td>`;
+      tr.innerHTML += `<td class="td-rm">${info.r}</td><td class="td-dept"><div class="dam">${info.am||''}</div><div class="dpm">${info.pm||''}</div></td>`;
     }
 
     const slots = info.ns
@@ -904,18 +886,18 @@ function buildTableBody(dayStr){
       if(sl.span) td.colSpan = sl.span;
       if(sl.dummy){ td.style.background='#f8f8f8'; tr.appendChild(td); return; }
       if(sl.shifts){
-        td.style.cssText='padding:2px 4px;vertical-align:middle;border-left:2px solid var(--acc);';
+        td.style.cssText='padding:2px 4px;vertical-align:middle;border-left:2px solid var(--acc);overflow:hidden;';
         const makeShiftRow = (lbl, bg, col, list) => {
           if(!list||!list.length) return;
           const row = document.createElement('div');
-          row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:4px;margin-bottom:2px;width:100%;';
+          row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:6px;width:100%;padding:6px 4px;border-bottom:1px solid #ddd;';
           const tag = document.createElement('span');
-          tag.style.cssText=`background:${bg};color:${col};font-size:10px;font-weight:900;padding:1px 4px;border-radius:3px;min-width:28px;text-align:center;flex-shrink:0;`;
+          tag.style.cssText=`background:${bg};color:${col};font-size:18px;font-weight:900;padding:3px 8px;border-radius:3px;min-width:44px;text-align:center;flex-shrink:0;`;
           tag.textContent=lbl;
           row.appendChild(tag);
           list.forEach(s=>{
             const c=document.createElement('span');
-            c.style.cssText='font-size:16px;font-weight:900;color:#000;margin:0 6px;';
+            c.style.cssText='font-size:18px;font-weight:900;color:#000;margin:0 8px;';
             c.textContent=s.name+(s.star?' ★':'');
             row.appendChild(c);
           });
@@ -1181,7 +1163,7 @@ async function cloudSave(){
 
     // 先查是否已有這天的資料
     const check = await fetch(
-      SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate+'&select=id',
+      SB_URL+'/rest/v1/dispatch?data_key=eq.'+currentDate+'&select=id',
       {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}
     );
     const existing = await check.json();
@@ -1189,11 +1171,11 @@ async function cloudSave(){
     if(existing && existing.length > 0){
       // 更新
       await fetch(
-        SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate,
+        SB_URL+'/rest/v1/dispatch?data_key=eq.'+currentDate,
         {
           method:'PATCH',
           headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'},
-          body: JSON.stringify({date_key:currentDate, date:JSON.stringify(data)})
+          body: JSON.stringify({data_key:currentDate, date:JSON.stringify(data)})
         }
       );
     } else {
@@ -1203,7 +1185,7 @@ async function cloudSave(){
         {
           method:'POST',
           headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-          body: JSON.stringify({date_key:currentDate, date:JSON.stringify(data)})
+          body: JSON.stringify({data_key:currentDate, date:JSON.stringify(data)})
         }
       );
     }
@@ -1219,11 +1201,20 @@ async function cloudLoad(){
   btn.textContent='⏳ 載入中...'; btn.disabled=true;
   try{
     const resp = await fetch(
-      SB_URL+'/rest/v1/dispatch?date_key=eq.'+currentDate+'&select=date',
-      {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}
+      SB_URL+'/rest/v1/dispatch?data_key=eq.'+currentDate+'&select=date',
+      {headers:{
+        'apikey':SB_KEY,
+        'Authorization':'Bearer '+SB_KEY,
+        'Content-Type':'application/json'
+      }}
     );
+    if(!resp.ok){
+      const errText = await resp.text();
+      alert('❌ 雲端取失敗：'+resp.status+' '+errText);
+      return;
+    }
     const rows = await resp.json();
-    if(!rows || rows.length===0){ alert('❌ 找不到 '+currentDate+' 的雲端資料'); return; }
+    if(!rows || rows.length===0){ alert('❌ 找不到 '+currentDate+' 的雲端資料\n請先用「☁️ 雲端存」存檔'); return; }
     const data = JSON.parse(rows[0].date);
 
     if(data.state) Object.assign(state, data.state);
@@ -1460,8 +1451,8 @@ function buildOT(shifts){
     div.className='otc'+(val?' pre':'');
     div.innerHTML=`
       <div style="font-size:9px;color:#888;font-weight:700;text-align:left;padding:2px 3px 0;">${i+1}.</div>
-      <input value="${val}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:16px;font-weight:900;background:transparent;color:#000;text-align:center;padding:6px 2px;display:block;">
-      <input placeholder="" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:12px;color:#b45309;text-align:center;background:transparent;padding:4px;display:block;">`;;
+      <input value="${val}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:22px;font-weight:900;background:transparent;color:#000;text-align:center;padding:6px 2px;display:block;">
+      <input placeholder="" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:14px;color:#b45309;text-align:center;background:#fffbea;padding:6px;display:block;">`;;
     g.appendChild(div);
   }
 }
