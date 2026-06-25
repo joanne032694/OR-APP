@@ -159,47 +159,48 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
 
 /* ── PRINT ── */
 @media print{
-  @page{size:210mm 297mm;margin:3mm;}
+  @page{size:210mm 297mm;margin:4mm;}
   html{zoom:0.85;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
   body{background:#fff!important;color:#000!important;margin:0;padding:0;}
   .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
 
-  /* Header */
-  .hdr{position:static;padding:4px 6px;background:#1a56a0!important;justify-content:center!important;}
+  /* ── Header：標題置中，白底黑字，粗框 ── */
+  .hdr{position:static;padding:4px 8px;background:#fff!important;border-bottom:3px solid #000!important;justify-content:center!important;color:#000!important;}
   .hdr-l{justify-content:center!important;width:100%!important;}
-  .hdr h1{font-size:14px;font-weight:900;text-align:center;}
+  .hdr h1{font-size:15px;font-weight:900;color:#000!important;text-align:center;}
   .hdr .sub{display:none!important;}
   .main{padding:1px 3px;}
 
-  /* 日期控台列 */
-  .dbar{padding:3px 5px;margin-bottom:2px;gap:8px;border:1px solid #333!important;}
-  .dinput{font-size:10px;padding:1px 3px;font-weight:700;}
-  .dbadge{font-size:11px;padding:1px 5px;font-weight:900;}
-  #twDate{font-size:12px;font-weight:900;}
-  .ctrl-row{padding:3px 6px;gap:8px;border:1px solid #1a56a0!important;}
-  .ci label{font-size:8px;font-weight:700;}
-  .csel,.star-fixed{font-size:18px!important;padding:3px 6px;min-width:65px;font-weight:900!important;}
+  /* ── 日期控台列 ── */
+  .dbar{padding:3px 5px;margin-bottom:2px;gap:8px;border:2px solid #000!important;background:#fff!important;}
+  .dinput{font-size:11px;padding:1px 3px;font-weight:900;color:#000!important;}
+  .dbadge{font-size:12px;padding:1px 6px;font-weight:900;background:#000!important;color:#fff!important;border-radius:3px;}
+  #twDate{font-size:13px;font-weight:900;color:#000!important;}
+  .ctrl-row{padding:3px 6px;gap:8px;border:2px solid #000!important;background:#eee!important;}
+  .ci label{font-size:9px;font-weight:900;color:#000!important;display:block;margin-bottom:1px;}
+  .csel,.star-fixed{font-size:18px!important;padding:2px 4px;font-weight:900!important;color:#000!important;background:#fff!important;border:1.5px solid #000!important;}
 
-  /* 表格：清楚的粗邊線 */
+  /* ── 表格 ── */
   table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:2px solid #000!important;}
-  tbody td{border:1px solid #333!important;padding:0;vertical-align:middle;}
-  thead th{border:1px solid #333!important;padding:1px 0;font-weight:900;}
-  tbody tr{border-bottom:1px solid #333!important;}
+  tbody td{border:1px solid #555!important;padding:0;vertical-align:middle;}
+  thead th{border:1px solid #000!important;padding:1px 0;font-weight:900;}
+  tbody tr{border-bottom:1px solid #555!important;}
 
-  /* 表頭字大清楚 */
-  .hdr-row2 th{font-size:9px;padding:2px 1px;font-weight:900;}
-  .hdr-row3 th{font-size:8.5px;padding:2px 1px;font-weight:900;}
+  /* 表頭：深灰底白字 */
+  .hdr-row2,.hdr-row2 th,.hdr-row2 td{background:#fff!important;color:#000!important;}
+  .hdr-row2 th{font-size:9px!important;padding:2px 1px!important;font-weight:900!important;border:1px solid #000!important;}
+  .hdr-row3,.hdr-row3 th,.hdr-row3 td{background:#fff!important;color:#000!important;}
+  .hdr-row3 th{font-size:9px!important;padding:2px 1px!important;font-weight:900!important;border:1px solid #000!important;}
+  thead tr{background:#fff!important;}
+  thead th{background:#fff!important;color:#000!important;}
 
-  /* 欄寬固定，格子均等 */
-  .td-rm{width:18px!important;font-size:11px;font-weight:900;text-align:center;border-right:2px solid #000!important;}
+  /* 欄寬 */
+  .td-rm{width:18px!important;font-size:11px;font-weight:900;text-align:center;border-right:2px solid #000!important;color:#000!important;}
   .td-dept{width:13%!important;padding:1px 3px;border-right:2px solid #000!important;}
-
-  /* 科別字：黑字無底色 */
-  .dam{font-size:8.5px!important;color:#000!important;background:transparent!important;font-weight:900;padding:1px 2px;display:block;line-height:1.4;border-bottom:0.5px solid #aaa;}
+  .dam{font-size:8.5px!important;color:#000!important;background:transparent!important;font-weight:900;padding:1px 2px;display:block;line-height:1.4;border-bottom:0.5px solid #999;}
   .dpm{font-size:8.5px!important;color:#000!important;background:transparent!important;font-weight:700;padding:1px 2px;display:block;line-height:1.4;}
 
-  /* 欄寬比例 */
   table colgroup col:nth-child(1){width:18px!important;}
   table colgroup col:nth-child(2){width:13%!important;}
   table colgroup col:nth-child(3){width:14%!important;}
@@ -211,63 +212,63 @@ tbody td{padding:0;border-right:1px solid var(--bdr);vertical-align:middle;}
   table colgroup col:nth-child(9){width:9%!important;}
   table colgroup col:nth-child(10){width:9%!important;}
 
-  /* 上午欄粗邊線區隔 */
   .bl{border-left:2px solid #000!important;}
 
-  /* 人員格 */
+  /* 人員格：名字填滿 */
   .td-p{padding:0!important;}
-  .dz{min-height:28px!important;padding:1px 2px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;}
-
-  /* 名字填滿格子 */
-  .dz{min-height:0!important;height:100%!important;padding:1px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  .dz{min-height:0!important;padding:1px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;}
   .ci-chip{font-size:16px!important;font-weight:900!important;padding:0!important;border:none!important;background:transparent!important;color:#000!important;width:100%!important;text-align:center!important;display:block!important;line-height:1.2!important;}
   [id^="zone-as-"] .ci-chip,[id^="zone-ac-"] .ci-chip{font-size:18px!important;font-weight:900!important;}
 
   /* 護理站 */
-  .ns-row td{border:1px solid #333!important;}
+  .ns-row td{border:1px solid #555!important;}
   .chip{font-size:9px!important;padding:0 3px!important;background:transparent!important;color:#000!important;border:none!important;font-weight:700!important;}
 
-  /* 加班+借休並排置中 */
-  .bch{padding:3px 6px!important;font-size:10px!important;font-weight:900!important;color:#fff!important;text-align:center!important;}
-  .bcb{padding:2px 4px!important;}
-  .bc{display:block!important;}
-  /* 加班借休並排 */
-  #page-dispatch > div[style*="flex-direction:column"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-items:start!important;}
+  /* 12-8 小夜 大夜 橫列：黑白模式 */
+  .ns-row td > div[style*="display:flex"]{border-bottom:1.5px solid #000!important;background:#fff!important;}
+  .ns-row td > div[style*="display:flex"] > span:first-child{background:#000!important;color:#fff!important;border-radius:2px!important;}
+  .ns-row td > div[style*="display:flex"] > span{color:#000!important;}
+
+  /* header → 白底黑字 */
+  .hdr{background:#fff!important;border-bottom:2px solid #000!important;}
+  .hdr h1{color:#000!important;}
+  .tabs{display:none!important;}
+  .dbadge{background:#000!important;color:#fff!important;}
+  .ctrl-row{background:#eee!important;border:2px solid #000!important;}
+  .ns-row{background:#eee!important;}
+
+  /* ── 加班＋借休並排，標題黑底白字 ── */
+  .bch{padding:4px 6px!important;font-size:11px!important;font-weight:900!important;color:#000!important;text-align:center!important;background:#fff!important;letter-spacing:4px;border-bottom:2px solid #000!important;}
+  .bcb{padding:3px 4px!important;}
+  .bc{display:block!important;border:2px solid #000!important;border-radius:0!important;margin-bottom:4px!important;}
+  #page-dispatch > div[style*="flex-direction:column"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;align-items:start!important;}
+
+  /* 加班順位格子 */
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
-  .otc{border:1px solid #333!important;padding:4px 2px!important;min-height:50px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;}
-  .otc label{display:none!important;}
-  .otc input{font-size:18px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;}
-  .otc input:last-child{font-size:11px!important;color:#555!important;border-top:0.5px solid #aaa!important;padding-top:3px!important;}
+  .otc{border:1.5px solid #000!important;padding:4px 2px!important;min-height:52px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:#fff!important;}
+  .otc.pre{background:#f5f5f5!important;}
+  .otc input{font-size:18px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;background:transparent!important;}
+  .otc input:last-child{font-size:11px!important;color:#000!important;border-top:1px solid #999!important;padding-top:2px!important;background:transparent!important;}
+
   /* 借休格子 */
-  [id^="bx"]{font-size:11px!important;font-weight:700!important;width:100%!important;display:block!important;text-align:center!important;border:none!important;padding:6px 0!important;}
-  [id$="t"]{font-size:10px!important;color:#0e7490!important;border-top:0.5px solid #ddd!important;padding:6px 0!important;}
-  .bcb > div > div{min-height:55px!important;}
+  .bc .bcb div[style*="grid-template-columns"]{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
+  .bc .bcb div[style*="grid-template-columns"] > div{border:1.5px solid #000!important;border-radius:0!important;overflow:hidden!important;min-height:52px!important;background:#fff!important;}
+  .bc .bcb div[style*="grid-template-columns"] > div input{font-size:18px!important;font-weight:900!important;color:#000!important;background:transparent!important;border:none!important;text-align:center!important;width:100%!important;display:block!important;padding:4px 2px!important;}
+  .bc .bcb div[style*="grid-template-columns"] > div input:last-child{font-size:11px!important;border-top:1px solid #999!important;background:#fff!important;padding:2px!important;}
 
-  /* 借休：字體加大，格子加寬（4欄） */
-  [id^="bx"]{font-size:11px!important;padding:1px!important;text-align:center!important;width:100%!important;display:block!important;font-weight:700!important;}
-  /* 借休 grid 改4欄讓格子更寬 */
-  .bcb > div[style*="grid-template-columns:repeat(8"]{
-    grid-template-columns:repeat(4,1fr)!important;
-  }
-
-  /* 交班事項：字大、高度填滿 */
+  /* 交班事項 */
   .handover-block{margin-top:3px;}
   #hv-chips{display:none!important;}
   #handover{
-    display:block!important;
-    width:100%!important;
-    height:150mm!important;
-    font-size:13px!important;
-    line-height:2!important;
-    padding:6px!important;
-    border:2px solid #000!important;
-    resize:none!important;
-    font-weight:500!important;
+    display:block!important;width:100%!important;height:120mm!important;
+    font-size:13px!important;line-height:2!important;padding:6px!important;
+    border:2px solid #000!important;resize:none!important;font-weight:500!important;
+    background:#fff!important;color:#000!important;
   }
-  .handover-block .bch{font-size:10px!important;padding:3px 6px!important;}
-}
+  .handover-block .bch{font-size:11px!important;padding:3px 6px!important;}
 
 }
+
 
   #hv-chips{display:none!important;}
 }
@@ -890,9 +891,9 @@ function buildTableBody(dayStr){
         const makeShiftRow = (lbl, bg, col, list) => {
           if(!list||!list.length) return;
           const row = document.createElement('div');
-          row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:6px;width:100%;padding:6px 4px;border-bottom:1px solid #ddd;';
+          row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:6px;width:100%;padding:6px 4px;border-bottom:2px solid #000;background:#fff;';
           const tag = document.createElement('span');
-          tag.style.cssText=`background:${bg};color:${col};font-size:18px;font-weight:900;padding:3px 8px;border-radius:3px;min-width:44px;text-align:center;flex-shrink:0;`;
+          tag.style.cssText='background:#fff;color:#000;font-size:16px;font-weight:900;padding:3px 8px;border-radius:3px;min-width:44px;text-align:center;flex-shrink:0;border:2px solid #000;';
           tag.textContent=lbl;
           row.appendChild(tag);
           list.forEach(s=>{
@@ -1450,9 +1451,8 @@ function buildOT(shifts){
     const val=otList[i]?otList[i].name:'';
     div.className='otc'+(val?' pre':'');
     div.innerHTML=`
-      <div style="font-size:9px;color:#888;font-weight:700;text-align:left;padding:2px 3px 0;">${i+1}.</div>
-      <input value="${val}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:22px;font-weight:900;background:transparent;color:#000;text-align:center;padding:6px 2px;display:block;">
-      <input placeholder="" style="width:100%;border:none;border-top:1px solid #eee;outline:none;font-family:var(--f);font-size:14px;color:#b45309;text-align:center;background:#fffbea;padding:6px;display:block;">`;;
+      <input value="${val?i+1+'. '+val:''}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:900;background:transparent;color:#000;text-align:center;padding:6px 2px;display:block;">
+      <input placeholder="" style="width:100%;border:none;border-top:1px solid #555;outline:none;font-family:var(--f);font-size:13px;color:#000;text-align:center;background:#fff;padding:5px;display:block;">`;;
     g.appendChild(div);
   }
 }
