@@ -180,7 +180,10 @@ tbody td{padding:0;border-right:1px solid #000;vertical-align:middle;}
   #twDate{font-size:20px!important;font-weight:900;color:#000!important;}
   .ctrl-row{padding:3px 6px;gap:8px;border:1.5px solid #2471c8!important;background:#e8f0fa!important;}
   .ci label{font-size:9px;font-weight:900;color:#1a56a0!important;display:block;margin-bottom:1px;}
-  .csel,.star-fixed{font-size:18px!important;padding:2px 4px;font-weight:900!important;background:#fff!important;border:1px solid #bbb!important;}
+  .csel{display:none!important;}
+  #ctrl-d-print{display:block!important;font-size:16px!important;font-weight:900!important;color:#000!important;text-align:center!important;}
+  .star-fixed{font-size:16px!important;padding:2px 4px;font-weight:900!important;background:transparent!important;border:none!important;color:#000!important;}
+  .ci label{font-size:9px!important;font-weight:900!important;color:#000!important;display:block!important;}
 
   /* 表格 */
   table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;border:2px solid #000!important;}
@@ -300,7 +303,8 @@ tbody td{padding:0;border-right:1px solid #000;vertical-align:middle;}
   </div>
   <div class="ctrl-row" id="ctrlRow" style="flex:2;justify-content:flex-end;">
     <div class="ci"><label>白班控台 D</label>
-      <select class="csel" id="ctrl-d" onchange="renderChips()"><option value="">—</option></select>
+      <select class="csel" id="ctrl-d" onchange="renderChips();document.getElementById('ctrl-d-print').textContent=this.options[this.selectedIndex].text;"><option value="">—</option></select>
+      <span id="ctrl-d-print" style="display:none;font-size:16px;font-weight:900;text-align:center;"></span>
     </div>
     <div class="ci"><label>★E 小夜控台</label>
       <div class="star-fixed" id="ctrl-e-disp">—</div>
@@ -1417,6 +1421,7 @@ function buildCtrl(shifts){
   // 預設李佳容，若沒出勤則預設第一位
   if(ctrlCandidates.includes('李佳容')) ctrlD.value='李佳容';
   else if(ctrlCandidates.length) ctrlD.value=ctrlCandidates[0];
+  const printSpan=document.getElementById('ctrl-d-print'); if(printSpan) printSpan.textContent=ctrlD.options[ctrlD.selectedIndex]?.text||'';
 
   // ★E 小夜控台：從班表★自動判斷
   const eStars = shifts.E.filter(s=>s.star);
