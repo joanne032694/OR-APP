@@ -545,7 +545,8 @@ const STAFF_INFO = {
   '蕭睬容':   {title:'護理師', ctrl:'白班', skill:'骨科刷手訓練中', train:'骨科刷'},
   '盧貞君':   {title:'護理師', ctrl:'白班', skill:'護理站專屬'},
   '朱庭宜':   {title:'護理師', ctrl:'白班', skill:'一外刷手訓練中', train:'一外刷'},
-  '鄧邦偉':   {title:'護理師', ctrl:'白班', skill:''},
+  '鄧邦偉':   {title:'護理師', ctrl:'白班', skill:'', hidden:true},
+  '王婷婷':   {title:'副護理長', ctrl:'白班', skill:'流動刷手 控台'},
   '陳柏宇':   {title:'護理師', ctrl:'白班', skill:'達文西'},
   '徐禾沐':   {title:'護理師', ctrl:'小夜', skill:''},
   '黃品喆':   {title:'護理師', ctrl:'小夜', skill:''},
@@ -757,7 +758,7 @@ function getTodayShifts(day){
   const result = {D:[],E:[],N:[],S128:[]};
   const dayKey = String(day);
   for(const [name, sched] of Object.entries(CURRENT_SCHEDULE)){
-    if(name==='蕭帆妤'||name==='王婷婷') continue;
+    if(name==='蕭帆妤'||name==='鄧邦偉') continue;
     const raw = sched[dayKey]||'';
     const s = parseShift(raw);
     if(!s) continue;
@@ -1464,7 +1465,7 @@ function getUsedFromAll(){
 // ══════════════════════════════════════════
 function buildCtrl(shifts){
   // 白班控台：固定名單，今日有出勤才出現
-  const CTRL_D_LIST = ['羅秀如','李靜怡','林奕辰','程郁淳','楊衣甄','李佳容','洪怡婷','陳玉茹','黃怡婷','汪瑄柔','卓湘晴'];
+  const CTRL_D_LIST = ['羅秀如','李靜怡','林奕辰','程郁淳','楊衣甄','李佳容','洪怡婷','陳玉茹','黃怡婷','汪瑄柔','卓湘晴','陳金燕','謝佩芳','張佩琪','黃淑嬅','林昕澄','周芳怡','李宜鵑'];
   const ctrlD = document.getElementById('ctrl-d');
   const dNames = shifts.D.map(s=>s.name);
   const ctrlCandidates = CTRL_D_LIST.filter(n => dNames.includes(n) && !todayExclude.includes(n));
