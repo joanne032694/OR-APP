@@ -771,7 +771,7 @@ function autoAssign(shifts, dayStr){
       scrub = findTrain(dNames,'一外刷', state) || findOne(dNames,['余宗芸','朱庭宜'], state) || findAny(dNames, state);
     } else if(am.includes('婦產')){
       circ  = findOne(dNames,['楊衣甄','程郁淳'], state);
-      scrub = findAny(dNames, state);
+      scrub = findScrub(dNames, state);
     } else if(am.includes('神外')){
       circ  = findOne(dNames,['程郁淳','羅秀如'], state);
       scrub = findTrain(dNames,'神外刷', state) || findOne(dNames,['陳筠心'], state) || findAny(dNames, state);
@@ -780,7 +780,7 @@ function autoAssign(shifts, dayStr){
       scrub = findTrain(dNames,'骨科刷', state) || findOne(dNames,['蕭睬容'], state) || findAny(dNames, state);
     } else if(am.includes('泌尿')){
       circ  = findOne(dNames,['郭妍伶','林靜子','黃沂晨','江嘉琪','劉祐呈'], state);
-      scrub = findAny(dNames, state);
+      scrub = findScrub(dNames, state);
     } else if(am.includes('ENT')||am.includes('耳鼻')){
       circ  = findOne(dNames,['謝佩芳','林昕澄'], state);
       scrub = findTrain(dNames,'ENT刷', state) || findOne(dNames,['張芸甄'], state) || findAny(dNames, state);
@@ -792,13 +792,13 @@ function autoAssign(shifts, dayStr){
       scrub = findTrain(dNames,'口外刷', state) || findOne(dNames,['簡晏欣'], state) || findAny(dNames, state);
     } else if(am.includes('達文西')){
       circ  = findOne(dNames,['高靖緹','周芳怡','辜嬿潔','黃玉秀','吳婉菁'], state);
-      scrub = findAny(dNames, state);
+      scrub = findScrub(dNames, state);
     } else if(am.includes('局麻')){
       circ  = findOne(dNames,['簡晏欣','余宗芸'], state);
-      scrub = findAny(dNames, state);
+      scrub = findScrub(dNames, state);
     } else {
-      scrub = findAny(dNames, state);
-      circ  = findAny(dNames, state);
+      circ  = findCirc(dNames, state);
+      scrub = findScrub(dNames, state);
     }
 
     if(scrub) state[`as-${row.r}`] = [scrub];
@@ -827,6 +827,36 @@ function findAny(pool, st){
     if(!used.has(n) && n!=='盧貞君') return n;
   }
   return '';
+}
+// 優先找會流動的人排流動
+function findCirc(pool, st){
+  const used = getUsedSet(st);
+  // 先找有「流動」技能的
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君') continue;
+    const skill = (STAFF_INFO[n]?.skill||'');
+    if(skill.includes('流動')) return n;
+  }
+  // 找不到就找任何人
+  return findAny(pool, st);
+}
+// 優先找只會刷手(沒有流動)的人排刷手
+function findScrub(pool, st){
+  const used = getUsedSet(st);
+  // 先找只有刷手沒有流動的
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君') continue;
+    const skill = (STAFF_INFO[n]?.skill||'');
+    if(skill.includes('刷手') && !skill.includes('流動')) return n;
+  }
+  // 找不到就找有刷手的
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君') continue;
+    const skill = (STAFF_INFO[n]?.skill||'');
+    if(skill.includes('刷手')) return n;
+  }
+  // 還找不到就任何人
+  return findAny(pool, st);
 }
 function getUsedSet(st){
   const s = new Set();
