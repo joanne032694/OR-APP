@@ -13,7 +13,7 @@
   --acc:#1a56a0;--acc2:#2471c8;--acd:#e8f0fa;
   --grn:#0f7b4a;--amb:#b45309;--amd:#fef3cd;
   --red:#c0392b;--pur:#6b21a8;
-  --bg:#f0f4f8;--sur:#fff;--bdr:#d1dbe6;
+  --bg:#f0f4f8;--sur:#fff;--bdr:#000;
   --t1:#1a2332;--t2:#4a5568;--t3:#8a9ab0;
   --f:"Noto Sans TC",sans-serif;
 }
@@ -85,7 +85,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;
 
 /* ── TABLE ── */
 .tw{overflow-x:auto;margin-bottom:8px;}
-table{width:100%;border-collapse:collapse;background:var(--sur);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);font-size:11.5px;}
+table{width:100%;border-collapse:collapse;background:var(--sur);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);font-size:11.5px;border:2px solid #000;}
 
 /* 抬頭 Row1: 控台 */
 .hdr-row1{background:#0f3778;}
@@ -95,15 +95,15 @@ table{width:100%;border-collapse:collapse;background:var(--sur);border-radius:8p
 
 /* 抬頭 Row2: 欄位名稱 */
 .hdr-row2{background:var(--acc);}
-.hdr-row2 th{color:#fff;padding:5px 4px;text-align:center;font-size:11px;font-weight:700;border-right:1px solid rgba(255,255,255,.15);}
+.hdr-row2 th{color:#fff;padding:5px 4px;text-align:center;font-size:11px;font-weight:700;border-right:1px solid #000;}
 /* 抬頭 Row3: 刷手/流動 */
 .hdr-row3{background:#dbeafe;}
-.hdr-row3 th{color:#1e3a8a;padding:3px 3px;text-align:center;font-size:12px;font-weight:900;border-right:1px solid #93c5fd;}
+.hdr-row3 th{color:#1e3a8a;padding:3px 3px;text-align:center;font-size:12px;font-weight:900;border-right:1px solid #000;}
 
-tbody tr{border-bottom:1.5px solid #000;}
+tbody tr{border-bottom:1.5px solid #000!important;}
 tbody tr:hover{background:#f5f8ff;}
 tbody tr.ns-row{background:#f0fdf4;}
-tbody td{padding:0;border-right:1px solid #000;vertical-align:middle;}
+tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
 .td-rm{text-align:center;font-weight:900;font-size:14px;color:#000;width:36px;min-width:36px;border-right:3px solid #000;}
 .td-rm.ns-rm{color:var(--grn);}
 .td-dept{padding:1px 3px;min-width:55px;max-width:68px;}
@@ -166,7 +166,8 @@ tbody td{padding:0;border-right:1px solid #000;vertical-align:middle;}
   html{zoom:0.85;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important;}
   body{background:#fff!important;margin:0;padding:0;}
-  .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl{display:none!important;}
+  .tabs,.hdr-r,.cpanel,.btn,.special-note,.dbar-ctrl,.month-btn,#mbtn6,#mbtn7{display:none!important;}
+  div[style*="display:flex;gap:4px;margin-right:4px"]{display:none!important;}
 
   /* Header：標題置中 */
   .hdr{position:static;padding:4px 8px;background:#1a56a0!important;justify-content:center!important;}
@@ -644,9 +645,17 @@ const ROOM_TMPL = {
   },
   '星期六':{
     rooms:[
+      {r:'1', am:'眼科', pm:'眼科'},
+      {r:'2', am:'', pm:''},
       {r:'3', am:'G1', pm:'G1'},
       {r:'5', am:'G1', pm:'G1'},
       {r:'6', am:'急診危急房', pm:'急診危急房'},
+      {r:'7', am:'', pm:''},
+      {r:'8', am:'', pm:''},
+      {r:'9', am:'', pm:''},
+      {r:'11', am:'', pm:''},
+      {r:'12', am:'局麻房', pm:'局麻房'},
+      {r:'13', am:'', pm:''},
     ]
   }
 };
