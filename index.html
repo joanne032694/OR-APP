@@ -888,7 +888,10 @@ function getUsedFromAll(){
 }
 
 function buildCtrl(shifts){
-  const CTRL_D_LIST=['羅秀如','李靜怡','林奕辰','程郁淳','楊衣甄','李佳容','洪怡婷','陳玉茹','黃怡婷','汪瑄柔','卓湘晴','陳金燕','謝佩芳','張佩琪','黃淑嬅','林昕澄','周芳怡','李宜鵑'];
+  // 動態從 STAFF_INFO 讀取有「控台」技能且班型為白班的人員
+  const CTRL_D_LIST = Object.entries(STAFF_INFO)
+    .filter(([,info]) => (info.skill||'').includes('控台') && info.ctrl==='白班')
+    .map(([name]) => name);
   const ctrlD=document.getElementById('ctrl-d'),dNames=shifts.D.map(s=>s.name);
   const cands=CTRL_D_LIST.filter(n=>dNames.includes(n)&&!todayExclude.includes(n));
   ctrlD.innerHTML='<option value="">— 選擇 —</option>';
