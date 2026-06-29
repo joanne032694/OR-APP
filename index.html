@@ -678,30 +678,115 @@ function getTodayShifts(day){
 function autoAssign(shifts,dayStr){
   state['as-護理站']=['盧貞君'];
   const dNames=shifts.D.map(s=>s.name).filter(n=>!todayExclude.includes(n)&&n!=='盧貞君');
+
+  // 各科組長 lead 對照表（優先排到對應科流動）
+  const LEAD_MAP = {
+    '眼科':    ['王嘉羚','張佩琪'],
+    '一外':    ['李靜怡','張瑋恩'],
+    '神外':    ['程郁淳','羅秀如'],
+    '婦產':    ['楊衣甄'],
+    '骨科':    ['黃淑嬅'],
+    '泌尿':    ['郭妍伶','林靜子'],
+    'ENT':     ['謝佩芳','林昕澄','洪怡婷'],
+    '口外':    ['林昕澄','謝佩芳'],
+    '心外':    ['陳玉茹','黃怡婷','汪瑄柔'],
+  };
+
   currentRooms.forEach(row=>{
     if(row.r==='護理站') return;
-    const am=row.am||''; let scrub='',circ='';
-    if(am.includes('眼科')){circ=findOne(dNames,['王嘉羚','張佩琪'],state);scrub=findTrain(dNames,'眼科',state)||findAny(dNames,state);}
-    else if(am.includes('直外')||am.includes('一外')||am.includes('胸外')){circ=findOne(dNames,['李靜怡','張瑋恩'],state);scrub=findTrain(dNames,'一外刷',state)||findOne(dNames,['余宗芸','朱庭宜'],state)||findAny(dNames,state);}
-    else if(am.includes('婦產')){circ=findOne(dNames,['楊衣甄','程郁淳'],state);scrub=findScrub(dNames,state);}
-    else if(am.includes('神外')){circ=findOne(dNames,['程郁淳','羅秀如'],state);scrub=findTrain(dNames,'神外刷',state)||findOne(dNames,['陳筠心'],state)||findAny(dNames,state);}
-    else if(am.includes('骨科')){circ=findOne(dNames,['黃淑嬅','鄒昀珊'],state);scrub=findTrain(dNames,'骨科刷',state)||findOne(dNames,['蕭睬容'],state)||findAny(dNames,state);}
-    else if(am.includes('泌尿')){circ=findOne(dNames,['郭妍伶','林靜子','黃沂晨','江嘉琪','劉祐呈'],state);scrub=findScrub(dNames,state);}
-    else if(am.includes('ENT')||am.includes('耳鼻')){circ=findOne(dNames,['謝佩芳','林昕澄'],state);scrub=findTrain(dNames,'ENT刷',state)||findOne(dNames,['張芸甄'],state)||findAny(dNames,state);}
-    else if(am.includes('心外')){circ=findOne(dNames,['陳玉茹','黃怡婷','汪瑄柔'],state);scrub=findOne(dNames,['陳玥汝','吳婉菁'],state)||findAny(dNames,state);}
-    else if(am.includes('口外')){circ=findOne(dNames,['林昕澄','謝佩芳'],state);scrub=findTrain(dNames,'口外刷',state)||findOne(dNames,['簡晏欣'],state)||findAny(dNames,state);}
-    else if(am.includes('達文西')){circ=findOne(dNames,['高靖緹','周芳怡','辜嬿潔','黃玉秀','吳婉菁'],state);scrub=findScrub(dNames,state);}
-    else if(am.includes('局麻')){circ=findOne(dNames,['簡晏欣','余宗芸'],state);scrub=findScrub(dNames,state);}
-    else{circ=findCirc(dNames,state);scrub=findScrub(dNames,state);}
-    if(scrub) state[`as-${row.r}`]=[scrub];
-    if(circ&&circ!==scrub) state[`ac-${row.r}`]=[circ];
+    const am=row.am||'';
+    let scrub='', circ='';
+
+    // 1. 決定流動（circ）：先找各科組長，再找一般流動人員
+    if(am.includes('眼科'))        circ=findLeads(dNames,LEAD_MAP['眼科'],state);
+    else if(am.includes('直外')||am.includes('一外')||am.includes('胸外'))
+                                   circ=findLeads(dNames,LEAD_MAP['一外'],state);
+    else if(am.includes('婦產'))   circ=findLeads(dNames,LEAD_MAP['婦產'],state);
+    else if(am.includes('神外'))   circ=findLeads(dNames,LEAD_MAP['神外'],state);
+    else if(am.includes('骨科'))   circ=findLeads(dNames,LEAD_MAP['骨科'],state);
+    else if(am.includes('泌尿'))   circ=findLeads(dNames,LEAD_MAP['泌尿'],state);
+    else if(am.includes('ENT')||am.includes('耳鼻'))
+                                   circ=findLeads(dNames,LEAD_MAP['ENT'],state);
+    else if(am.includes('口外'))   circ=findLeads(dNames,LEAD_MAP['口外'],state);
+    else if(am.includes('心外'))   circ=findLeads(dNames,LEAD_MAP['心外'],state);
+    else if(am.includes('達文西')) circ=findLeads(dNames,['高靖緹','周芳怡','辜嬿潔','黃玉秀','吳婉菁'],state);
+    else if(am.includes('局麻'))   circ=findCirc(dNames,state);
+    else                           circ=findCirc(dNames,state);
+
+    // 2. 決定刷手（scrub）：
+    //    訓練中→排刷手；只會刷手→排刷手；可刷可流→優先排流動（此格排剩餘刷手）
+    const usedAfterCirc = getUsedSet(state);
+    if(am.includes('眼科'))
+      scrub=findTrain(dNames,'眼科',state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('直外')||am.includes('一外')||am.includes('胸外'))
+      scrub=findTrain(dNames,'一外刷',state)||findLeads(dNames,['余宗芸','朱庭宜'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('婦產'))
+      scrub=findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('神外'))
+      scrub=findTrain(dNames,'神外刷',state)||findLeads(dNames,['陳筠心'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('骨科'))
+      scrub=findTrain(dNames,'骨科刷',state)||findLeads(dNames,['蕭睬容'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('泌尿'))
+      scrub=findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('ENT')||am.includes('耳鼻'))
+      scrub=findTrain(dNames,'ENT刷',state)||findLeads(dNames,['張芸甄'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('心外'))
+      scrub=findLeads(dNames,['陳玥汝','吳婉菁'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else if(am.includes('口外'))
+      scrub=findTrain(dNames,'口外刷',state)||findLeads(dNames,['簡晏欣'],state)||findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+    else
+      scrub=findScrubOnly(dNames,state)||findCanScrub(dNames,state);
+
+    if(scrub&&scrub!==circ) state[`as-${row.r}`]=[scrub];
+    if(circ&&circ!==scrub)  state[`ac-${row.r}`]=[circ];
   });
 }
-function findOne(pool,candidates,st){const used=getUsedSet(st);for(const c of candidates){if(pool.includes(c)&&!used.has(c))return c;}return '';}
-function findTrain(pool,trainKey,st){const used=getUsedSet(st);for(const n of pool){const info=STAFF_INFO[n];if(info&&info.train&&info.train.includes(trainKey)&&!used.has(n))return n;}return '';}
+
+// 從候選名單找出今天在班且未排的人（組長/指定人員用）
+function findLeads(pool,candidates,st){
+  const used=getUsedSet(st);
+  for(const c of candidates){if(pool.includes(c)&&!used.has(c))return c;}
+  return '';
+}
+// 找訓練中的人→排刷手
+function findTrain(pool,trainKey,st){
+  const used=getUsedSet(st);
+  for(const n of pool){const info=STAFF_INFO[n];if(info&&info.train&&info.train.includes(trainKey)&&!used.has(n))return n;}
+  return '';
+}
+// 只會刷手（無流動）→優先排刷手位
+function findScrubOnly(pool,st){
+  const used=getUsedSet(st);
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君')continue;
+    const sk=STAFF_INFO[n]?.skill||'';
+    if(sk.includes('刷手')&&!sk.includes('流動')&&!sk.includes('組長'))return n;
+  }
+  return '';
+}
+// 可刷可流→拿來排刷手（已把流動優先排到circ）
+function findCanScrub(pool,st){
+  const used=getUsedSet(st);
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君')continue;
+    if((STAFF_INFO[n]?.skill||'').includes('刷手'))return n;
+  }
+  return '';
+}
+// 找流動人員（非科別指定）
+function findCirc(pool,st){
+  const used=getUsedSet(st);
+  // 優先：有流動技能
+  for(const n of pool){
+    if(used.has(n)||n==='盧貞君')continue;
+    const sk=STAFF_INFO[n]?.skill||'';
+    if(sk.includes('流動'))return n;
+  }
+  // 次選：任何人
+  for(const n of pool){if(!used.has(n)&&n!=='盧貞君')return n;}
+  return '';
+}
 function findAny(pool,st){const used=getUsedSet(st);for(const n of pool){if(!used.has(n)&&n!=='盧貞君')return n;}return '';}
-function findCirc(pool,st){const used=getUsedSet(st);for(const n of pool){if(used.has(n)||n==='盧貞君')continue;if((STAFF_INFO[n]?.skill||'').includes('流動'))return n;}return findAny(pool,st);}
-function findScrub(pool,st){const used=getUsedSet(st);for(const n of pool){if(used.has(n)||n==='盧貞君')continue;const s=(STAFF_INFO[n]?.skill||'');if(s.includes('刷手')&&!s.includes('流動'))return n;}for(const n of pool){if(used.has(n)||n==='盧貞君')continue;if((STAFF_INFO[n]?.skill||'').includes('刷手'))return n;}return findAny(pool,st);}
 function getUsedSet(st){const s=new Set();Object.values(st).forEach(v=>{if(Array.isArray(v))v.forEach(n=>{if(n)s.add(n);});else if(v)s.add(v);});return s;}
 
 function buildTableBody(dayStr){
