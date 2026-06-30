@@ -200,7 +200,7 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
   #otg .otc,#otg .otc.pre,#otg .otc *{background:#fff!important;background-color:#fff!important;}
   .otc input{font-size:18px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;background:transparent!important;}
   .otc input:last-child{font-size:11px!important;color:#000!important;border-top:1px solid #000!important;padding-top:2px!important;background:transparent!important;}
-  #bxGrid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
+  #bxGrid{display:grid!important;grid-template-columns:repeat(9,1fr)!important;gap:2px!important;}
   #bxGrid > div{border:1px solid #000!important;border-radius:0!important;overflow:hidden!important;min-height:52px!important;}
   #bxGrid input{font-size:18px!important;font-weight:900!important;color:#000!important;background:transparent!important;border:none!important;text-align:center!important;width:100%!important;display:block!important;padding:4px 2px!important;}
   #bxGrid input:last-child{font-size:11px!important;border-top:1px solid #000!important;background:#fff!important;padding:2px!important;}
@@ -310,7 +310,7 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
   <div class="bc">
     <div class="bch" style="background:#0e7490;">借休</div>
     <div class="bcb">
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;" id="bxGrid"></div>
+      <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:3px;" id="bxGrid"></div>
     </div>
   </div>
 </div>
@@ -522,12 +522,12 @@ function buildTableBody(dayStr){
       const td=document.createElement('td');td.className='td-p'+(sl.cls?' '+sl.cls:'');
       if(sl.span)td.colSpan=sl.span;
       if(sl.shifts){
-        td.style.cssText='padding:2px 4px;vertical-align:middle;border-left:2px solid var(--acc);overflow:hidden;';
+        td.style.cssText='padding:1px 4px;vertical-align:middle;border-left:2px solid var(--acc);overflow:hidden;';
         [[todayShifts.S128,'12-8'],[todayShifts.E,'小夜'],[todayShifts.N,'大夜']].forEach(([list,lbl])=>{
           if(!list||!list.length)return;
-          const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:6px;width:100%;padding:6px 4px;border-bottom:2px solid #000;background:#fff;';
-          const tag=document.createElement('span');tag.style.cssText='background:#fff;color:#000;font-size:16px;font-weight:900;padding:3px 8px;border-radius:3px;min-width:44px;text-align:center;flex-shrink:0;border:2px solid #000;';tag.textContent=lbl;row.appendChild(tag);
-          list.forEach(s=>{const c=document.createElement('span');c.style.cssText='font-size:18px;font-weight:900;color:#000;margin:0 8px;cursor:pointer;';c.textContent=s.name+(s.star?' ★':'');c.onclick=()=>openTrainModal(s.name);row.appendChild(c);});
+          const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:4px;width:100%;padding:3px 4px;border-bottom:1px solid #000;background:#fff;';
+          const tag=document.createElement('span');tag.style.cssText='background:#fff;color:#000;font-size:12px;font-weight:900;padding:1px 6px;border-radius:3px;min-width:36px;text-align:center;flex-shrink:0;border:1.5px solid #000;';tag.textContent=lbl;row.appendChild(tag);
+          list.forEach(s=>{const c=document.createElement('span');c.style.cssText='font-size:13px;font-weight:900;color:#000;margin:0 5px;cursor:pointer;';c.textContent=s.name+(s.star?' ★':'');c.onclick=()=>openTrainModal(s.name);row.appendChild(c);});
           td.appendChild(row);
         });tr.appendChild(td);return;
       }
@@ -626,7 +626,7 @@ function buildOT(shifts){
 }
 function buildBxGrid(){
   const g=document.getElementById('bxGrid');g.innerHTML='';
-  for(let i=0;i<7;i++){g.innerHTML+='<div style="border:1.5px solid #000;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;" oninput="saveData()"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #000;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#fff;display:block;padding:6px 2px;min-height:32px;" oninput="saveData()"></div>';}
+  for(let i=0;i<9;i++){g.innerHTML+='<div style="border:1.5px solid #000;border-radius:4px;overflow:hidden;"><input placeholder="" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:700;text-align:center;background:transparent;display:block;padding:8px 2px;min-height:40px;" oninput="saveData()"><input placeholder="" style="width:100%;border:none;border-top:1.5px solid #000;outline:none;font-family:var(--f);font-size:13px;text-align:center;background:#fff;display:block;padding:6px 2px;min-height:32px;" oninput="saveData()"></div>';}
 }
 function dropToHandover(e){e.preventDefault();const hvc=document.getElementById('hv-chips');hvc.style.borderColor='transparent';hvc.style.background='transparent';if(!dragName)return;if(dragFrom&&dragFrom!=='panel'){if(dragFrom==='handover')hvNames=hvNames.filter(n=>n!==dragName);else{state[dragFrom]=(state[dragFrom]||[]).filter(n=>n!==dragName);}}if(!hvNames.includes(dragName))hvNames.push(dragName);dragName=null;dragFrom=null;renderHandover();renderAll();}
 function renderHandover(){const hvc=document.getElementById('hv-chips');hvc.innerHTML='';hvNames.forEach(name=>{const chip=document.createElement('span');chip.className='ci-chip';chip.textContent=name;chip.draggable=true;chip.style.cursor='grab';chip.addEventListener('dragstart',e=>{dragName=name;dragFrom='handover';e.dataTransfer.effectAllowed='move';e.stopPropagation();});chip.addEventListener('dblclick',()=>{hvNames=hvNames.filter(n=>n!==name);renderHandover();renderChips();});hvc.appendChild(chip);});}
