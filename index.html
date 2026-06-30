@@ -130,6 +130,8 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
 @media print{
   /* 強制所有框線黑色（保險規則，放最前面確保優先生效）*/
   *{border-color:#000!important;}
+  /* 但拖放區的虛線本來就該是透明，強制移除 */
+  .dz{border-style:none!important;border-color:transparent!important;border-width:0!important;}
 
   @page{size:A4 portrait;margin:4mm;}
   html{zoom:0.85;}
@@ -193,13 +195,13 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
   .handover-block{display:block!important;}
   .otg{grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
   .otc{border:1px solid #000!important;padding:4px 2px!important;min-height:52px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:#fff!important;}
-  .otc.pre{background:#fffbea!important;border:1px solid #000!important;}
+  .otc.pre{background:#fff!important;border:1px solid #000!important;}
   .otc input{font-size:18px!important;color:#000!important;font-weight:900!important;border:none!important;padding:0!important;text-align:center!important;width:100%!important;display:block!important;background:transparent!important;}
   .otc input:last-child{font-size:11px!important;color:#000!important;border-top:1px solid #000!important;padding-top:2px!important;background:transparent!important;}
   #bxGrid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:2px!important;}
   #bxGrid > div{border:1px solid #000!important;border-radius:0!important;overflow:hidden!important;min-height:52px!important;}
   #bxGrid input{font-size:18px!important;font-weight:900!important;color:#000!important;background:transparent!important;border:none!important;text-align:center!important;width:100%!important;display:block!important;padding:4px 2px!important;}
-  #bxGrid input:last-child{font-size:11px!important;border-top:1px solid #000!important;background:#f0f9ff!important;padding:2px!important;}
+  #bxGrid input:last-child{font-size:11px!important;border-top:1px solid #000!important;background:#fff!important;padding:2px!important;}
   .handover-block{margin-top:3px;}
   #hv-chips{display:none!important;}
   #handover{display:block!important;width:100%!important;height:120mm!important;font-size:24px!important;line-height:1.9!important;padding:10px!important;border:2px solid #000!important;resize:none!important;font-weight:700!important;}
@@ -213,18 +215,16 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
 <div id="trainModal">
   <div class="modal-card">
     <div class="modal-hdr">
-      <div><h2 id="m-name">—</h2><div class="msub" id="m-sub">員編 — ｜ 年資 —</div></div>
+      <div><h2 id="m-name">—</h2><div class="msub" id="m-sub">員編 —</div></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="stat-row">
-        <div class="stat-box blue"><div class="stat-val blue" id="m-indep">—</div><div class="stat-lbl">可獨立項目</div></div>
-        <div class="stat-box amber"><div class="stat-val amber" id="m-sen">—</div><div class="stat-lbl">年資</div></div>
-        <div class="stat-box purple"><div class="stat-val purple" id="m-emp">—</div><div class="stat-lbl">員編</div></div>
+      <div class="sec-title" style="font-size:14px;margin-bottom:10px;">📌 技能標籤</div>
+      <div id="m-skills" style="line-height:2.4;margin-bottom:16px;font-size:14px;"></div>
+      <div class="stat-row" style="grid-template-columns:1fr;">
+        <div class="stat-box blue"><div class="stat-val blue" id="m-indep">—</div><div class="stat-lbl">可獨立項目（or-db）</div></div>
       </div>
-      <div id="m-badge" style="margin-bottom:12px;"></div>
-      <div class="sec-title">📌 技能標籤</div>
-      <div id="m-skills" style="line-height:2.2;"></div>
+      <div id="m-badge" style="margin-top:10px;"></div>
     </div>
   </div>
 </div>
@@ -336,7 +336,7 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
         <button class="btn" style="background:#b45309;color:#fff" onclick="resetStaffData()">↺ 還原預設</button>
       </div>
     </div>
-    <div id="staffTable"></div>
+    <div id="staffTable" style="overflow-x:auto;"></div>
   </div>
 </div>
 
@@ -390,10 +390,8 @@ const OR_DB={
 function openTrainModal(name){
   const d=OR_DB[name],si=STAFF_INFO[name]||{};
   document.getElementById('m-name').textContent=name;
-  document.getElementById('m-sub').textContent=d?`員編 ${d.empId} ｜ 年資 ${d.sen}`:'（無訓練資料）';
+  document.getElementById('m-sub').textContent=d?`員編 ${d.empId}`:'（無 or-db 訓練資料）';
   document.getElementById('m-indep').textContent=d?d.indep:'—';
-  document.getElementById('m-sen').textContent=d?d.sen:'—';
-  document.getElementById('m-emp').textContent=d?d.empId:'—';
   const ok=d&&d.indep>0;
   const pct=d?Math.min(100,Math.round(d.indep/20*100)):0;
   document.getElementById('m-badge').innerHTML=d?`
@@ -406,10 +404,9 @@ function openTrainModal(name){
     <div style="font-size:10px;color:#6b7280;margin-top:2px;">${pct}% 訓練進度</div>`
     :'<div style="color:#9ca3af;font-size:12px;">無訓練資料</div>';
   const skills=(si.skill||'').split(/\s+/).filter(Boolean);
-  document.getElementById('m-skills').innerHTML=
-    skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')+
-    (si.train?`<span class="skill-tag train">🔄 ${si.train} 訓練中</span>`:'')
-    ||'<span style="color:#9ca3af;font-size:12px;">無技能標籤</span>';
+  let skillHtml=skills.map(s=>`<span class="skill-tag">${s}</span>`).join('');
+  if(si.train) skillHtml+=`<span class="skill-tag train">🔄 ${si.train} 訓練中</span>`;
+  document.getElementById('m-skills').innerHTML=skillHtml||'<span style="color:#9ca3af;font-size:13px;">無技能標籤</span>';
   document.getElementById('trainModal').classList.add('open');
 }
 function closeModal(){document.getElementById('trainModal').classList.remove('open');}
@@ -655,14 +652,14 @@ function printToPDF(){
 
 function buildStaffPage(){
   const div=document.getElementById('staffTable');
-  let h='<table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#1a56a0;color:#fff;"><th style="padding:6px 8px;">姓名</th><th>班型</th><th>技能說明</th><th>訓練中</th><th>控台</th><th style="text-align:center;">or-db</th><th style="width:40px;">刪除</th></tr></thead><tbody>';
+  let h='<table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#1a56a0;color:#fff;"><th style="padding:6px 8px;min-width:70px;">姓名</th><th style="min-width:60px;">班型</th><th style="min-width:220px;">技能說明</th><th style="min-width:90px;">訓練中</th><th style="min-width:50px;">控台</th><th style="text-align:center;min-width:70px;">or-db</th><th style="width:40px;">刪除</th></tr></thead><tbody>';
   Object.entries(STAFF_INFO).forEach(([name,info])=>{
     const db=OR_DB[name];const isCtrl=(info.skill||'').includes('控台');
     h+='<tr style="border-bottom:1px solid #e0e7ef;">'
       +'<td style="padding:3px 4px;"><span class="name-btn" onclick="openTrainModal(\''+name+'\')">'+name+'</span></td>'
       +'<td style="padding:3px 4px;text-align:center;"><select style="font-size:11px;border:1px solid #ddd;border-radius:3px;padding:2px;" onchange="updateStaff(\''+name+'\',\'ctrl\',this.value)"><option value="白班"'+(info.ctrl==='白班'?' selected':'')+'>白班</option><option value="小夜"'+(info.ctrl==='小夜'?' selected':'')+'>小夜</option><option value="大夜"'+(info.ctrl==='大夜'?' selected':'')+'>大夜</option></select></td>'
-      +'<td style="padding:3px 4px;"><input style="width:100%;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:11px;" value="'+(info.skill||'')+'" onchange="updateStaff(\''+name+'\',\'skill\',this.value)"></td>'
-      +'<td style="padding:3px 4px;"><input style="width:100%;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:11px;" value="'+(info.train||'')+'" onchange="updateStaff(\''+name+'\',\'train\',this.value)"></td>'
+      +'<td style="padding:3px 4px;"><input style="width:100%;min-width:200px;border:1px solid #93c5fd;border-radius:3px;padding:4px 6px;font-size:13px;color:#000;background:#f0f7ff;" value="'+(info.skill||'')+'" onchange="updateStaff(\''+name+'\',\'skill\',this.value)" placeholder="（無技能標籤）"></td>'
+      +'<td style="padding:3px 4px;"><input style="width:100%;min-width:80px;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:11px;" value="'+(info.train||'')+'" onchange="updateStaff(\''+name+'\',\'train\',this.value)"></td>'
       +'<td style="padding:3px 4px;text-align:center;"><input type="checkbox" '+(isCtrl?'checked':'')+' onchange="toggleCtrl(\''+name+'\',this.checked)"></td>'
       +'<td style="padding:3px 4px;text-align:center;">'+(db?'<span style="font-size:11px;font-weight:700;color:'+(db.indep>0?'#166534':'#92400e')+';background:'+(db.indep>0?'#dcfce7':'#fef9c3')+';border-radius:4px;padding:2px 6px;">'+(db.indep>0?'✓'+db.indep+'項':'訓練中')+'</span>':'—')+'</td>'
       +'<td style="padding:3px 4px;text-align:center;"><button onclick="deleteStaff(\''+name+'\')" style="background:#fee2e2;border:none;border-radius:3px;padding:2px 6px;cursor:pointer;color:#c0392b;font-weight:700;">✕</button></td>'
