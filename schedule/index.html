@@ -133,11 +133,12 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;
   <div class="page active" id="page-login">
     <div class="login-card">
       <div class="icon">🔑</div>
-      <h2>輸入員編查詢班表</h2>
-      <div class="desc">請輸入您的員工編號，即可查看當月排班</div>
-      <div class="login-row">
-        <input type="text" id="empIdInput" class="login-input" placeholder="例：14536" inputmode="numeric" maxlength="6" onkeydown="if(event.key==='Enter')doLogin()">
-        <button class="login-btn" onclick="doLogin()">查詢</button>
+      <h2>輸入密碼與員編查詢班表</h2>
+      <div class="desc">請輸入手術室通用密碼與您的員工編號</div>
+      <div class="login-row" style="flex-direction:column;align-items:center;">
+        <input type="password" id="pwInput" class="login-input" placeholder="通用密碼" onkeydown="if(event.key==='Enter')document.getElementById('empIdInput').focus()">
+        <input type="text" id="empIdInput" class="login-input" placeholder="員編 例：14536" inputmode="numeric" maxlength="6" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="login-btn" onclick="doLogin()" style="width:200px;">查詢</button>
       </div>
       <div class="login-err" id="loginErr">查無此員編，請確認後再試一次</div>
     </div>
@@ -259,9 +260,14 @@ function ctrlLabel(raw, dayOfWeek){
 // ══════════════════════════════════════════
 // 登入 / 登出
 // ══════════════════════════════════════════
+const SHARED_PASSWORD = 'A030';
+
 function doLogin(){
+  const pw = document.getElementById('pwInput').value.trim();
   const id = document.getElementById('empIdInput').value.trim();
   const err = document.getElementById('loginErr');
+  if(!pw){ err.style.display='block'; err.textContent='請輸入通用密碼'; return; }
+  if(pw !== SHARED_PASSWORD){ err.style.display='block'; err.textContent='密碼錯誤，請確認後再試一次'; return; }
   if(!id){ err.style.display='block'; err.textContent='請輸入員編'; return; }
   const found = Object.entries(EMP_ID_MAP).find(([name, eid]) => eid === id);
   if(!found){ err.style.display='block'; err.textContent='查無此員編，請確認後再試一次'; return; }
@@ -269,6 +275,7 @@ function doLogin(){
   currentName = found[0];
   currentEmpId = found[1];
   localStorage.setItem('my_schedule_emp', currentEmpId);
+  localStorage.setItem('my_schedule_pw', pw);
   showPage('calendar');
   renderProfile();
   renderCalendar();
@@ -276,7 +283,9 @@ function doLogin(){
 function doLogout(){
   currentEmpId = null; currentName = null;
   localStorage.removeItem('my_schedule_emp');
+  localStorage.removeItem('my_schedule_pw');
   document.getElementById('empIdInput').value='';
+  document.getElementById('pwInput').value='';
   document.getElementById('loginErr').style.display='none';
   showPage('login');
 }
@@ -392,7 +401,8 @@ document.getElementById('dayModal').addEventListener('click', e=>{
 // ══════════════════════════════════════════
 (function init(){
   const saved = localStorage.getItem('my_schedule_emp');
-  if(saved){
+  const savedPw = localStorage.getItem('my_schedule_pw');
+  if(saved && savedPw === SHARED_PASSWORD){
     const found = Object.entries(EMP_ID_MAP).find(([name, eid]) => eid === saved);
     if(found){
       currentName = found[0];
