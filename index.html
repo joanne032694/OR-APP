@@ -1204,38 +1204,33 @@ async function cloudSave(){
       otInputs:[...document.querySelectorAll('#otg input')].map(el=>el.value),
       bxInputs:[...document.querySelectorAll('[id^=bx]')].map(el=>{return{id:el.id,val:el.value}}),
     };
+    const body = JSON.stringify({data_key:currentDate, date:JSON.stringify(data)});
+    const headers = {
+      'apikey':SB_KEY,
+      'Authorization':'Bearer '+SB_KEY,
+      'Content-Type':'application/json',
+      'Prefer':'resolution=merge-duplicates,return=minimal'
+    };
 
-    // 先查是否已有這天的資料
-    const check = await fetch(
-      SB_URL+'/rest/v1/dispatch?data_key=eq.'+currentDate+'&select=id',
-      {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}
+    // 用 upsert 一次搞定（不用先查再存）
+    const resp = await fetch(
+      SB_URL+'/rest/v1/dispatch',
+      { method:'POST', headers, body }
     );
-    const existing = await check.json();
 
-    if(existing && existing.length > 0){
-      // 更新
-      await fetch(
-        SB_URL+'/rest/v1/dispatch?data_key=eq.'+currentDate,
-        {
-          method:'PATCH',
-          headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'},
-          body: JSON.stringify({data_key:currentDate, date:JSON.stringify(data)})
-        }
-      );
-    } else {
-      // 新增
-      await fetch(
-        SB_URL+'/rest/v1/dispatch',
-        {
-          method:'POST',
-          headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-          body: JSON.stringify({data_key:currentDate, date:JSON.stringify(data)})
-        }
-      );
+    if(!resp.ok){
+      const errText = await resp.text();
+      throw new Error('HTTP '+resp.status+': '+errText);
     }
-    console.log('cloudSave date:', currentDate);
+
     alert('✅ 雲端存檔成功！日期：'+currentDate);
-  }catch(e){ alert('❌ 存檔失敗：'+e.message); }
+  }catch(e){
+    if(e.message.includes('Failed to fetch')){
+      alert('❌ 無法連線到雲端\n\n請確認：\n1. 網路是否正常\n2. 是否從 GitHub 網址開啟（不能用 file://）');
+    } else {
+      alert('❌ 存檔失敗：'+e.message);
+    }
+  }
   finally{ btn.textContent=orig; btn.disabled=false; }
 }
 
