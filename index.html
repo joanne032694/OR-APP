@@ -765,7 +765,7 @@ function getTodayShifts(day){
 function autoAssign(shifts, dayStr){
   // 盧貞君固定護理站
   state['as-護理站'] = ['盧貞君'];
-  const dNames = shifts.D.map(s=>s.name).filter(n=>!todayExclude.includes(n)&&n!=='盧貞君');
+  const dNames = shifts.D.map(s=>s.name).filter(n=>!todayExclude.includes(n)&&n!=='盧貞君'&&n!=='王婷婷'&&n!=='蕭帆妤');
 
   // 組長以流動為主，訓練生排刷手
   currentRooms.forEach(row=>{
