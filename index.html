@@ -1055,9 +1055,7 @@ function saveData(){
     showSaveHint();
   } catch(e){
     console.error('儲存失敗:', e);
-    alert('⚠️ 儲存失敗：'+e.message+'
-
-請嘗試清除瀏覽器快取後重試');
+    alert('⚠️ 儲存失敗：'+e.message+'\n\n請嘗試清除瀏覽器快取後重試');
   }
 }
 
