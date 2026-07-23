@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1a56a0">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAFXElEQVRYhb2XaWxUVRTHf/fO0s7S6VDptEBZ2rQFoeybCy7UBhSIG7bUIMXRmChqNOEDfiImYgJ+MC4Y1MQUDFhkKIIWCCguiIIIQqbsBTrQYSlDS6cznZZZ3vVDN5gWWwnln7zk3XPOPf9/zjt3eYJeImX+WltiJDobyBcwVsEwwN7mbhDgUYjDCO3ncLO29er3Lwd6k1f0FDBo3ppcpVgCqhgw91JvCEGZjKoV3nJn1W0JyCjcYNJE6D3gLUDfS+J4RBDiI6NJW+pZ7WzptYCMuaU5Sic2Kci7TeJ47DNEdc+e27TgUo8CBhavGY+mdgCpd4i8HV6pE7O9ZQvdtxSQMbc0R9OJP/qAvENERKnJPpfzcrtBtr8Me7E0UdNJVx+SA2QYhKjIKNxg6iIgHBLLQI3tQ/J2TNRk6J32gYD2paaOcvvd/n8RjCiV43M5L+sBWtf5f5BLO0/NHUDdzhPs8as4XxIz5mSRZ2wd6lPTmDksxv4DV/G1hYbPe1i130+sc5bVIMVSYJE+Zf5aG5FocadPMLLgPl4fZUAAkarjLP4xkfyZOSSa7RQm6VvLFmvg268r+aNZh9WaQEpCaz8bUqxkD4jisQWJaQCK64my63JTlPR/8qslsm17vWmHa7oW4LpjENMdMTz1kY4Zzf4gNSTzxCQbmi9EIAZoDez8qw5foIX6QAvXmjXQYgTaxvWNAXYfbSData4WY4J+lgTy46WdO3gM1+kwjafP8h25LHvMhg5F9YEjfLynnlCoDtfmM7jb9jYhJHpd66OTrVWUss0mRWenx0FIlS8FxHW+wDEql+eyjdiyM5lmhcnPjuRBY/dJLFlZOMeZUTGNaEzrKLumtY6jysD4R4aQ240KpRgjFWTGO4xJFtLNEr3ZTL/aKtbWGEnVC9InjmPF7DSs1nReW5jDvTqQxgQcdhMOexKTHx7NG5PNhLiHgvF20uwm0tJsDE02ktD9qZMlAVv8J/DuO8RKdwv17iOsqrzGuk/281M4iv9aiAv+CJoWwVfXQrOCwInjLK+owWNKYZw9yMbPtvJMuQ+DPsCWXT6MWYMYHmrgTKxbAcm9Wvea3cJgWtj890m2Nt5DyUiNjRU1eDTJ8FkFlL+QRkJUYbxUyed/+jlpqaRi5nTWvx/mn+17WbTZR+gWufVAI9C/0yRxZA0hf6iRlJTxfFx7gNXJQxlcfYqDXQ5UjVO/HeTNcxGCedPZcL+FqQ+NoigvGc+2U5wuzibVkUSGTU+1L4qKnw5+nW3U04XAoE6bgYIFj1JireNX9xUu9svm7Xwj2364wpgnR/P8BAcj0pPIHNIP40Uv7qshPPVW5pfk8UBGfx7ONdHkrWXnrsN8egimzhjD4lkOruytxt3URUClGFi05ktQr3RfIB2Z08bwTEsVK6uszCtII7WjmaK4fz/GT7UK0JE3bQQj6s+z40SAgHZjjU2MzpAc9zR12QsU6gsxcF5pMUqUdS+gbyGEKpIRzVIBdC1O36MprFm2S5+rKIhg/d3nF9/4XEVBCSCjagUQ6WHGnUQ4Fosth7YLibfcWYUQH901eiE+rC1/6WyHAACjSVsK7LsL9HvNjf53O7Tc6EktLE03CLEfGNxH5BelElO8roUX2g03nVE+l/Oy1Ik5gLcPyGukUo/fSN5FAIC3bKFbU9oEYPcdJN8bUWqK1+WsjHfouosOHtsSShuSXxZJTNCAScAtbgM9IizgA3Og0end8qq/u4Aef05TC0vTDVIsRVECWHpJ3CQE66JRbUV7t98KPQroFLLBaqB5thLadKEYhxCZ3PB7jlLVSohDEn4JK/M2n6so2Ju8/wJDXQqKiiQSbQAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%E6%88%91%E7%9A%84%E7%8F%AD%E8%A1%A8%E6%9F%A5%E8%A9%A2%22%2C%22short_name%22%3A%22%E7%8F%AD%E8%A1%A8%22%2C%22start_url%22%3A%22./%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a56a0%22%2C%22theme_color%22%3A%22%231a56a0%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABmJLR0QA/wD/AP%2BgvaeTAAAgAElEQVR4nO2deXhU1fnHP%2BfOZGdNSEIWISCLrMqioIiCxQUUQSVgUfZa6l5rXdpqtbW1dvvVuhYVCMGFJC0oiyKgIMoOIovshgDJhCQEyJ5MZu75/UHAEGaSmWRm7kxyPs/jI8zce%2B6Xmfc7Z33PESg8QuyU1AhRrieZzKKLRO%2BCJAG0aJCRSKIQRAFhQLuaW4KBiJo/lwHWmj%2BfBSqQFCJq/pPyFIIcgXbUbpNHZbiWlbdwaplv/4XNE2G0gEAjMTk9zG6q7CPs%2BpVCk/2kFP2BvkC0j6Xkg9grhL5H6mKPNGm7TPbQ77MzJlb4WEdAowzQANHJ8zsGCa4GhoG4HhgMhBgsyxk24JAQfANssAu5/uSiGVkGa/JrlAHqkDR9fqi1XLse9FEgRgGDjNbUFIQgE1gjpVweHM7qrJQZlUZr8ieUAYCk8fPbVQcxXgoxARgJhButyUuUI/lSaGSE6FWfZGbMLjJakNG0WANEJ6e3Mmvl44RkEnAL/tus8RZVwOdImWYPNX3SUjvVLc4AHe9J6aOZ5BQQDwCRRuvxE4qFYJGu805uxvQdRovxJS3CAInJ6WF2yqcIwWxgoNF6/JwdEjknJJyFLaG/0KwN0DF5XrQmTDNBPgbEG60nwCgAOc%2Bk6a%2BdWDTLYrQYb9EsDRB393udMZt%2BIxDTgFCj9QQ4FQhSEPpfLItmnjBajKdpVgaIvSs1xhRk/xWIx1GB72msQpCiCfsfmlON0CwMkJj8XqRdmJ8T8CAq8L1NBfCW2Rz05%2BMf3nfGaDFNJbANMGKtOS762Ewh%2BBO%2BX4rQ0jktpfhjbkGnN1k30ma0mMYSsAaIn5RyC5J/Ab2N1tKSEbBXIp6wpE9bY7SWxhBwBoi9KzXGHCz/IaWcYrQWRW1Ehi7tD5/MmFlgtBJ3CCgDJEyanyyleAvoYLQWhUPOSMmzuRnT3gUhjRbjCgFhgMTkBQm60OeCuNVoLQqXWGnS7LMCYbTI7w0Ql7zgLiHku0CU0VoUbnEWIR%2B0pM1YZLSQ%2BvBbAyQmp4fpovwV4DGjtSgajxBioVUPe6ggY2Kp0Voc4ZcGiJuU2kugL0ZyhdFaFB5hH9J%2BtyVj1kGjhdRFM1pAXeKTU%2B4UUt%2Bkgr9Z0Rth2paQvGCC0ULq4j81QHK6KV6U/RnE0/iTLoUnkQJeyZHhz5Mx0W60GPCTQIudkhphqtI/AsYarUXhE1ZaK%2B0TTy2dVWK0EMMN0PnuhXHVZvsyAjz3VuEuYpewme7IWXx/tqEqjHx47KTUviaprwA6GalDYRBCHNN1%2B5iTGTP3GSbBqAfH3Zs6WOj6StT4fkvnrBBydE7ajM1GPNyQUaC4iSk3CF3/AhX8CmgnpVidkDzvJiMe7nMDxCXPv03ASqCNr5%2Bt8FtaSaEti5uY6vOlLj5tAsUlz79NCPExLW8LEoVrVCG405I2fZWvHugzA8RPTBkGfM6PG8IqFI6o0KU2%2BmTG1K988TCfGCDx3tQhuq6vBlr74nmKgKdYF3LUybQZ27z9IK8boGaocz3Q3tvPUjQrTutSH%2B7tIVKvdoI7370wzoRcjgp%2BhftEakJbEZ08v6M3H%2BI1A8SPnRNuNds/RsrO3nqGotmTFCTE8tgpqV7rN3rHAMnpJkJD0gRc45XyFS2JQaZK%2Bwe8%2BKJXYtUrhcaL8pcR3OGNshUtECHGxe1P%2BqNXivZ0gfGTFoxDyiXeKFvRopESknPTp//Pk4V6NEjjk%2Bf2RJi2omZ5Fd6hRAptSG7a1P2eKtBjTaDo5PRWaKaPUcGv8B6tha5nxI%2Bd47ETfDxmgCCt/FWVxqjwOoI%2BhIf8w3PFeYCarUsWe6IshcIlJOMsGdOXNrWYJhvgsnvnxtt1027U0maFbzkVZDP1P7Z4Sm5TCmlyE8iua/NQwa/wPR2sZv29phbSJAMkTFwwTW1XqDAKgRwTnzx/ctPKaCTxP/2wA3brPtS%2B/ApjOaVLvXdjd6VufA1gt76OCn6F8XQQQmv0qFCjaoCawyk%2Bb%2BxDFQpPI6T%2Bk5yMmV%2B6e5/7NcCItWYh%2Bafb9ykUXkQK7XVGrDW7e5/bBoiPOfaQhL7u3qdQeJneCTFZP3P3JreaQJ0mf9DeZqs%2BjBr2VPgnpzVp656d8bPTrt7gVg1Qbat%2BHhX8Cv8lUteCnnXnBpdrgJo9PH8AwtyWpVD4jgqTZu/m6vFMLtcA1Wbbc6jgV/g/YbrUnnb1YpdqgPjk1E4I/RBqQytFYFCFpne3LJp5oqELXaoBpLD/FhX8isAhBF17xpULG6wBYu9KjTEF6Vmo5o8isCjHFNzZ8tHkU/Vd1ODEgSlYfxjZzIJftGbaM7fyyy4OKsCKY/zy11v4yuZ7Wd7GFNeT/zzZix4O633JyfXfcN/HhTSTf3q4sFc9CLxU30X1GiBp%2BvxQazmzPSrLHxCC8NZhxLS7NBJkUBDBzTWd3xRCp/i2dDM5elMS3NbhGwGLRDySmJz%2Bj%2ByMiRXOrqm3D1BVJqYCsR5XplD4hhhdq7ivvgvqrQGEaIa//i4S2jqcqFDNw3u7SGzllZws84sDElsGupwNOE2ccWqAuHtTB6PrA70iygGRCTH0aCs8E3B6FUcOn6Wg0XGmMez%2BO1kwIsTjBjj%2B6UqGL8hvoJ0t6JAYQ3cP768hYlrVuzd9aGQkQ3sLPG1PWVXO3swSSqWHC3YFweD4excMsCyattPR204NoEn9Ad/pNTF0ws28c53ZMwFXnc0Tv/iC9FJPFGYEQYyYfDP/HuTLNrkgZugQ0oZ6vmR77l7GPbmDnUZVfLqcBTzi6C2HfYDYKakRUnKvV0UpFL7jfmd7CTk0gFYl70JtcKVoPrQlNNThIewODSCknORdPQqFjxGOY/oSAySNn98Owc3eV6RQ%2BJTRXZPntK374iWdYGuIuAup1v2cseSzaV%2BQk065oH1CDD2djFpVnznN9lyrg3ckeSerPapT4TKhFSJ0LPB%2B7RcvHQWS3OMrRbUfmnc0hzWhpksCKjw2hqEJwQ7aapKSnDy25tm4ZLTKdgpLk0YcdL795EuSP3H2vokxj9/LO9c5GkSTFO3cwU/nWGh8qFezZsGnjP6vZwdhtdjuvPZoTy53MhOct2ETs5af9vwwqLWCH3QPF9oIhNQnUJ8BapY%2BjPSpKgB0dixdx6U7PQq6jhvD2skdHBrg6DdbmLH4rMe/MOORnM07zVkPl2qyJuB0TQBQVVTEnsxmsxboUoQY1W30ayFHPnus6vxLF8VVVbnpRsBjW08rFH5GREWrVsNqv3BRDaAJ%2B2gpm9lKMC2Ybl3DKfzhLGeMmIn0ABHRUfSLbvokoa9ngs9Y8jlw1r8%2BdKmZbgMu7B90kQGk1G7j0hZ1QGJu3Z6bR1zB9Ju7cF2HCub%2BcSkvHgjExpKgy03Xk3Z3u4bXrjfxOZ6dCbazdk4GU76s8quIElKOBi6kTF5oAl1279x4kD0NUeUxBJFJSTz24G1sfPNO3ru/B9fHBqGZ2jA5uTudmlnlpnAfCX1rnz18wQC6brreGEmeRJBwTX%2BevDGWhDoDuRG9%2B/LolcHGyFL4FWa0a8//%2BcdOsJDXGaLGo%2Bjs/XwvqxwtO9QiuCe5Jz2aV86HohEIIS90hC8YQOpimOPLAwtZlMWba4qwOfBAyOW9eHhAsDq/VXEh1s0AicnpYboov9I4PZ5EZ9fKvXxxyzBujagT6iKMseN78Pp3x42R1kgqzxSxL0unyZVXUBhd48MIc/ILYC0u5shpBxOLjULnWIk/dX8vYmDS9PmhWSkzKmsGFir6AUGGSvIg8mwWb6/tz0/uaHPJyEnI5b148MpcfjBEWWOQHFm1jtGrml6SKbE/n/5tAH2dzASf/GYDoxtM1mkWBFeViT7ADg1A1%2BhvsCAPY2fHyv1sqXLwlhbOuPHdSfLYAbGKQERD9jv3fwB57i/NCb3gB/6zsRxHS1DCunfjnsuUA1oyukY/qOkDSEl/0ex6htWsX3GQvcMH0L9uO0iYCPXDBl9wZCQDOgZ57vTyOhiVE3yBJudqew4hRX%2BoMYAQ9DZWDiBC6dGzLVEXffuC%2BBhnkSpoFR3FkN4hF3XaygsK2V1wriNnyz7Eezv78O%2BrA2HkRxAz9BrSpsUa1BnzXk7wBfwrV7sPgDl2SmoEVXqM0WoIjuOp525gjMvfvqDrTdeTcVPt1yQHFy/nlrTT5zpyspJPV2by1KArUC0eRR06xo%2BdE27GShejlXiTin0H%2BTCrB093dXOPH2GmU5coEkIdvanRvY3z0oLbtWdIb/slTQm9vIRdWeVUuqND4S2EDA/rbDZJe5cmHBfs/%2BhFpK/O5ZGfJ1B3WqBetLZMfuRWHk1w97MRtBk4mDQHOyrZjuxgxPN7OeoHySEKkMgkDUGS0UK8i%2BTk5kOsdHFSRkqJ3W/nbxSeRIMuGpIEo4V4nfIcFm0qc210w643wwwzhSOElIlm0KKbSw6Ac%2BxsXZ9F1qi%2BdJUV7NqazZnu3RgZ7aB5Y5dNyOVtCpKCLduYfNxR/rMbhLRh/KRBTOrctOHU0u938ejiPMqboqUusopD9eVk%2BhiJ6GBG6lH4wySAvZgvVx0gr840fZuunbmrR5jDnOBTh4%2By/AdrLftK8g9XOpz8smUe4a8fFlO4KZPNZ9vxzN%2B6OUx%2BlnbdsCZQVWEhGwsbf39IxySef3xgw8EvJZZtW/jnmT787dbWDtcYRSRF0ubEd6wqck9DeGIc/ary2FLg/x0dIYkyI4R/HHtqK%2BSj1LrfvqDruA6Mc2IAy7d7%2BL2rSfF6ESuW13ybJjOtHI7uADa7QTVAExDB9BkxmH9N6Uafhnr6UmLZtol7XztMVmwI00cNoJ8DB4jweKbd2JYlS4tcbhK26d6Pd58awLWigDlvr%2Bdv35b592cp9Cgzgg7NvgVUFxHk1ACywkqJBGQlO745wPy2jgJK0PnK7oyMczy0Wpl9grS9ZZfURPaCQoo9/FkHd4jnwZnX8vjAVoQ0VJFLO5lfb2TKnEyybEBOJosO9KNvHwf5xsLElaP7MvKLDawpa0iFRsLgwcx95Ar6hQkghgefuoNBSzfwSHp2E7eo8R5Sig5mJK2MFuJrRGgoUU6iRS%2BrokgCsozVi7ey2uFVJsY8fjkj4xw1NCSlhw7wwvym7AvkAqZwrh09mD9PSKKns/XNF8mqZtenXzH9/RzyzztTlrL0SwvP9O6Eo2kNU/suPHHz96z7%2BKzzFaIimAG3D%2BfdyYnE1apJhBbKkHE38WmPvTzxxnesLfTDJpGgtUYLPP1Rax9BRyeNZHtplcd/pT2Lmc4D%2B/H2X8eRfn8Xl4Jf2kpZmfI5kxbWCv4aTm8/zKfOdm4QJvqPHcSEKCfPCGnLhF%2BMJv3%2Bi4P/x/sF0b37kfLyzTzVP9zLSf2NIlgDWlyirBbpzACS4hKrnw6Dmuh4RXdefH48a58eyJ2XBaO58MNvL8nnrb9/xuyVhTicCqm08O7q01Q78YDWKoFnJneiQ51nhXRM4s8vjuFfI9oR3oAOc7uOPDClD8P8r60RYqYFGqB9dAStnXxpp4v9axsPhJmkK3vw4PjeTLgiglCXB%2BwkRT8c4Kl/72BFXn2W1jm4ag/Lb72Ru5z0d6Kvu5rnN%2Bfxy22VSEwkDRnEGz%2B/gqtauXCij7Syb%2B02Hk09wgE/GgKtoSUaQKNbp3aO0wulTk5eqX/UAFoIvYdcwcPjruCOpFDM7o5UV2fz/EtbWeFC0MmS47zx2WlunxTl8IRMoUVw96whrMvZhXb79fzpJ1EO%2Bwx1sRfnM2/uBl7ZXOyv659C/LBZ5mVEBP26hDoxQAVZ%2BZ7KiW0MgtZxHRl7QzcmDO/E1R3MLjVzHGOn0uXcRsnB1btZdtsI7mnn%2BIFa%2ByRe/XsnTGYXFhVKO8d37uLX73zPhjN%2B2PmthRmw0oJOgRfh0VzTyXEPWNqLOJDr%2By/MFNGW66%2B9nOQbu3Jb9winSeveRJae4LXlBYy5L8bp883mhueW7aWFLHp/Iy%2BtO%2B24z%2BFfVLU4A4T3SmCIk3Ev%2B6kzHDAgWaPd5T15fmovehk6Hic58vk25t44mocva8TxsNJG1vbdPDv/e772xyFPx1RpnDNAC8HMtVfH4bCvB5T9UMBBAzoAhbu3MfWtTE4Y3fmwnuKN1MMcd1OHtTCXN19dzi3/3BNIwQ81BnC0d0JgIkx0SGjPZU7qMxGRyD2DQx2vk5F2du0vqHf/fO8hsWzexOz/FrjUbJDVZWz64ijfeeGbK9nzLb/5osThxmKX6LCVs3H5em57chUvby6izP%2BbPHWxakCJ0Soaizksgn79uzB9wjW8/pvb2Th3Mt/9YxS/6OooxAWXDe/JzU7Wykh7Iev2VBrYAbax6%2BP1PLetwuFiPgBZXc7WNVuZ9MQSJsw/yhFvbOAjraxftInUXL3hz0JAeWExFj8d4mkIAcVmJKcCMyFMo/edo1hxZ52XZQjxkee7NrUIiWHW6FinHTz7sWy%2BKDD4J0wv5X/vbuLapJFMivlxjF2vLGHj1/t5a%2BlhvsqviXqPZ86biEqMYViijQ1bcnn5jd0MfOEqrqqnXyJM4Yyaeiv/S9jELxYcJTPAGtO65JQZQRMW4HoJzUxMXCT9ukRxff8IN3N5BbFRYZioPaMruPzmgUyOdVKStLNr0zG/SFWUxSf4w7uHGPpsD6Lyc1m8%2BgAp67I55IX2hTmiNQP7JjDiqgRuvLIj/SLNULifSdsK2PTDHh5Z0IElDyTiKG3iAiKIPqOGs6JrLL97cztLso0cRnYPTVB4zgCGKtaISoxhSI8o%2BiVF0rdLFH07tyE6xIVZRocIOnYIR%2BPHZbym2B68dHe00yl7WZVH2jcl/jEBBhTv%2BZYpv91HwbFizw4lCjPxXeMYcWU8I65KYHi31rSpMyEi27YmMQwo1Tn65dc8GHcrC%2B%2BIbGBoVtCma09eezmO0f/dzO8/zSU3EPZXFBSakfKUsUnxJoYl/4S3hjb9CKBzCNpHhRMOFAEEtWPm7IEMd7pOXpK/eT9L/ekoH2klM6uB9oRmItSFacyQdu0Z2j%2BBEVfGc2P/GHq0ufQkztoIUxt6dhRwRIK0sumjtTzZ/hb%2BPaw1QQ18QSKkDWPuu5nhNx7jzfe/Ze7OEs9mlHkaea4GyDG2BrBx4FgR9qFRHlsteH61Z5EM4Yb7buQ3vZ2nGcrqQuYtywmESZuLMHVoTaf6PjBTLE%2B/nMyrl4U3uFjtIkQEV3QKQRypGRCwl/LJ22sIMd/C34dEuLAkQ9A6MYlnn7mMGYd%2B4K3Fe1m0qwRHRzYYjRQi2yzQjkpDHSA5lnWWEhlF%2ByZWAbbyUr4/lMeW7/I5QxAD7rqJ/9zWrp5EEcmJdTtZkCOd7EznjMbtC3RBZ9FZtuc0ZdGdoNuQzvSqT6sWRrdOjSlao3eX9pjJ/TGfwVZM%2BhufU20dxT%2BHt2k48QZAmIjt2YM/PNudX%2BVkk7b6MIs3W9hz1l8amqDDURE7KbWvSep7jBSiRffiv69ewxB3qgApqSwqYueBPLYcyGPL/nx2HC%2BjTAdEKMMmjeSd8TE4WdoCgF6UxcNPfcXSIiCkC%2B/OdWdnusZT8vWX9H/jRKNnIEMSe5Hyh6u5oZV3mq62zG8Z9bs9HK47KKCFMfKnI3ljbHS9n6szpN3K0f3H%2BWRDJhkbcjlm9AyUXfYyE8xRo6fC9NNn2FckGeIs8QJA6pzNP82OWgG/K7fqkqwrERbJfQ/cwIvXta2/46aXs2z%2BVpa7mfRtNK2TevJ/vx7McC8Ff3VJEVuPVWJyVLxewdoPVjHuxBDemdWNns7yqp0gTMF07XM5kyvzWbzeI3KbgsRqPW7OWzi1LH5iSj5g3P6g%2Bln2ntCRUT920GR1FVlHC9h2KJ/tB/PZdvAUh4vs9TQbBJHde/LHXwxifGIDHWqpk/XlJn632fmkkz8iWnXmld8NYYwra5FdRUpK8gtYt%2BMEq7ad4IuDRRTV20qxcWT9Bu7MyuOFh6/m3iT3tnEp%2B2E3s14/TKbxo0QnLctml9c0OsRekDfVf70XkVXs/T6XzbYKdh4sYPvBfLZnFlHoRlJtWPcBpL/Qj14NNmEkZ77fwc8WZAfcwdmy9AT/XlbALZNj3OvY1i1H2sg7msvqbcdZuT2bjccr3W6OlR4/wlPP5bH67qG8NDaeRBeajnpRNi%2B%2Btoud/jFzvBcubI%2Bu75FSGGcAJHuXfsGEJpRQcXg3D6e044OZlznOT62h9Og%2BHnx1H/sDbNbyHDqHPt/JolG3MNPZpJ4TZHUlB/dns2rbCT7fYWF3oa3ptV91CavSVrPhmyQenzaImf1bOW926uV8PHcjH%2BX5za/Objh/QIYu9gTmcoja2Di4Zj0zIkaR9tNYBys%2BJSVHvmfWKzvYELCrn4CqPOYsP8mkmXENbvZrryhl564TrNx2jJU78znqpdVqZTlZvPzyCVL69OCXk/qS3CP84swyKclev5kXtlb4zSyxQOyBGgPomtytyYB3AGBjz9J1PB43hvdGtP5xzFrqZO/Yzs/f3M8uZzMz0krOibMc8PookKS8sLoJgSDJ2XCQVckductBX8BWWsTmb4%2BzYssxVu4qJN9nO1PZsXy/n6d/f4j/69mFGXf0YvKgSCJNYD%2Bdye/fP8Fpf4l%2BQGrnagABF45JLaK5nBQZGs0zL97Ko11MYK9g8yff8FCG5ZItQQIXE9fNHM%2BiW1thAvSqMnZsy2Txhiw%2B3X2aU8Z3MAEIbhfFzcO70vPk97y6zfF5bQZhDQ6XbbNSZlRe%2BAmJm5iyRcA1RqryJCFdryL94fZ8Pncz7%2ByraHZHfwb3voY1D7XnmxV7mbfewpEAXIxvGFJstGRMGwb8uPpAg42yGRmgKnMXdz8lsfvRz44nsR7cyZhfVVMakJ15g9HY8OMfzyPFBocXByzNN/gBsKvgbwKXGsCK/o0xWhQKnyLtVrHp/F8uGKAgY8ZJBAeM0aRQ%2BAjJnrwlU/PP//XiU3klK32vSKHwIeLiGL/IAFLwmW/VKBS%2BRSCcGyC8uPgroMHjEBSKAKUsrKRoY%2B0XLjLAkc8eq0Ky1reaFAqfsfrIZ49dtPj/kpWsQiPDd3oUCp%2BSXveFSwxQYTZ/DP66m7VC0WgqK4PMK%2Bq%2BeIkBTn9wfzGwyieSFAofIWBFTWxfhJN9wmWa1xUpFL5EOI5phwbQiFgCnPWqIIXCdxTJcuslzR9wYoDsjIkVEhZ5V5NC4SMECy3LZjvMBHGaz6wJ%2B3%2B8p0ih8B1Cl3OdvefUADlps3YB33pFkULhIwRsy8mY8Z2z9%2Bvd0UIiVS2gCGikZE5979drgIiSklTgpEcVKRS%2BIz84Qn5Q3wX1GuDctLFQtYAiIBGS17JSZtQ7qdvgpl6arH4dtUBOEXiUY2v4x7tBA2Rn/Ow0glTPaFIofIWYm7NkWoOnH7m2raOuvUJzOk1S0dypFDbT31y50CUDWDKmHkfwbtM0KRS%2BQcLbOYvvz3blWpc39g2qNr0M/n3ijUIBlNlN1X919WKXDXBs8ZRc4O1GSVIofIZ8I/%2BjB/Jcvdqdrd0xm4P%2BDJxyW5NC4RvyQ6X1L%2B7c4JYBjn943xmEeME9TQqFb5DI5zIzZrt15o9bBgCw6GFzAEPPFFMoHPBdroyY5%2B5NbhuAjIl2EL9y%2Bz6FwntITZNPnItN93DfAIAlfdoahPiwMfcqFB5HsCB70Yx1jbm1UQYAEFYeA/IbvFCh8C6ndF1/urE3N9oAOUumFUopf93Y%2BxUKjyDkoyczZhY0%2BvamPj9%2BYspnwG1NLUehcBvJckvG9LFNKaLRNcB5bKbq6YDLEw8KhYcoqEY%2B0NRCmmyA/I8eyEOI2U0tR6FwAwlyVkHGjCYnazXZAACWtGmfCME7nihLoWgQwZuW9BnLPFGURwwAYAvWfgXs81R5CoVDJLs1PbzRoz518ZgB8hZOLdPscjzg1lS0QuEGZzVM92RnTKzwVIEeMwBA9v9mHEYyFfzmQHBF80FKKWZmZ0w54slCTZ4sDKBk38cH2/QZHwIM93TZihaM4KXc9OkeX47v0RrgPDky/HlgqTfKVrQ8hBSLLb2y/uCVsr1RKEBicnqYLsq/BIZ66xmKFoBkuz1UG5G3cKpXdibxmgEAOibPi9aEtgm43JvPUTRbjtpM1de6k%2BHlLl5pAp3nZMbMAl3qdwKnvfkcRbPkFHY5xpvBD142AMDJjJn7hJQ/QZ03oHCdYqlpoy3/m%2BH1g9u9bgCAnIwZ36HptwOlvnieIqAplzA2d9HU7b54mE8MAGBZNHMjgntQG2wpnFMJYlxu%2BvT1vnqgzwwAYEmbvkrT5G2omkBxKeUIxlnSp63x5UO9OgrkjPjk1OsR%2BgqgjRHPV/gdRcDtlvTpG3z9YEMMABCXnDJICFYCHYzSoPALzmiaNjp70dQtRjzcp02g2uRmTN%2BhS/1GIMsoDQpjEYJM7PI6o4IfDDQAnBsixRR8NeDzqk9hLBK2VmvV1/liqLM%2BDDUAgOWjyaeCw%2BUoIN1oLQqfsURUVI309iSXK3h8NWhjOPvdJ7aS5KsWtzrVzizOrSI1rG%2Bi8CoSxJ8svbMeKnnn11ajxYAfBlpCcsrtUvA%2B0M5oLQqPUiylmJ6bMW2J0UJq43cGAEiYtKCH1OViBH2M1qLwAJLd5zK5PJvM4gkM7wM4Iidt2iGN8KuB11DZZQGNEGKhPVS7zh%2BDH/y0BqhN3MTUWwV6CtDRaC0KtygAOctTuzd4C7%2BsAWqTmz7182opB0jEp0ZrUbiIZLnNVN3P34MfAqAGqE3CpPnJUoo3gBijtSgcki8ET%2BWkTQ%2BYY3UDygAAnSZ/0N5ur35FSh4gAPU3X0QGpqCHLB9NDqgjtAI2gBKS590k0f6FoL/RWlo432mafKKx%2B/Mbjd/3AZyRkzHzS0ufrAFCMA11ToERFEopfmmR4YMDNfghgGuA2iSNn9/OGqL9FikfBsKN1tPMKa2CZzgAAAHeSURBVAP5Rqi0/sXdA%2Bn8kWZhgPOc24VCPAniMSDMaD3NDKsQpJirTS/WnBndLGhWBjhPwt3vJ0qz7VlgBqpGaCplIOZpkr9mZ0zLMVqMp2mWBjhP1%2BQ5bSsInS6EfApIMFpPgJEP8m1Rrb2es2RaodFivEWzNsB5kqbPD7VWaPejy9kIBhutx58RsE1K5oSXFr9/5LPHmv0GBi3CALXpmDyvtybEVBA/A6KM1uMnFAlBmhTiP5ZF03YaLcaXtDgDnCd%2B7JxwwoPvRIqJwGgg1GhNPqZCSPEZQqYJGb7Mk3vuBxIt1gC1ibzv/TYh1fY7BfIeYBTQymhNXqIUWI2U/7VW6ctOLZ1VYrQgo1EGqMuIteb46BNDEfY7QIwCBhLAn5MQZErJchDLwkuKvm4J7Xp3CNgv1lfE3pUaYwqyDwEGgRgGXI//NpdswC5ggxDyG5vV9FXekqlqlrwelAHcJGn6/NCqMtFHaPSXyL5Civ5AHyDOx1IswD4p5G5NZ4/U5O7gMLEvK2VGpY91BDTKAB4iMTk9zEZpF7MQSTqii0DGS0QM50aaopBECY0wKWnDuc0Igvixr1EKVAN2IShGUi7PbSlfCOKUQC%2BQQsvRpJ5lF6ajIWH2oyrQPcP/A8GHg8Ay3hJFAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image/png%22%7D%5D%7D">
+<title>我的班表查詢</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --acc:#1a56a0;--acc2:#2471c8;--acd:#e8f0fa;
+  --grn:#0f7b4a;--amb:#b45309;--amd:#fef3cd;
+  --red:#c0392b;--pur:#6b21a8;
+  --bg:#f0f4f8;--sur:#fff;--bdr:#000;
+  --t1:#1a2332;--t2:#4a5568;--t3:#8a9ab0;
+  --f:"Noto Sans TC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;}
+
+.hdr{background:var(--acc);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+.hdr h1{font-size:18px;font-weight:900;}
+.hdr .sub{font-size:11px;opacity:.75;}
+
+.main{padding:14px 12px 30px;max-width:780px;margin:0 auto;}
+
+/* ── 登入卡片 ── */
+.login-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:12px;padding:28px 24px;text-align:center;margin-top:30px;}
+.login-card .icon{font-size:46px;margin-bottom:8px;}
+.login-card h2{font-size:18px;margin-bottom:6px;color:var(--t1);}
+.login-card .desc{font-size:13px;color:var(--t3);margin-bottom:20px;}
+.login-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.login-input{border:1.5px solid var(--bdr);border-radius:8px;padding:12px 16px;font-size:18px;font-family:var(--f);width:200px;text-align:center;outline:none;font-weight:700;letter-spacing:2px;}
+.login-input:focus{border-color:var(--acc2);background:var(--acd);}
+.login-btn{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--f);}
+.login-btn:hover{background:#0f3778;}
+.login-err{color:var(--red);font-size:13px;margin-top:12px;font-weight:700;display:none;}
+
+/* ── 個人資訊卡 ── */
+.profile-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:10px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.profile-l{display:flex;align-items:center;gap:12px;}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;}
+.profile-name{font-size:18px;font-weight:900;color:var(--t1);}
+.profile-emp{font-size:12px;color:var(--t3);}
+.logout-btn{background:#f3f4f6;color:var(--t2);border:1.5px solid #ddd;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);}
+.logout-btn:hover{background:#e5e7eb;}
+
+/* ── 月份切換 ── */
+.month-nav{display:flex;align-items:center;justify-content:space-between;background:var(--sur);border:1.5px solid var(--bdr);border-radius:10px;padding:10px 16px;margin-bottom:14px;}
+.month-nav .mtitle{font-size:18px;font-weight:900;color:var(--acc);}
+.nav-btn{background:var(--acd);border:1.5px solid var(--acc2);border-radius:6px;width:34px;height:34px;font-size:16px;font-weight:900;color:var(--acc);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.nav-btn:hover{background:var(--acc2);color:#fff;}
+.nav-btn:disabled{opacity:.3;cursor:default;}
+
+/* ── 統計列 ── */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.stat-pill{background:var(--sur);border:1.5px solid var(--bdr);border-radius:8px;padding:10px 6px;text-align:center;}
+.stat-pill .num{font-size:20px;font-weight:900;color:var(--acc);}
+.stat-pill .lbl{font-size:10px;color:var(--t3);margin-top:2px;}
+
+/* ── 月曆 ── */
+.cal-wrap{background:var(--sur);border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);background:var(--acc);}
+.cal-head div{color:#fff;text-align:center;padding:8px 0;font-size:12px;font-weight:700;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-cell{
+  min-height:74px;border-right:1px solid #eee;border-bottom:1px solid #eee;
+  padding:4px 4px;position:relative;cursor:pointer;transition:.12s;
+}
+.cal-cell:nth-child(7n){border-right:none;}
+.cal-cell.empty{background:#fafbfc;cursor:default;}
+.cal-cell.today{background:#fffbe6;}
+.cal-cell:hover:not(.empty){background:var(--acd);}
+.cal-cell .dnum{font-size:12px;font-weight:700;color:var(--t2);}
+.cal-cell.today .dnum{color:var(--amb);font-weight:900;}
+.cal-cell .shift-tag{
+  margin-top:4px;display:inline-block;font-size:13px;font-weight:900;
+  padding:2px 6px;border-radius:4px;line-height:1.3;
+}
+.cal-cell .star{color:var(--amb);font-size:11px;margin-left:1px;}
+.cal-cell .extra{font-size:9px;color:var(--t3);margin-top:2px;display:block;}
+
+.shift-D{background:#e8f0fa;color:var(--acc);}
+.shift-E{background:#f3e8ff;color:var(--pur);}
+.shift-N{background:#fdf2f8;color:#be185d;}
+.shift-128{background:var(--amd);color:var(--amb);}
+.shift-off{background:#fee2e2;color:#c0392b;}
+.shift-special{background:#fef9c3;color:#92400e;}
+
+@media(max-width:768px){
+  .cal-cell{min-height:78px;padding:5px 3px;}
+  .cal-cell .dnum{font-size:16px;font-weight:900;}
+  .cal-cell .shift-tag{font-size:17px;padding:3px 7px;}
+  .cal-head div{font-size:17px;padding:12px 0;font-weight:900;}
+  .stat-pill .num{font-size:30px;}
+  .stat-pill .lbl{font-size:14px;}
+  .month-nav .mtitle{font-size:24px;}
+  .nav-btn{width:44px;height:44px;font-size:20px;}
+  .profile-name{font-size:24px;}
+  .profile-emp{font-size:16px;}
+  .legend{font-size:15px;}
+  .legend-dot{width:18px;height:18px;}
+  .login-card h2{font-size:22px;}
+  .login-card .desc{font-size:16px;}
+  .login-input{font-size:22px;padding:16px 18px;}
+  .login-btn{font-size:19px;padding:16px 26px;}
+  .day-card h3{font-size:22px;}
+  .day-row{font-size:18px;padding:12px 0;}
+  .logout-btn{font-size:14px;padding:10px 18px;}
+  .avatar{width:54px;height:54px;font-size:21px;}
+}
+
+/* ── 圖例 ── */
+.legend{display:flex;flex-wrap:wrap;gap:10px;background:var(--sur);border:1.5px solid var(--bdr);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:11px;}
+.legend-item{display:flex;align-items:center;gap:5px;}
+.legend-dot{width:14px;height:14px;border-radius:3px;}
+
+/* ── 詳情 Modal ── */
+#dayModal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;}
+#dayModal.open{display:flex;}
+@media(min-width:600px){ #dayModal{align-items:center;} }
+.day-card{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:420px;padding:20px;box-shadow:0 -4px 30px rgba(0,0,0,.2);}
+@media(min-width:600px){ .day-card{border-radius:16px;} }
+.day-card h3{font-size:18px;color:var(--acc);margin-bottom:14px;}
+.day-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:14px;}
+.day-row:last-of-type{border-bottom:none;}
+.day-row .lbl{color:var(--t3);}
+.day-row .val{font-weight:700;color:var(--t1);}
+.day-close{margin-top:16px;width:100%;background:var(--acc);color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f);}
+
+.page{display:none;}
+.page.active{display:block;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <h1>📅 我的班表查詢</h1>
+    <div class="sub">手術室人員專屬</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ 登入頁 ══ -->
+  <div class="page active" id="page-login">
+    <div class="login-card">
+      <div class="icon">🔑</div>
+      <h2>輸入密碼與員編查詢班表</h2>
+      <div class="desc">請輸入手術室通用密碼與您的員工編號</div>
+      <div class="login-row" style="flex-direction:column;align-items:center;">
+        <input type="password" id="pwInput" class="login-input" placeholder="通用密碼" onkeydown="if(event.key==='Enter')document.getElementById('empIdInput').focus()">
+        <input type="text" id="empIdInput" class="login-input" placeholder="員編 例：14536" inputmode="numeric" maxlength="6" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="login-btn" onclick="doLogin()" style="width:200px;">查詢</button>
+      </div>
+      <div class="login-err" id="loginErr">查無此員編，請確認後再試一次</div>
+    </div>
+  </div>
+
+  <!-- ══ 班表頁 ══ -->
+  <div class="page" id="page-calendar">
+    <div class="profile-card">
+      <div class="profile-l">
+        <div class="avatar" id="avatarTxt">—</div>
+        <div>
+          <div class="profile-name" id="profileName">—</div>
+          <div class="profile-emp" id="profileEmp">員編 —</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">↩ 查詢其他員編</button>
+    </div>
+
+    <div class="month-nav">
+      <button class="nav-btn" id="prevBtn" onclick="changeMonth(-1)">‹</button>
+      <div class="mtitle" id="monthTitle">115年7月</div>
+      <button class="nav-btn" id="nextBtn" onclick="changeMonth(1)">›</button>
+    </div>
+
+    <div class="stat-strip" id="statStrip"></div>
+
+    <div class="cal-wrap">
+      <div class="cal-head">
+        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot shift-D"></div>白班</div>
+      <div class="legend-item"><div class="legend-dot shift-E"></div>小夜</div>
+      <div class="legend-item"><div class="legend-dot shift-N"></div>大夜</div>
+      <div class="legend-item"><div class="legend-dot shift-128"></div>12-8</div>
+      <div class="legend-item"><div class="legend-dot shift-special"></div>包班／特殊</div>
+      <div class="legend-item"><div class="legend-dot shift-off"></div>休假</div>
+      <div class="legend-item">★ = 控台</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 單日詳情 -->
+<div id="dayModal">
+  <div class="day-card">
+    <h3 id="dm-date">7月1日（三）</h3>
+    <div class="day-row"><span class="lbl">班別</span><span class="val" id="dm-shift">—</span></div>
+    <div class="day-row"><span class="lbl">控台</span><span class="val" id="dm-ctrl">—</span></div>
+    <div class="day-row"><span class="lbl">原始代碼</span><span class="val" id="dm-raw">—</span></div>
+    <button class="day-close" onclick="closeDayModal()">關閉</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// 7月班表資料（與 OR-APP 同步）
+// ══════════════════════════════════════════
+const EMP_ID_MAP = {
+  '蕭帆妤':'11192','王婷婷':'10273','李靜怡':'10361','張瑋恩':'10367','李佳容':'10740',
+  '王玉仙':'10746','陳玉茹':'10922','羅秀如':'11598','林奕辰':'12295','林靜子':'12483',
+  '郭妍伶':'12847','王嘉羚':'13288','程郁淳':'13565','黃怡婷':'14040','洪怡婷':'14055',
+  '楊衣甄':'14190','李宜鵑':'14444','張佩琪':'14536','謝佩芳':'14492','汪瑄柔':'14635',
+  '林昕澄':'14958','高靖緹':'15068','卓湘晴':'15268','陳柏宇':'15321','黃品喆':'15349',
+  '周芳怡':'15423','徐禾沐':'15508','黃淑嬅':'15544','鄒芮宸':'15577','陳金燕':'15664',
+  '蘇奕臻':'15783','曾雅筠':'15813','林峙廷':'16016','王婷玉':'16304','黃玉秀':'16343',
+  '辜嬿潔':'16360','黃予婕':'16565','黃沂晨':'16587','吳婉菁':'16601','劉祐呈':'16650',
+  '江嘉琪':'16704','何尚謙':'16926','陳明瑄':'16946','簡晏欣':'16947','黃佩琪':'16948',
+  '陳筠心':'16949','李宜諮':'16900','張芸甄':'17073','余宗芸':'17149','陳玥汝':'17212',
+  '鄒昀珊':'17223','蕭睬容':'17307','盧貞君':'11468','朱庭宜':'15491','鄧邦偉':'15971',
+};
+
+const JULY_SCHEDULE={"蕭帆妤":{"1":"D","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D","10":"公","11":"休","12":"例","13":"D","14":"D","15":"D","16":"D","17":"D","18":"休","19":"例","20":"D","21":"D","22":"D","23":"D","24":"D","25":"休","26":"例","27":"D","28":"D","29":"V","30":"V","31":"V"},"王婷婷":{"1":"D","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D","10":"D","11":"休","12":"例","13":"D","14":"D","15":"D","16":"D","17":"D","18":"休","19":"例","20":"D","21":"D","22":"D","23":"D","24":"D","25":"休","26":"例","27":"V","28":"D","29":"D","30":"D","31":"D"},"王玉仙":{"1":"休","2":"D","3":"D7","4":"D值","5":"例","6":"D","7":"D7","8":"D","9":"D14","10":"D","11":"休","12":"例","13":"D6","14":"V","15":"V","16":"V","17":"V","18":"休","19":"例","20":"D","21":"D","22":"D7","23":"D","24":"D","25":"休","26":"例","27":"D6","28":"V","29":"D","30":"D","31":"D"},"羅秀如":{"1":"D13","2":"D8","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D6","9":"D","10":"D9","11":"休","12":"例","13":"D","14":"D","15":"D8","16":"V","17":"V","18":"休","19":"例","20":"V","21":"D","22":"D","23":"D6","24":"D","25":"休","26":"例","27":"D","28":"D9","29":"V","30":"D13","31":"D"},"李靜怡":{"1":"D7","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D10","9":"D","10":"D13","11":"休","12":"例","13":"D","14":"D11","15":"D","16":"D7","17":"D8","18":"休","19":"例","20":"V","21":"D","22":"D","23":"D","24":"D7","25":"休","26":"例","27":"D","28":"D13","29":"D","30":"D","31":"D6"},"王嘉羚":{"1":"D9","2":"D","3":"D3","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D12","10":"D","11":"休","12":"例","13":"D","14":"D7","15":"D","16":"D6","17":"DX","18":"休","19":"例","20":"D","21":"休","22":"D","23":"D","24":"DX","25":"休","26":"例","27":"D8","28":"D","29":"D","30":"D","31":"D"},"張佩琪":{"1":"D","2":"D4","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D2","9":"D","10":"D8","11":"休","12":"D★","13":"D12","14":"D","15":"DX","16":"D11","17":"D10","18":"休","19":"例","20":"D9","21":"D","22":"D1","23":"D10","24":"D3","25":"例","26":"E","27":"休","28":"D11","29":"D","30":"D","31":"例"},"林奕辰":{"1":"D11","2":"D","3":"D1","4":"休","5":"例","6":"D12","7":"D14","8":"D14","9":"D","10":"DX","11":"休","12":"例","13":"休","14":"V","15":"V","16":"V","17":"V","18":"休","19":"例","20":"D","21":"D8","22":"D11","23":"D4","24":"休","25":"D","26":"D★","27":"D10","28":"D","29":"例","30":"D3","31":"D10"},"張瑋恩":{"1":"D","2":"DX","3":"DX","4":"休","5":"例","6":"V","7":"V","8":"V","9":"V","10":"V","11":"休","12":"例","13":"休","14":"DX","15":"D4","16":"D","17":"D6","18":"E★","19":"例","20":"D8","21":"D11","22":"D","23":"D14","24":"D9","25":"休","26":"例","27":"D","28":"D","29":"D10","30":"D14","31":"D"},"程郁淳":{"1":"D1","2":"例","3":"D11","4":"D","5":"D★","6":"D14","7":"D","8":"DX","9":"休","10":"D3","11":"D","12":"例","13":"D4","14":"D","15":"D14","16":"DX","17":"休","18":"休","19":"例","20":"V","21":"V","22":"V","23":"V","24":"V","25":"休","26":"例","27":"D11","28":"D","29":"D7","30":"D11","31":"D4"},"楊衣甄":{"1":"N★","2":"國","3":"N★","4":"休","5":"例","6":"N★","7":"N★","8":"N★","9":"N★","10":"N★","11":"休","12":"例","13":"N","14":"N","15":"N★","16":"N★","17":"N★","18":"休","19":"N★","20":"D","21":"例","22":"N★","23":"N★","24":"N★","25":"N★","26":"N★","27":"例","28":"休","29":"休","30":"V","31":"D14"},"黃淑嬅":{"1":"12-8","2":"V","3":"V","4":"休","5":"例","6":"V","7":"V","8":"V","9":"V","10":"V","11":"休","12":"例","13":"DX","14":"D1","15":"D","16":"D5","17":"E","18":"休","19":"例","20":"D13","21":"D12","22":"D3","23":"休","24":"D14","25":"D","26":"例","27":"D4","28":"D","29":"D11","30":"D7","31":"D"},"李佳容":{"1":"D","2":"D6","3":"D","4":"休","5":"例","6":"D","7":"D11","8":"D","9":"D8","10":"D","11":"休","12":"例","13":"D14","14":"D2","15":"D6","16":"D","17":"D4","18":"休","19":"例","20":"DX","21":"D","22":"D","23":"D","24":"D13","25":"休","26":"D","27":"D","28":"V","29":"V","30":"例","31":"休"},"郭妍伶":{"1":"休","2":"D12","3":"D","4":"E","5":"例","6":"D4","7":"D","8":"休","9":"D2","10":"D11","11":"D","12":"例","13":"D","14":"D13","15":"D","16":"D","17":"DX","18":"休","19":"例","20":"V","21":"V","22":"V","23":"V","24":"V","25":"休","26":"例","27":"休","28":"DX","29":"D2","30":"D","31":"D12"},"林靜子":{"1":"例","2":"N★","3":"N","4":"N★","5":"N★","6":"例","7":"D13","8":"DX","9":"休","10":"N","11":"休","12":"例","13":"D10","14":"V","15":"V","16":"V","17":"休","18":"N★","19":"例","20":"N★","21":"N★","22":"D","23":"D","24":"休","25":"休","26":"例","27":"N★","28":"N★","29":"N★","30":"N★","31":"N★"},"洪怡婷":{"1":"D","2":"D2","3":"DX","4":"休","5":"例","6":"V","7":"D","8":"D","9":"D1","10":"D","11":"D","12":"例","13":"D8","14":"D","15":"D","16":"D","17":"D14","18":"休","19":"例","20":"D","21":"D4","22":"休","23":"D","24":"D","25":"E★","26":"例","27":"D12","28":"D","29":"D12","30":"DX","31":"休"},"陳玉茹":{"1":"D3","2":"D","3":"D9","4":"D","5":"例","6":"D","7":"D6","8":"D12","9":"D10","10":"D","11":"D","12":"例","13":"D","14":"D12","15":"休","16":"D","17":"D","18":"D","19":"例","20":"D","21":"D3","22":"D","23":"D8","24":"DX","25":"休","26":"例","27":"V","28":"V","29":"V","30":"V","31":"休"},"黃怡婷":{"1":"D","2":"DX","3":"國","4":"休","5":"例","6":"D3","7":"D","8":"D","9":"D6","10":"D","11":"休","12":"例","13":"休","14":"D3","15":"D","16":"D9","17":"D","18":"D","19":"例","20":"D","21":"D","22":"D13","23":"D","24":"D","25":"休","26":"例","27":"D2","28":"D","29":"D14","30":"D","31":"DX"},"汪瑄柔":{"1":"D","2":"D","3":"D13","4":"例","5":"D","6":"D10","7":"DX","8":"休","9":"休","10":"產檢","11":"D","12":"例","13":"DX","14":"D","15":"D10","16":"D","17":"D","18":"休","19":"例","20":"DX","21":"D10","22":"D","23":"DX","24":"產檢","25":"休","26":"例","27":"休","28":"D14","29":"D8","30":"D","31":"D"},"卓湘晴":{"1":"D","2":"D5","3":"V","4":"休","5":"例","6":"國","7":"D3","8":"12-8","9":"D","10":"D7","11":"休","12":"例","13":"DX","14":"D","15":"產檢","16":"12-8","17":"D12","18":"D","19":"例","20":"DX","21":"D6","22":"休","23":"D2","24":"D10","25":"D","26":"例","27":"12-8","28":"休","29":"D4","30":"D9","31":"產檢"},"林昕澄":{"1":"D","2":"D","3":"12-8","4":"休","5":"例","6":"D1","7":"D9","8":"D","9":"D4","10":"D","11":"休","12":"例","13":"D2","14":"D9","15":"D12","16":"D13","17":"D","18":"休","19":"D★","20":"休","21":"例","22":"D5","23":"D12","24":"D","25":"休","26":"D","27":"D14","28":"D","29":"D","30":"12-8","31":"例"},"謝佩芳":{"1":"D","2":"D14","3":"D","4":"休","5":"例","6":"D","7":"D5","8":"D","9":"D","10":"休","11":"N★","12":"N★","13":"N★","14":"N★","15":"例","16":"D1","17":"D","18":"休","19":"例","20":"D7","21":"D","22":"D9","23":"D","24":"D5","25":"休","26":"例","27":"休","28":"D","29":"D6","30":"D","31":"D8"},"李宜鵑":{"1":"休","2":"D10","3":"12-8","4":"D","5":"例","6":"D8","7":"D","8":"12-8","9":"休","10":"D5","11":"休","12":"例","13":"D","14":"D","15":"D2","16":"D","17":"D","18":"休","19":"例","20":"D11","21":"休","22":"D","23":"D","24":"D1","25":"D","26":"例","27":"休","28":"D","29":"D","30":"D5","31":"D2"},"周芳怡":{"1":"D","2":"12-8","3":"D5","4":"休","5":"例","6":"D2","7":"D","8":"D8","9":"D","10":"公","11":"休","12":"例","13":"D","14":"D5","15":"D","16":"D","17":"D2","18":"休","19":"例","20":"D","21":"D14","22":"公","23":"12-8","24":"D11","25":"休","26":"例","27":"D","28":"D5","29":"D","30":"D","31":"公"},"蘇奕臻":{"1":"12-8","2":"12-8","3":"休","4":"休","5":"D","6":"例","7":"12-8","8":"12-8","9":"12-8","10":"12-8","11":"休","12":"例","13":"12-8","14":"12-8","15":"休","16":"12-8","17":"12-8","18":"D","19":"例","20":"12-8","21":"12-8","22":"12-8","23":"12-8","24":"D","25":"休","26":"例","27":"12-8","28":"12-8","29":"12-8","30":"12-8","31":"12-8"},"陳金燕":{"1":"例","2":"12-8","3":"12-8","4":"E","5":"例","6":"12-8","7":"12-8","8":"12-8","9":"V","10":"12-8","11":"休","12":"D","13":"12-8","14":"12-8","15":"12-8","16":"例","17":"12-8","18":"休","19":"D★","20":"12-8","21":"12-8","22":"12-8","23":"例","24":"12-8","25":"休","26":"例","27":"12-8","28":"12-8","29":"12-8","30":"休","31":"12-8"},"陳柏宇":{"1":"E","2":"E★","3":"E","4":"休","5":"例","6":"12-8","7":"E★","8":"E★","9":"E","10":"E","11":"休","12":"E★","13":"E","14":"E★","15":"E","16":"E","17":"例","18":"E","19":"休","20":"休","21":"休","22":"V","23":"例","24":"E★","25":"E★","26":"E★","27":"E★","28":"例","29":"12-8","30":"E","31":"E"},"徐禾沐":{"1":"例","2":"休","3":"休","4":"E★","5":"E★","6":"E★","7":"例","8":"E","9":"E","10":"E","11":"休","12":"例","13":"E★","14":"E","15":"E★","16":"E","17":"E","18":"例","19":"E","20":"E★","21":"E","22":"E★","23":"E","24":"休","25":"休","26":"E","27":"E","28":"例","29":"休","30":"E★","31":"E"},"黃品喆":{"1":"E","2":"國","3":"E★","4":"休","5":"例","6":"12-8","7":"E","8":"休","9":"E★","10":"E★","11":"E★","12":"E","13":"例","14":"12-8","15":"12-8","16":"E★","17":"休","18":"休","19":"例","20":"12-8","21":"E★","22":"E","23":"E","24":"12-8","25":"休","26":"E","27":"E","28":"E","29":"E★","30":"E","31":"例"},"鄒芮宸":{"1":"E★","2":"E","3":"例","4":"休","5":"E","6":"E","7":"E★","8":"E","9":"E","10":"E","11":"例","12":"E","13":"E","14":"例","15":"12-8","16":"E","17":"E★","18":"休","19":"E★","20":"E","21":"例","22":"E","23":"E★","24":"E","25":"休","26":"例","27":"12-8","28":"E★","29":"E","30":"E","31":"E★"},"林峙廷":{"1":"E","2":"E","3":"E","4":"例","5":"E","6":"E","7":"國","8":"休","9":"休","10":"例","11":"E","12":"E","13":"E","14":"E","15":"E","16":"例","17":"E","18":"E","19":"E","20":"E","21":"E","22":"例","23":"E","24":"E","25":"休","26":"例","27":"E","28":"E","29":"E","30":"休","31":"12-8"},"曾雅筠":{"1":"12-8","2":"E","3":"E","4":"休","5":"例","6":"E","7":"E","8":"E","9":"例","10":"12-8","11":"E","12":"例","13":"12-8","14":"E","15":"E","16":"休","17":"例","18":"E","19":"E","20":"E","21":"E","22":"E","23":"休","24":"E","25":"E","26":"例","27":"12-8","28":"E","29":"E","30":"休","31":"E"},"王婷玉":{"1":"N","2":"N","3":"D","4":"休","5":"例","6":"N","7":"N","8":"N","9":"N","10":"休","11":"N","12":"N","13":"V","14":"例","15":"N","16":"N","17":"休","18":"休","19":"例","20":"N","21":"N","22":"N","23":"N","24":"N","25":"休","26":"例","27":"N","28":"N","29":"N","30":"N","31":"N"},"黃玉秀":{"1":"12-8","2":"12-8","3":"12-8","4":"休","5":"例","6":"12-8","7":"12-8","8":"V","9":"12-8","10":"12-8","11":"休","12":"例","13":"12-8","14":"12-8","15":"12-8","16":"12-8","17":"12-8","18":"休","19":"例","20":"12-8","21":"12-8","22":"休","23":"12-8","24":"12-8","25":"D","26":"例","27":"12-8","28":"12-8","29":"12-8","30":"12-8","31":"12-8"},"辜嬿潔":{"1":"D","2":"DX","3":"休","4":"N","5":"N","6":"D5","7":"例","8":"D4","9":"D11","10":"D2","11":"休","12":"例","13":"D3","14":"D","15":"D9","16":"D","17":"DX","18":"休","19":"例","20":"D4","21":"D2","22":"D14","23":"D5","24":"休","25":"休","26":"例","27":"D5","28":"D8","29":"D","30":"D1","31":"D"},"黃予婕":{"1":"12-8","2":"D","3":"D2","4":"休","5":"例","6":"12-8","7":"12-8","8":"D","9":"12-8","10":"D12","11":"休","12":"例","13":"休","14":"V","15":"D3","16":"D3","17":"12-8","18":"D","19":"例","20":"D5","21":"D","22":"D4","23":"D","24":"休","25":"E","26":"例","27":"休","28":"12-8","29":"D1","30":"D","31":"D9"},"黃沂晨":{"1":"12-8","2":"12-8","3":"國","4":"休","5":"E","6":"例","7":"D8","8":"D","9":"D13","10":"D4","11":"休","12":"例","13":"休","14":"12-8","15":"D","16":"12-8","17":"12-8","18":"D","19":"例","20":"12-8","21":"12-8","22":"12-8","23":"休","24":"D","25":"D","26":"例","27":"D13","28":"12-8","29":"12-8","30":"12-8","31":"D"},"吳婉菁":{"1":"D10","2":"D1","3":"D","4":"休","5":"例","6":"D13","7":"D","8":"D","9":"D7","10":"D","11":"休","12":"例","13":"D5","14":"D","15":"D7","16":"D","17":"休","18":"N","19":"N","20":"例","21":"休","22":"D","23":"D","24":"D4","25":"休","26":"例","27":"D","28":"D10","29":"D","30":"D8","31":"12-8"},"江嘉琪":{"1":"D12","2":"例","3":"D","4":"D","5":"例","6":"D6","7":"D2","8":"休","9":"DX","10":"D","11":"休","12":"D","13":"D","14":"例","15":"休","16":"D4","17":"D7","18":"休","19":"例","20":"D","21":"D13","22":"12-8","23":"D11","24":"D","25":"休","26":"例","27":"D3","28":"D12","29":"D","30":"D2","31":"D"},"劉祐呈":{"1":"D4","2":"D","3":"D14","4":"E","5":"例","6":"國","7":"D10","8":"12-8","9":"12-8","10":"休","11":"休","12":"例","13":"D13","14":"D","15":"D","16":"休","17":"N","18":"D","19":"D","20":"例","21":"12-8","22":"12-8","23":"12-8","24":"12-8","25":"休","26":"例","27":"D","28":"D1","29":"D","30":"D10","31":"D1"},"何尚謙":{"1":"病","2":"病","3":"病","4":"休","5":"例","6":"D","7":"12-8","8":"D7","9":"D9","10":"12-8","11":"休","12":"例","13":"D","14":"D","15":"12-8","16":"D14","17":"D","18":"例","19":"D","20":"D10","21":"D9","22":"D12","23":"休","24":"D","25":"休","26":"例","27":"D1","28":"12-8","29":"12-8","30":"休","31":"D13"},"陳明瑄":{"1":"D","2":"D7","3":"D","4":"休","5":"D","6":"D9","7":"D1","8":"例","9":"D5","10":"D1","11":"休","12":"D","13":"D11","14":"D","15":"例","16":"D8","17":"D11","18":"休","19":"例","20":"休","21":"D","22":"D","23":"D7","24":"D2","25":"休","26":"N","27":"D","28":"D","29":"D5","30":"例","31":"D3"},"簡晏欣":{"1":"D8","2":"例","3":"D6","4":"休","5":"例","6":"D","7":"休","8":"D3","9":"D","10":"D","11":"E","12":"例","13":"D","14":"D8","15":"D5","16":"休","17":"12-8","18":"休","19":"例","20":"D","21":"12-8","22":"D6","23":"D13","24":"12-8","25":"休","26":"例","27":"D","28":"D2","29":"D","30":"D","31":"D5"},"黃佩琪":{"1":"休","2":"D9","3":"12-8","4":"休","5":"例","6":"D","7":"D4","8":"D9","9":"D","10":"12-8","11":"休","12":"例","13":"D7","14":"D14","15":"D11","16":"D","17":"D1","18":"休","19":"例","20":"D6","21":"D7","22":"D","23":"D","24":"休","25":"N","26":"D","27":"D","28":"D","29":"例","30":"D6","31":"D"},"陳筠心":{"1":"D2","2":"國","3":"D8","4":"休","5":"例","6":"休","7":"D","8":"D11","9":"12-8","10":"D","11":"D","12":"例","13":"D1","14":"D","15":"D","16":"12-8","17":"D9","18":"休","19":"例","20":"D3","21":"D","22":"D","23":"12-8","24":"D6","25":"D","26":"例","27":"休","28":"休","29":"D13","30":"12-8","31":"D"},"李宜諮":{"1":"D6","2":"12-8","3":"12-8","4":"休","5":"例","6":"D7","7":"V","8":"D","9":"D3","10":"D14","11":"D","12":"例","13":"D","14":"D4","15":"D","16":"D","17":"D13","18":"休","19":"例","20":"12-8","21":"D","22":"D10","23":"D1","24":"D","25":"休","26":"例","27":"D7","28":"D","29":"D3","30":"12-8","31":"12-8"},"張芸甄":{"1":"休","2":"D13","3":"D","4":"D","5":"例","6":"D","7":"D","8":"D13","9":"12-8","10":"D10","11":"休","12":"例","13":"12-8","14":"12-8","15":"12-8","16":"D12","17":"DX","18":"休","19":"例","20":"D2","21":"D","22":"D2","23":"D","24":"D8","25":"休","26":"例","27":"D","28":"D4","29":"D","30":"D12","31":"D"},"余宗芸":{"1":"D5","2":"D3","3":"D10","4":"D","5":"例","6":"12-8","7":"12-8","8":"12-8","9":"D","10":"休","11":"休","12":"例","13":"12-8","14":"D10","15":"D1","16":"12-8","17":"D5","18":"休","19":"例","20":"D1","21":"D5","22":"12-8","23":"12-8","24":"12-8","25":"休","26":"例","27":"D","28":"D3","29":"D","30":"D","31":"D7"},"陳玥汝":{"1":"D","2":"D","3":"D4","4":"D","5":"例","6":"D","7":"休","8":"D","9":"D","10":"D6","11":"休","12":"例","13":"D","14":"D6","15":"D","16":"D2","17":"D","18":"休","19":"例","20":"D14","21":"D","22":"D","23":"D9","24":"D12","25":"休","26":"例","27":"D","28":"D7","29":"D9","30":"D","31":"D11"},"鄒昀珊":{"1":"D","2":"D11","3":"D12","4":"休","5":"例","6":"D","7":"D12","8":"D5","9":"D","10":"D","11":"休","12":"例","13":"D","14":"D","15":"D13","16":"D","17":"D3","18":"休","19":"例","20":"D","21":"D1","22":"D8","23":"D","24":"D","25":"休","26":"例","27":"D9","28":"D","29":"D","30":"D","31":"D"},"蕭睬容":{"1":"D14","2":"D","3":"D","4":"休","5":"例","6":"D11","7":"D","8":"D1","9":"D","10":"D","11":"休","12":"例","13":"D9","14":"D","15":"D","16":"D10","17":"D","18":"休","19":"例","20":"D12","21":"D","22":"D","23":"D3","24":"D","25":"休","26":"例","27":"D","28":"D6","29":"D","30":"D4","31":"D"},"盧貞君":{"1":"D","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D","10":"D","11":"休","12":"例","13":"D","14":"D","15":"D","16":"D","17":"D","18":"休","19":"例","20":"D","21":"D","22":"D","23":"D","24":"D","25":"休","26":"例","27":"D","28":"D","29":"D","30":"D","31":"D"},"朱庭宜":{"1":"D","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D","10":"D","11":"休","12":"例","13":"D","14":"D","15":"D","16":"D","17":"D","18":"休","19":"例","20":"D","21":"D","22":"D","23":"D","24":"D","25":"休","26":"例","27":"D","28":"D","29":"D","30":"D","31":"D"},"鄧邦偉":{"1":"D","2":"D","3":"D","4":"休","5":"例","6":"D","7":"D","8":"D","9":"D","10":"D","11":"休","12":"例","13":"D","14":"D","15":"D","16":"D","17":"D","18":"休","19":"例","20":"D","21":"D","22":"D","23":"D","24":"D","25":"休","26":"例","27":"D","28":"D","29":"D","30":"D","31":"D"}};
+
+const JUNE_SCHEDULE = {"王玉仙": {"1": "D13", "2": "D", "3": "D10", "4": "D", "5": "D8", "6": "休", "7": "例", "8": "D", "9": "D", "10": "D", "11": "D", "12": "D9", "13": "休", "14": "例", "15": "D", "16": "D11", "17": "D14", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D14", "24": "D", "25": "D10", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D"}, "羅秀如": {"1": "D", "2": "D", "3": "D8", "4": "D14", "5": "D", "6": "休", "7": "例", "8": "V", "9": "D14", "10": "D", "11": "D", "12": "D", "13": "休", "14": "例", "15": "D14", "16": "D", "17": "D8", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D9", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D8", "30": "D"}, "李靜怡": {"1": "D", "2": "D", "3": "D12", "4": "D", "5": "D14", "6": "休", "7": "例", "8": "V", "9": "V", "10": "D", "11": "D8", "12": "V", "13": "休", "14": "例", "15": "V", "16": "V", "17": "V", "18": "V", "19": "國", "20": "休", "21": "例", "22": "V", "23": "V", "24": "D7", "25": "D", "26": "D11", "27": "休", "28": "例", "29": "D14", "30": "D9"}, "王嘉羚": {"1": "V", "2": "V", "3": "V", "4": "V", "5": "V", "6": "休", "7": "例", "8": "D11", "9": "D", "10": "D", "11": "D", "12": "DX", "13": "休", "14": "例", "15": "D", "16": "D", "17": "D11", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D11", "24": "休", "25": "D6", "26": "D", "27": "D", "28": "D", "29": "例", "30": "D"}, "張佩琪": {"1": "D10", "2": "D11", "3": "D", "4": "休", "5": "D2", "6": "E", "7": "例", "8": "D", "9": "D", "10": "D1", "11": "D14", "12": "D", "13": "休", "14": "例", "15": "D", "16": "D10", "17": "D6", "18": "D2", "19": "國", "20": "休", "21": "例", "22": "V", "23": "V", "24": "V", "25": "V", "26": "休", "27": "D", "28": "例", "29": "D", "30": "D5"}, "林奕辰": {"1": "D2", "2": "D", "3": "D", "4": "D11", "5": "Dx", "6": "休", "7": "例", "8": "D", "9": "D", "10": "D", "11": "D4", "12": "Dx", "13": "休", "14": "例", "15": "D8", "16": "D", "17": "D", "18": "D5", "19": "國", "20": "休", "21": "例", "22": "D13", "23": "D", "24": "D", "25": "D3", "26": "D9", "27": "休", "28": "例", "29": "12-8", "30": "D"}, "張瑋恩": {"1": "V", "2": "D", "3": "D", "4": "D7", "5": "D", "6": "D", "7": "例", "8": "D", "9": "D", "10": "D14", "11": "D", "12": "D", "13": "休", "14": "D", "15": "12-8", "16": "D6", "17": "D", "18": "DX", "19": "例", "20": "休", "21": "例", "22": "D14", "23": "D", "24": "D5", "25": "DX", "26": "國", "27": "休", "28": "例", "29": "D10", "30": "D"}, "程郁淳": {"1": "D8", "2": "D1", "3": "例", "4": "D", "5": "D10", "6": "D", "7": "例", "8": "D", "9": "12-8", "10": "D11", "11": "D", "12": "D7", "13": "V", "14": "例", "15": "D", "16": "D", "17": "D", "18": "D", "19": "國", "20": "N★", "21": "N★", "22": "D", "23": "D8", "24": "D", "25": "例", "26": "D3", "27": "休", "28": "例", "29": "休", "30": "休"}, "楊衣甄": {"1": "N", "2": "N", "3": "N★", "4": "N★", "5": "休", "6": "N★", "7": "N★", "8": "N★", "9": "D", "10": "例", "11": "DX", "12": "D", "13": "休", "14": "例", "15": "N★", "16": "N★", "17": "N★", "18": "N★", "19": "N★", "20": "休", "21": "例", "22": "N★", "23": "N★", "24": "N★", "25": "N★", "26": "N★", "27": "休", "28": "例", "29": "N★", "30": "N★"}, "黃淑嬅": {"1": "D4", "2": "D", "3": "D", "4": "D1", "5": "D", "6": "休", "7": "例", "8": "D", "9": "D4", "10": "D", "11": "DX", "12": "V", "13": "休", "14": "例", "15": "DX", "16": "D13", "17": "D", "18": "D", "19": "國", "20": "E★", "21": "例", "22": "D3", "23": "D", "24": "D11", "25": "D", "26": "12-8", "27": "休", "28": "例", "29": "D12", "30": "休"}, "李佳容": {"1": "DX", "2": "D9", "3": "D", "4": "D3", "5": "休", "6": "V", "7": "例", "8": "D", "9": "D10", "10": "D", "11": "D", "12": "D", "13": "例", "14": "E★", "15": "例", "16": "D1", "17": "D", "18": "D7", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D10", "24": "D", "25": "D12", "26": "D", "27": "休", "28": "例", "29": "12-8", "30": "D"}, "郭妍伶": {"1": "例", "2": "D13", "3": "E", "4": "休", "5": "D6", "6": "D", "7": "例", "8": "D3", "9": "D", "10": "D", "11": "D12", "12": "D12", "13": "休", "14": "例", "15": "D", "16": "D", "17": "D", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D7", "23": "D", "24": "D13", "25": "D2", "26": "DX", "27": "休", "28": "D★", "29": "D", "30": "例"}, "林靜子": {"1": "D3", "2": "D", "3": "D", "4": "休", "5": "N★", "6": "V", "7": "例", "8": "N", "9": "N★", "10": "N★", "11": "N★", "12": "N★", "13": "休", "14": "例", "15": "D12", "16": "D", "17": "D", "18": "D3", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D", "25": "D", "26": "休", "27": "N★", "28": "N★", "29": "D", "30": "D7"}, "洪怡婷": {"1": "V", "2": "D", "3": "D", "4": "D2", "5": "D", "6": "休", "7": "D★", "8": "D9", "9": "例", "10": "D6", "11": "D11", "12": "D5", "13": "休", "14": "例", "15": "D", "16": "D7", "17": "D12", "18": "E", "19": "國", "20": "休", "21": "例", "22": "V", "23": "V", "24": "V", "25": "V", "26": "V", "27": "休", "28": "例", "29": "休", "30": "D3"}, "陳玉茹": {"1": "D6", "2": "D", "3": "D", "4": "D", "5": "D12", "6": "休", "7": "例", "8": "D6", "9": "D12", "10": "V", "11": "D10", "12": "D11", "13": "D", "14": "例", "15": "D2", "16": "D", "17": "D", "18": "D9", "19": "國", "20": "休", "21": "D", "22": "D", "23": "D", "24": "D", "25": "例", "26": "DX", "27": "休", "28": "例", "29": "休", "30": "V"}, "黃怡婷": {"1": "D12", "2": "D", "3": "D4", "4": "D", "5": "DX", "6": "休", "7": "例", "8": "D", "9": "D6", "10": "D", "11": "D", "12": "D", "13": "休", "14": "D★", "15": "D5", "16": "D", "17": "D", "18": "D11", "19": "例", "20": "休", "21": "例", "22": "D", "23": "D2", "24": "D", "25": "D14", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D13"}, "汪瑄柔": {"1": "休", "2": "V", "3": "V", "4": "D13", "5": "D9", "6": "D", "7": "D", "8": "D14", "9": "例", "10": "D9", "11": "D", "12": "D", "13": "休", "14": "例", "15": "D", "16": "D9", "17": "D", "18": "DX", "19": "國", "20": "休", "21": "例", "22": "產檢", "23": "D12", "24": "D", "25": "D7", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D8"}, "卓湘晴": {"1": "D14", "2": "例", "3": "D6", "4": "D", "5": "V", "6": "休", "7": "例", "8": "產檢", "9": "D2", "10": "D", "11": "D", "12": "12-8", "13": "D3", "14": "D", "15": "例", "16": "D2", "17": "D10", "18": "DX", "19": "D", "20": "休", "21": "例", "22": "12-8", "23": "D6", "24": "D", "25": "D", "26": "D7", "27": "休", "28": "例", "29": "產檢", "30": "D"}, "林昕澄": {"1": "D", "2": "D5", "3": "D", "4": "D", "5": "E", "6": "休", "7": "例", "8": "D7", "9": "D", "10": "D13", "11": "D", "12": "DX", "13": "V", "14": "例", "15": "D6", "16": "D", "17": "D", "18": "12-8", "19": "國", "20": "休", "21": "例", "22": "D9", "23": "D", "24": "D1", "25": "12-8", "26": "D13", "27": "休", "28": "D", "29": "D", "30": "例"}, "謝佩芳": {"1": "N★", "2": "N★", "3": "D", "4": "D9", "5": "D", "6": "休", "7": "N", "8": "D13", "9": "D", "10": "D5", "11": "D", "12": "例", "13": "N★", "14": "N★", "15": "D", "16": "例", "17": "D4", "18": "D", "19": "D", "20": "休", "21": "例", "22": "D11", "23": "D4", "24": "D", "25": "D", "26": "D1", "27": "休", "28": "例", "29": "休", "30": "國"}, "李宜鵑": {"1": "休", "2": "D10", "3": "D", "4": "D", "5": "D", "6": "休", "7": "例", "8": "D1", "9": "D", "10": "D", "11": "11-8", "12": "DX", "13": "休", "14": "例", "15": "D10", "16": "D", "17": "D", "18": "D13", "19": "國", "20": "D★", "21": "E★", "22": "例", "23": "D", "24": "D3", "25": "D8", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D11"}, "高靖緹": {"1": "D", "2": "D7", "3": "D", "4": "D", "5": "D4", "6": "休", "7": "例", "8": "D", "9": "D8", "10": "D", "11": "D6", "12": "D6", "13": "產檢", "14": "例", "15": "D", "16": "休", "17": "D2", "18": "D", "19": "國", "20": "D", "21": "D★", "22": "D5", "23": "例", "24": "D", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D4", "30": "D"}, "周芳怡": {"1": "D", "2": "D", "3": "D", "4": "D5", "5": "D", "6": "休", "7": "例", "8": "12-8", "9": "D", "10": "D7", "11": "D", "12": "D13", "13": "休", "14": "例", "15": "D", "16": "D5", "17": "D", "18": "D1", "19": "國", "20": "休", "21": "例", "22": "D", "23": "E", "24": "休", "25": "D4", "26": "DX", "27": "D", "28": "例", "29": "D6", "30": "D"}, "蘇奕臻": {"1": "12-8", "2": "12-8", "3": "12-8", "4": "12-8", "5": "12-8", "6": "休", "7": "例", "8": "12-8", "9": "12-8", "10": "12-8", "11": "V", "12": "12-8", "13": "D", "14": "例", "15": "12-8", "16": "12-8", "17": "12-8", "18": "12-8", "19": "國", "20": "D", "21": "例", "22": "12-8", "23": "12-8", "24": "12-8", "25": "12-8", "26": "12-8", "27": "休", "28": "例", "29": "12-8", "30": "12-8"}, "陳金燕": {"1": "V", "2": "12-8", "3": "12-8", "4": "12-8", "5": "12-8", "6": "休", "7": "例", "8": "12-8", "9": "12-8", "10": "12-8", "11": "V", "12": "12-8", "13": "D", "14": "例", "15": "12-8", "16": "12-8", "17": "12-8", "18": "休", "19": "國", "20": "休", "21": "例", "22": "12-8", "23": "12-8", "24": "12-8", "25": "休", "26": "12-8", "27": "D", "28": "D", "29": "12-8", "30": "12-8"}, "陳柏宇": {"1": "休", "2": "休", "3": "V", "4": "V", "5": "V", "6": "例", "7": "E★", "8": "E", "9": "E★", "10": "E", "11": "休", "12": "E", "13": "E★", "14": "例", "15": "休", "16": "E★", "17": "E", "18": "國", "19": "E★", "20": "E", "21": "E", "22": "E", "23": "例", "24": "E", "25": "E", "26": "E★", "27": "休", "28": "例", "29": "E", "30": "E★"}, "徐禾沐": {"1": "E", "2": "E", "3": "E★", "4": "E", "5": "E★", "6": "休", "7": "例", "8": "12-8", "9": "E", "10": "E", "11": "E★", "12": "V", "13": "E", "14": "例", "15": "E", "16": "E", "17": "E★", "18": "E", "19": "國", "20": "休", "21": "例", "22": "E★", "23": "E", "24": "喪", "25": "12-8", "26": "E", "27": "E★", "28": "喪", "29": "喪", "30": "喪"}, "黃品喆": {"1": "E", "2": "E★", "3": "E", "4": "E★", "5": "休", "6": "例", "7": "E", "8": "E", "9": "E", "10": "E★", "11": "E", "12": "E★", "13": "休", "14": "E", "15": "E★", "16": "例", "17": "婚", "18": "婚", "19": "婚", "20": "休", "21": "例", "22": "E", "23": "E★", "24": "E", "25": "E★", "26": "婚", "27": "休", "28": "例", "29": "E★", "30": "E"}, "鄒芮宸": {"1": "E★", "2": "E", "3": "E", "4": "E", "5": "例", "6": "E★", "7": "E", "8": "E★", "9": "E", "10": "E", "11": "E", "12": "例", "13": "E", "14": "E", "15": "E", "16": "例", "17": "E", "18": "E★", "19": "E", "20": "休", "21": "例", "22": "休", "23": "國", "24": "E★", "25": "E", "26": "E", "27": "休", "28": "E★", "29": "E", "30": "E"}, "林峙廷": {"1": "E", "2": "E", "3": "例", "4": "E", "5": "E", "6": "E", "7": "E", "8": "E", "9": "休", "10": "例", "11": "E", "12": "E", "13": "休", "14": "例", "15": "E", "16": "E", "17": "E", "18": "E", "19": "E", "20": "休", "21": "例", "22": "12-8", "23": "E", "24": "E", "25": "E", "26": "E", "27": "休", "28": "E", "29": "E", "30": "E"}, "曾雅筠": {"1": "12-8", "2": "12-8", "3": "12-8", "4": "12-8", "5": "E", "6": "休", "7": "例", "8": "休", "9": "V", "10": "V", "11": "V", "12": "V", "13": "V", "14": "例", "15": "休", "16": "休", "17": "國", "18": "12-8", "19": "E", "20": "E", "21": "E", "22": "E", "23": "例", "24": "12-8", "25": "12-8", "26": "12-8", "27": "E", "28": "E", "29": "休", "30": "12-8"}, "王婷玉": {"1": "休", "2": "V", "3": "N", "4": "N", "5": "N", "6": "N", "7": "例", "8": "休", "9": "N", "10": "N", "11": "N", "12": "N", "13": "N", "14": "例", "15": "N", "16": "N", "17": "N", "18": "N", "19": "國", "20": "休", "21": "例", "22": "N", "23": "N", "24": "N", "25": "N", "26": "N", "27": "休", "28": "例", "29": "N", "30": "N"}, "黃玉秀": {"1": "12-8", "2": "例", "3": "12-8", "4": "12-8", "5": "12-8", "6": "E", "7": "例", "8": "12-8", "9": "12-8", "10": "休", "11": "12-8", "12": "12-8", "13": "休", "14": "D", "15": "12-8", "16": "12-8", "17": "12-8", "18": "例", "19": "國", "20": "休", "21": "例", "22": "12-8", "23": "12-8", "24": "12-8", "25": "休", "26": "12-8", "27": "E", "28": "例", "29": "D9", "30": "12-8"}, "辜嬿潔": {"1": "D9", "2": "D8", "3": "D", "4": "DX", "5": "D1", "6": "休", "7": "例", "8": "D4", "9": "D", "10": "12-8", "11": "DX", "12": "D1", "13": "休", "14": "例", "15": "D4", "16": "D3", "17": "休", "18": "D10", "19": "國", "20": "N", "21": "N", "22": "D1", "23": "D9", "24": "D", "25": "例", "26": "休", "27": "N", "28": "例", "29": "D7", "30": "D1"}, "黃予婕": {"1": "D", "2": "12-8", "3": "D2", "4": "D6", "5": "D", "6": "休", "7": "例", "8": "休", "9": "D9", "10": "D", "11": "D2", "12": "D", "13": "E", "14": "例", "15": "D1", "16": "D14", "17": "D9", "18": "D4", "19": "國", "20": "休", "21": "例", "22": "休", "23": "12-8", "24": "D6", "25": "D", "26": "D8", "27": "D", "28": "例", "29": "D", "30": "12-8"}, "黃沂晨": {"1": "12-8", "2": "12-8", "3": "12-8", "4": "12-8", "5": "D", "6": "休", "7": "例", "8": "休", "9": "12-8", "10": "12-8", "11": "12-8", "12": "D", "13": "休", "14": "E", "15": "例", "16": "D", "17": "D3", "18": "D", "19": "D", "20": "休", "21": "例", "22": "D", "23": "12-8", "24": "12-8", "25": "12-8", "26": "12-8", "27": "休", "28": "例", "29": "D", "30": "12-8"}, "吳婉菁": {"1": "D", "2": "例", "3": "D7", "4": "D", "5": "12-8", "6": "V", "7": "例", "8": "D10", "9": "D1", "10": "D", "11": "V", "12": "D", "13": "D", "14": "例", "15": "D7", "16": "12-8", "17": "D", "18": "D6", "19": "國", "20": "休", "21": "例", "22": "D6", "23": "D", "24": "休", "25": "D", "26": "D14", "27": "E", "28": "例", "29": "D13", "30": "D"}, "江嘉琪": {"1": "D1", "2": "D", "3": "DX", "4": "DX", "5": "D7", "6": "V", "7": "例", "8": "12-8", "9": "D11", "10": "D12", "11": "D13", "12": "D4", "13": "休", "14": "例", "15": "V", "16": "V", "17": "V", "18": "DX", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D3", "24": "D", "25": "D9", "26": "D4", "27": "休", "28": "D", "29": "D2", "30": "D"}, "劉祐呈": {"1": "12-8", "2": "D2", "3": "例", "4": "D10", "5": "D", "6": "D", "7": "D", "8": "D2", "9": "例", "10": "12-8", "11": "12-8", "12": "12-8", "13": "D", "14": "例", "15": "D", "16": "D12", "17": "12-8", "18": "休", "19": "N", "20": "D", "21": "D", "22": "D", "23": "D", "24": "例", "25": "D", "26": "D10", "27": "休", "28": "例", "29": "D", "30": "D14"}, "何尚謙": {"1": "D7", "2": "D", "3": "D3", "4": "D", "5": "12-8", "6": "D", "7": "例", "8": "D", "9": "D13", "10": "D", "11": "D1", "12": "E", "13": "休", "14": "D", "15": "12-8", "16": "12-8", "17": "12-8", "18": "12-8", "19": "例", "20": "D", "21": "D", "22": "V", "23": "V", "24": "例", "25": "國", "26": "休", "27": "休", "28": "例", "29": "12-8", "30": "D10"}, "陳明瑄": {"1": "D", "2": "D4", "3": "D", "4": "D12", "5": "12-8", "6": "例", "7": "D", "8": "D", "9": "12-8", "10": "D8", "11": "DX", "12": "休", "13": "休", "14": "例", "15": "D", "16": "E", "17": "休", "18": "D14", "19": "國", "20": "D", "21": "例", "22": "D8", "23": "D1", "24": "D", "25": "D13", "26": "D5", "27": "休", "28": "例", "29": "D", "30": "D4"}, "簡晏欣": {"1": "D", "2": "12-8", "3": "D9", "4": "D", "5": "D", "6": "休", "7": "例", "8": "D12", "9": "D", "10": "D", "11": "D7", "12": "D2", "13": "休", "14": "N", "15": "例", "16": "D", "17": "D13", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D10", "25": "D", "26": "D12", "27": "休", "28": "N", "29": "D11", "30": "D"}, "黃佩琪": {"1": "D", "2": "D", "3": "D11", "4": "D", "5": "D3", "6": "休", "7": "例", "8": "D", "9": "D3", "10": "D10", "11": "D", "12": "12-8", "13": "休", "14": "例", "15": "D9", "16": "D", "17": "D", "18": "D", "19": "國", "20": "E", "21": "E", "22": "例", "23": "D5", "24": "D12", "25": "D", "26": "D2", "27": "休", "28": "例", "29": "D", "30": "D"}, "陳筠心": {"1": "D5", "2": "D", "3": "D13", "4": "V", "5": "V", "6": "休", "7": "例", "8": "D", "9": "V", "10": "D3", "11": "12-8", "12": "D8", "13": "D", "14": "例", "15": "12-8", "16": "D", "17": "D7", "18": "12-8", "19": "D", "20": "休", "21": "例", "22": "D12", "23": "D", "24": "D", "25": "D5", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D6"}, "李宜諮": {"1": "D11", "2": "D3", "3": "D5", "4": "休", "5": "D11", "6": "D", "7": "例", "8": "D8", "9": "D", "10": "D", "11": "D3", "12": "D", "13": "休", "14": "例", "15": "D", "16": "12-8", "17": "12-8", "18": "D8", "19": "國", "20": "休", "21": "例", "22": "休", "23": "12-8", "24": "D8", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D3", "30": "D"}, "張芸甄": {"1": "12-8", "2": "D10", "3": "D1", "4": "D", "5": "D13", "6": "休", "7": "例", "8": "D", "9": "D", "10": "D4", "11": "D", "12": "D14", "13": "休", "14": "例", "15": "D", "16": "D8", "17": "D", "18": "D12", "19": "國", "20": "休", "21": "例", "22": "12-8", "23": "休", "24": "D4", "25": "12-8", "26": "D6", "27": "D", "28": "例", "29": "D", "30": "D12"}, "余宗芸": {"1": "D", "2": "D6", "3": "D", "4": "12-8", "5": "D", "6": "休", "7": "例", "8": "D5", "9": "D", "10": "D2", "11": "D", "12": "12-8", "13": "休", "14": "例", "15": "D13", "16": "D", "17": "D5", "18": "12-8", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D13", "24": "休", "25": "D1", "26": "D", "27": "D", "28": "例", "29": "D1", "30": "D"}, "陳玥汝": {"1": "例", "2": "D", "3": "12-8", "4": "DX", "5": "D5", "6": "V", "7": "例", "8": "D", "9": "D", "10": "12-8", "11": "D9", "12": "D", "13": "休", "14": "例", "15": "D3", "16": "D", "17": "D1", "18": "D", "19": "國", "20": "D", "21": "例", "22": "D10", "23": "D7", "24": "12-8", "25": "D11", "26": "D", "27": "休", "28": "例", "29": "12-8", "30": "休"}, "鄒昀珊": {"1": "D", "2": "D12", "3": "D", "4": "D4", "5": "D", "6": "休", "7": "例", "8": "D", "9": "D5", "10": "D", "11": "D", "12": "D10", "13": "休", "14": "例", "15": "D", "16": "D4", "17": "D", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D2", "23": "D", "24": "D14", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D2"}, "蕭睬容": {"1": "D", "2": "D14", "3": "D", "4": "D8", "5": "D", "6": "休", "7": "例", "8": "D", "9": "D7", "10": "D", "11": "D5", "12": "D", "13": "休", "14": "例", "15": "D11", "16": "婚", "17": "婚", "18": "婚", "19": "國", "20": "休", "21": "例", "22": "D4", "23": "D", "24": "D2", "25": "D", "26": "婚", "27": "休", "28": "例", "29": "D5", "30": "D"}, "盧貞君": {"1": "D", "2": "D", "3": "D", "4": "D", "5": "D", "6": "休", "7": "例", "8": "V", "9": "D", "10": "D", "11": "D", "12": "D", "13": "休", "14": "例", "15": "D", "16": "D", "17": "D", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D"}, "朱庭宜": {"1": "D", "2": "D", "3": "D", "4": "D", "5": "D", "6": "休", "7": "例", "8": "D", "9": "D", "10": "D", "11": "D", "12": "D", "13": "休", "14": "例", "15": "D", "16": "D", "17": "D", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D"}, "鄧邦偉": {"1": "D", "2": "D", "3": "D", "4": "D", "5": "D", "6": "休", "7": "例", "8": "D", "9": "D", "10": "D", "11": "D", "12": "D", "13": "休", "14": "例", "15": "D", "16": "D", "17": "D", "18": "D", "19": "國", "20": "休", "21": "例", "22": "D", "23": "D", "24": "D", "25": "D", "26": "D", "27": "休", "28": "例", "29": "D", "30": "D"}};
+
+const SCHEDULES = { '2026-6': JUNE_SCHEDULE, '2026-7': JULY_SCHEDULE };
+const YEAR_TW = 115;
+const MONTH_LABELS = { '2026-6': '115年6月', '2026-7': '115年7月' };
+
+let currentEmpId = null;
+let currentName = null;
+let viewYear = 2026;
+let viewMonth = 7;
+
+// ══════════════════════════════════════════
+// 班別解析與顯示
+// ══════════════════════════════════════════
+function parseDisplayShift(raw){
+  if(!raw) return {cls:'shift-off', label:'—', star:false};
+  const v = raw.trim();
+  const offSet = ['休','例','國','公','婚','喪','產檢','病'];
+  if(offSet.includes(v)) return {cls:'shift-off', label:v, star:false};
+  if(v==='V') return {cls:'shift-off', label:'特休', star:false};
+  if(v==='H') return {cls:'shift-off', label:'排休', star:false};
+  if(v==='12-8'||v==='11-8') return {cls:'shift-128', label:v, star:false};
+  const star = v.includes('★');
+  const clean = v.replace('★','').replace('*','');
+  if(clean.startsWith('E')) return {cls:'shift-E', label:'小夜', star};
+  if(clean.startsWith('N')) return {cls:'shift-N', label:'大夜', star};
+  if(/^D\d+/.test(clean)) return {cls:'shift-special', label:clean, star};
+  if(clean.startsWith('D')) return {cls:'shift-D', label:'白班', star};
+  return {cls:'shift-off', label:v, star:false};
+}
+
+function ctrlLabel(raw, dayOfWeek){
+  if(!raw) return '—';
+  if(raw.includes('★')){
+    if(raw.startsWith('E')) return '小夜控台 ★';
+    if(raw.startsWith('N')) return '大夜控台 ★';
+    if(raw.startsWith('D')) return '白班控台 ★';
+  }
+  return '—';
+}
+
+// ══════════════════════════════════════════
+// 登入 / 登出
+// ══════════════════════════════════════════
+const SHARED_PASSWORD = 'A030';
+
+function doLogin(){
+  const pw = document.getElementById('pwInput').value.trim();
+  const id = document.getElementById('empIdInput').value.trim();
+  const err = document.getElementById('loginErr');
+  if(!pw){ err.style.display='block'; err.textContent='請輸入通用密碼'; return; }
+  if(pw !== SHARED_PASSWORD){ err.style.display='block'; err.textContent='密碼錯誤，請確認後再試一次'; return; }
+  if(!id){ err.style.display='block'; err.textContent='請輸入員編'; return; }
+  const found = Object.entries(EMP_ID_MAP).find(([name, eid]) => eid === id);
+  if(!found){ err.style.display='block'; err.textContent='查無此員編，請確認後再試一次'; return; }
+  err.style.display='none';
+  currentName = found[0];
+  currentEmpId = found[1];
+  localStorage.setItem('my_schedule_emp', currentEmpId);
+  localStorage.setItem('my_schedule_pw', pw);
+  showPage('calendar');
+  renderProfile();
+  renderCalendar();
+}
+function doLogout(){
+  currentEmpId = null; currentName = null;
+  localStorage.removeItem('my_schedule_emp');
+  localStorage.removeItem('my_schedule_pw');
+  document.getElementById('empIdInput').value='';
+  document.getElementById('pwInput').value='';
+  document.getElementById('loginErr').style.display='none';
+  showPage('login');
+}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+}
+
+function renderProfile(){
+  document.getElementById('profileName').textContent = currentName;
+  document.getElementById('profileEmp').textContent = '員編 ' + currentEmpId;
+  document.getElementById('avatarTxt').textContent = currentName.slice(-2);
+}
+
+// ══════════════════════════════════════════
+// 月份切換
+// ══════════════════════════════════════════
+function changeMonth(delta){
+  let m = viewMonth + delta;
+  let y = viewYear;
+  if(m > 12){ m = 1; y++; }
+  if(m < 1){ m = 12; y--; }
+  const key = y+'-'+m;
+  if(!SCHEDULES[key]){ return; } // 只有有資料的月份可切換
+  viewMonth = m; viewYear = y;
+  renderCalendar();
+}
+
+// ══════════════════════════════════════════
+// 月曆渲染
+// ══════════════════════════════════════════
+function renderCalendar(){
+  const key = viewYear+'-'+viewMonth;
+  const schedule = SCHEDULES[key];
+  document.getElementById('monthTitle').textContent = MONTH_LABELS[key] || (viewYear+'年'+viewMonth+'月');
+  document.getElementById('prevBtn').disabled = !SCHEDULES[(viewMonth-1<1?viewYear-1:viewYear)+'-'+(viewMonth-1<1?12:viewMonth-1)];
+  document.getElementById('nextBtn').disabled = !SCHEDULES[(viewMonth+1>12?viewYear+1:viewYear)+'-'+(viewMonth+1>12?1:viewMonth+1)];
+
+  if(!schedule){
+    document.getElementById('calGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#9ca3af;">本月尚無班表資料</div>';
+    document.getElementById('statStrip').innerHTML='';
+    return;
+  }
+
+  const personalSched = schedule[currentName] || {};
+  const daysInMonth = new Date(viewYear, viewMonth, 0).getDate();
+  const firstDay = new Date(viewYear, viewMonth-1, 1).getDay();
+  const today = new Date();
+  const isThisMonth = today.getFullYear()===viewYear && (today.getMonth()+1)===viewMonth;
+  const todayDate = today.getDate();
+
+  // 統計
+  let countD=0, countE=0, countN=0, count128=0, countOff=0, countStar=0;
+  Object.values(personalSched).forEach(raw=>{
+    const s = parseDisplayShift(raw);
+    if(s.star) countStar++;
+    if(s.cls==='shift-D') countD++;
+    else if(s.cls==='shift-E') countE++;
+    else if(s.cls==='shift-N') countN++;
+    else if(s.cls==='shift-128') count128++;
+    else if(s.cls==='shift-special') countD++;
+    else countOff++;
+  });
+  document.getElementById('statStrip').innerHTML = `
+    <div class="stat-pill"><div class="num">${countD}</div><div class="lbl">白班</div></div>
+    <div class="stat-pill"><div class="num">${countE+countN}</div><div class="lbl">小／大夜</div></div>
+    <div class="stat-pill"><div class="num">${countStar}</div><div class="lbl">控台次數</div></div>
+    <div class="stat-pill"><div class="num">${countOff}</div><div class="lbl">休假</div></div>
+  `;
+
+  // 月曆格
+  let html = '';
+  for(let i=0;i<firstDay;i++){ html += '<div class="cal-cell empty"></div>'; }
+  for(let d=1; d<=daysInMonth; d++){
+    const raw = personalSched[String(d)] || '';
+    const s = parseDisplayShift(raw);
+    const isToday = isThisMonth && d===todayDate;
+    html += `<div class="cal-cell${isToday?' today':''}" onclick="openDayModal(${d},'${raw}')">
+      <div class="dnum">${d}</div>
+      <span class="shift-tag ${s.cls}">${s.label}${s.star?'<span class=\"star\">★</span>':''}</span>
+    </div>`;
+  }
+  const totalCells = firstDay + daysInMonth;
+  const remain = (7 - (totalCells % 7)) % 7;
+  for(let i=0;i<remain;i++){ html += '<div class="cal-cell empty"></div>'; }
+  document.getElementById('calGrid').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// 單日詳情
+// ══════════════════════════════════════════
+const DAY_ZH = ['日','一','二','三','四','五','六'];
+function openDayModal(day, raw){
+  const date = new Date(viewYear, viewMonth-1, day);
+  const dow = DAY_ZH[date.getDay()];
+  document.getElementById('dm-date').textContent = viewMonth+'月'+day+'日（'+dow+'）';
+  const s = parseDisplayShift(raw);
+  const shiftText = s.label + (s.star ? ' ★' : '');
+  document.getElementById('dm-shift').textContent = shiftText;
+  document.getElementById('dm-ctrl').textContent = s.star ? ctrlLabel(raw, dow) : '—';
+  document.getElementById('dm-raw').textContent = raw || '（無排班）';
+  document.getElementById('dayModal').classList.add('open');
+}
+function closeDayModal(){
+  document.getElementById('dayModal').classList.remove('open');
+}
+document.getElementById('dayModal').addEventListener('click', e=>{
+  if(e.target===e.currentTarget) closeDayModal();
+});
+
+// ══════════════════════════════════════════
+// 初始化：嘗試自動登入
+// ══════════════════════════════════════════
+(function init(){
+  const saved = localStorage.getItem('my_schedule_emp');
+  const savedPw = localStorage.getItem('my_schedule_pw');
+  if(saved && savedPw === SHARED_PASSWORD){
+    const found = Object.entries(EMP_ID_MAP).find(([name, eid]) => eid === saved);
+    if(found){
+      currentName = found[0];
+      currentEmpId = found[1];
+      showPage('calendar');
+      renderProfile();
+      renderCalendar();
+      return;
+    }
+  }
+  showPage('login');
+})();
+</script>
+</body>
+</html>
