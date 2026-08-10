@@ -126,7 +126,7 @@ tbody td{padding:0;border-right:1px solid #000!important;vertical-align:middle;}
 .dz .ci-chip{
   background:transparent;color:#000;
   border:none;padding:0;border-radius:0;
-  font-size:clamp(12px,2vw,18px);font-weight:900;
+  font-size:clamp(16px,2.5vw,24px);font-weight:900;
   white-space:nowrap;cursor:grab;
   line-height:1.3;display:block;
   width:100%;text-align:center;
@@ -917,7 +917,7 @@ function buildTableBody(dayStr){
     }
 
     const slots = info.ns
-      ? [{k:'as',cls:'bl',lbl:'窗口',span:1},{k:'ac',cls:'',lbl:'點眼藥',span:1},{k:'shifts',cls:'',span:8,shifts:true}]
+      ? [{k:'as',cls:'bl',lbl:'窗口',span:1,small:true},{k:'ac',cls:'',lbl:'點眼藥',span:1,small:true},{k:'shifts',cls:'',span:8,shifts:true}]
       : [
           {k:'as',cls:'bl'},{k:'ac',cls:''},
           {k:'ps',cls:'bl'},{k:'pc',cls:''},
@@ -928,6 +928,7 @@ function buildTableBody(dayStr){
     slots.forEach(sl=>{
       const td = document.createElement('td');
       td.className = `td-p${sl.cls?' '+sl.cls:''}`;
+      if(sl.small) td.style.cssText='max-width:60px;width:60px;';
       if(sl.span) td.colSpan = sl.span;
       if(sl.dummy){ td.style.background='#f8f8f8'; tr.appendChild(td); return; }
       if(sl.shifts){
@@ -935,15 +936,25 @@ function buildTableBody(dayStr){
         const makeShiftRow = (lbl, bg, col, list) => {
           if(!list||!list.length) return;
           const row = document.createElement('div');
-          row.style.cssText='display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:6px;width:100%;padding:6px 4px;border-bottom:2px solid #000;background:#fff;';
+          row.style.cssText='display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:2px;width:100%;padding:2px 3px;border-bottom:1px solid #ccc;background:#fff;box-sizing:border-box;';
           const tag = document.createElement('span');
-          tag.style.cssText='background:#fff;color:#000;font-size:16px;font-weight:900;padding:3px 8px;border-radius:3px;min-width:44px;text-align:center;flex-shrink:0;border:2px solid #000;';
+          tag.style.cssText='background:#fff;color:#000;font-size:11px;font-weight:900;padding:1px 5px;border-radius:3px;min-width:30px;text-align:center;flex-shrink:0;border:1px solid #aaa;';
           tag.textContent=lbl;
           row.appendChild(tag);
           list.forEach(s=>{
             const c=document.createElement('span');
-            c.style.cssText='font-size:18px;font-weight:900;color:#000;margin:0 8px;';
+            c.style.cssText='font-size:11px;font-weight:700;color:#000;flex:1;text-align:center;cursor:pointer;padding:1px 2px;border-radius:3px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            c.contentEditable='true';
+            c.spellcheck=false;
+            c.addEventListener('focus',()=>{ c.style.background='#fffbea'; });
+            c.addEventListener('blur',()=>{ c.style.background='transparent'; saveData(); });
             c.textContent=s.name+(s.star?' ★':'');
+            c.title='點擊可拖到其他格子';
+            c.draggable=true;
+            c.addEventListener('dragstart',e=>{
+              e.dataTransfer.setData('text/plain',s.name);
+              dragName=s.name;
+            });
             row.appendChild(c);
           });
           td.appendChild(row);
@@ -1510,7 +1521,7 @@ function buildOT(shifts){
     const val=otList[i]?otList[i].name:'';
     div.className='otc'+(val?' pre':'');
     div.innerHTML=`
-      <input value="${val?i+1+'. '+val:''}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:18px;font-weight:900;background:transparent;color:#000;text-align:center;padding:6px 2px;display:block;">
+      <input value="${val?i+1+'. '+val:''}" placeholder="—" style="width:100%;border:none;outline:none;font-family:var(--f);font-size:13px;font-weight:700;background:transparent;color:#000;text-align:center;padding:3px 2px;display:block;">
       <input placeholder="" style="width:100%;border:none;border-top:1px solid #555;outline:none;font-family:var(--f);font-size:13px;color:#000;text-align:center;background:#fff;padding:5px;display:block;">`;;
     g.appendChild(div);
   }
