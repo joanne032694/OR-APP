@@ -938,12 +938,12 @@ function buildTableBody(dayStr){
           const row = document.createElement('div');
           row.style.cssText='display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:2px;width:100%;padding:2px 3px;border-bottom:1px solid #ccc;background:#fff;box-sizing:border-box;';
           const tag = document.createElement('span');
-          tag.style.cssText='background:#fff;color:#000;font-size:11px;font-weight:900;padding:1px 5px;border-radius:3px;min-width:30px;text-align:center;flex-shrink:0;border:1px solid #aaa;';
+          tag.style.cssText='background:#fff;color:#000;font-size:12px;font-weight:900;padding:0 5px;border-radius:3px;min-width:30px;text-align:center;flex-shrink:0;border:1px solid #aaa;line-height:1;';
           tag.textContent=lbl;
           row.appendChild(tag);
           list.forEach(s=>{
             const c=document.createElement('span');
-            c.style.cssText='font-size:11px;font-weight:700;color:#000;flex:1;text-align:center;cursor:pointer;padding:1px 2px;border-radius:3px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            c.style.cssText='font-size:14px;font-weight:900;color:#000;flex:1;text-align:center;cursor:pointer;padding:0 3px;border-radius:3px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1;';
             c.contentEditable='true';
             c.spellcheck=false;
             c.addEventListener('focus',()=>{ c.style.background='#fffbea'; });
