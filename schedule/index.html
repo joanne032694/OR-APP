@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>手術室班表查詢 - 9月</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans TC',sans-serif;background:#f5f5f5;padding:20px;}
+.container{max-width:900px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.header{background:#1a56a0;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0;}
+.header h1{font-size:28px;margin-bottom:5px;}
+.header p{font-size:14px;opacity:0.9;}
+.login{padding:40px;text-align:center;}
+.login input{
+  width:100%;max-width:300px;padding:12px;margin:10px 0;
+  font-size:16px;border:2px solid #ddd;border-radius:6px;
+}
+.login button{
+  background:#1a56a0;color:#fff;padding:12px 30px;
+  font-size:16px;border:none;border-radius:6px;cursor:pointer;margin-top:10px;
+}
+.login button:hover{background:#0f3778;}
+.error{color:red;font-size:14px;margin-top:10px;display:none;}
+.profile{background:#f9f9f9;padding:20px;margin:20px;border-radius:6px;display:none;}
+.profile h2{color:#1a56a0;margin-bottom:10px;}
+.logout-btn{background:#999;padding:8px 16px;font-size:14px;float:right;}
+.calendar{display:none;padding:20px;}
+.month-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.month-nav button{background:#1a56a0;color:#fff;border:none;padding:10px 15px;border-radius:6px;cursor:pointer;}
+.month-nav h2{color:#1a56a0;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px;}
+.stat-box{background:#f0f4f8;padding:15px;border-radius:6px;text-align:center;}
+.stat-box .num{font-size:24px;font-weight:bold;color:#1a56a0;}
+.stat-box .label{font-size:12px;color:#666;margin-top:5px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;}
+.cal-day{
+  border:2px solid #ddd;border-radius:6px;padding:10px;
+  text-align:center;cursor:pointer;min-height:80px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+}
+.cal-day .date{font-weight:bold;margin-bottom:5px;}
+.cal-day .shift{font-size:14px;font-weight:bold;padding:4px 6px;border-radius:4px;margin:2px 0;}
+.shift-D{background:#e8f0fa;color:#1a56a0;}
+.shift-E{background:#f3e8ff;color:#6b21a8;}
+.shift-N{background:#fdf2f8;color:#be185d;}
+.shift-128{background:#fef3cd;color:#b45309;}
+.shift-休{background:#fee2e2;color:#c0392b;}
+.shift-例{background:#fee2e2;color:#c0392b;}
+.shift-國{background:#fee2e2;color:#c0392b;}
+.shift-other{background:#fef9c3;color:#92400e;}
+.legend{background:#f9f9f9;padding:15px;margin:20px;border-radius:6px;font-size:13px;}
+.legend-item{display:inline-block;margin-right:20px;margin-top:5px;}
+.star{color:#b45309;font-weight:bold;}
+</style>
+</head>
+<body>
 
+<div class="container">
+  <div class="header">
+    <h1>📅 手術室班表查詢系統</h1>
+    <p>115年9月班表 | 員工專屬</p>
+  </div>
+
+  <div class="login" id="loginArea">
+    <h2>登入查詢</h2>
+    <input type="password" id="password" placeholder="輸入通用密碼" />
+    <input type="text" id="empId" placeholder="輸入員編" inputmode="numeric" />
+    <br/>
+    <button onclick="login()">查詢班表</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="profile" id="profileArea">
+    <button class="logout-btn" onclick="logout()">↩ 登出</button>
+    <h2 id="empName"></h2>
+    <p>員編: <span id="empIdDisplay"></span></p>
+  </div>
+
+  <div class="calendar" id="calendarArea">
+    <div class="month-nav">
+      <h2 id="monthTitle">115年9月</h2>
+    </div>
+    
+    <div class="stats" id="stats"></div>
+
+    <div style="text-align:center;margin-bottom:20px;font-size:14px;color:#666;">
+      （點擊日期查看詳細班別）
+    </div>
+
+    <div class="cal-grid" id="calGrid"></div>
+
+    <div class="legend">
+      <strong>班別說明：</strong><br/>
+      <div class="legend-item"><span class="shift shift-D" style="display:inline-block;width:30px;">D</span> = 白班</div>
+      <div class="legend-item"><span class="shift shift-E" style="display:inline-block;width:30px;">E</span> = 小夜</div>
+      <div class="legend-item"><span class="shift shift-N" style="display:inline-block;width:30px;">N</span> = 大夜</div>
+      <div class="legend-item"><span class="shift shift-128" style="display:inline-block;width:30px;">12-8</span> = 12-8班</div>
+      <div class="legend-item"><span class="shift shift-休" style="display:inline-block;width:30px;">休</span> = 休假/例假</div>
+      <div class="legend-item"><span class="star">★</span> = 控台</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHARED_PASSWORD = 'A030';
+
+const EMP_NAMES = {
+  '11192': '蕭帆妤', '10273': '王婷婷', '10361': '李靜怡', '10367': '張瑋恩',
+  '10740': '李佳容', '10922': '陳玉茹', '11598': '羅秀如', '12295': '林奕辰',
+  '12483': '林靜子', '12847': '郭妍伶', '13288': '王嘉羚', '13565': '程郁淳',
+  '14040': '黃怡婷', '14055': '洪怡婷', '14190': '楊衣甄', '14444': '李宜鵑',
+  '14536': '張佩琪', '14492': '謝佩芳', '14635': '汪瑄柔', '14958': '林昕澄',
+  '15068': '高靖緹', '15268': '卓湘晴', '15321': '陳柏宇', '15349': '黃品喆',
+  '15423': '周芳怡', '15508': '徐禾沐', '15544': '黃淑嬅', '15664': '陳金燕',
+  '15813': '曾雅筠', '16016': '林峙廷', '16304': '王婷玉', '16343': '黃玉秀',
+  '16360': '辜嬿潔', '16565': '黃予婕', '16587': '黃沂晨', '16601': '吳婉菁',
+  '16650': '劉祐呈', '16704': '江嘉琪', '16900': '李宜諮', '16926': '何尚謙',
+  '16946': '陳明瑄', '16947': '簡晏欣', '16948': '黃佩琪', '16949': '陳筠心',
+  '17073': '張芸甄', '17149': '余宗芸', '17212': '陳玥汝', '17223': '鄒昀珊',
+  '17307': '蕭睬容', '17565': '賴砡安', '11468': '盧貞君', '15491': '朱庭宜',
+  '15971': '鄧邦偉'
+};
+
+const SCHEDULE_9月 = {
+  "蕭帆妤": {1:"D",2:"D",3:"D",4:"D",5:"休",6:"例",7:"D",8:"D",9:"D",10:"D",11:"D",12:"休",13:"例",14:"D",15:"D",16:"D",17:"D",18:"D",19:"休",20:"例",21:"D",22:"D",23:"D",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "王婷婷": {1:"D",2:"D",3:"D",4:"D",5:"休",6:"例",7:"D",8:"D",9:"D",10:"D",11:"D",12:"休",13:"例",14:"D",15:"D",16:"D",17:"D",18:"D",19:"休",20:"例",21:"D",22:"D",23:"D",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "李靜怡": {1:"D",2:"D8",3:"DX",4:"D12",5:"休",6:"例",7:"V",8:"D8",9:"D",10:"D11",11:"D8",12:"休",13:"例",14:"D",15:"D",16:"D",17:"D6",18:"D",19:"休",20:"D值",21:"D",22:"例",23:"D",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D13"},
+  "張瑋恩": {1:"D",2:"D9",3:"D13",4:"V",5:"V",6:"例",7:"休",8:"D",9:"D10",10:"D",11:"D",12:"D",13:"例",14:"D",15:"D8",16:"D",17:"休",18:"D",19:"D",20:"例",21:"D",22:"D",23:"D8",24:"D10",25:"國",26:"休",27:"例",28:"國",29:"D13",30:"D12"},
+  "李佳容": {1:"D",2:"D",3:"D",4:"V",5:"休",6:"例",7:"休",8:"D1",9:"D",10:"D5",11:"D12",12:"D",13:"例",14:"D",15:"D",16:"D8",17:"D",18:"D7",19:"休",20:"例",21:"D",22:"D",23:"D9",24:"D",25:"D★",26:"休",27:"例",28:"國",29:"國",30:"D10"},
+  "王嘉羚": {1:"D10",2:"D",3:"D10",4:"V",5:"休",6:"例",7:"D9",8:"D",9:"D",10:"D7",11:"D",12:"休",13:"例",14:"D",15:"D6",16:"D",17:"D",18:"D",19:"休",20:"例",21:"D",22:"D5",23:"D",24:"D12",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "張佩琪": {1:"D8",2:"休",3:"D",4:"D",5:"E★",6:"例",7:"D7",8:"D",9:"D",10:"D14",11:"D",12:"休",13:"例",14:"D2",15:"D13",16:"D4",17:"D",18:"12-8",19:"休",20:"例",21:"D",22:"D14",23:"D",24:"D",25:"國",26:"休",27:"例",28:"國",29:"V",30:"D5"},
+  "林奕辰": {1:"D14",2:"D",3:"D5",4:"D",5:"休",6:"例",7:"D",8:"D9",9:"休",10:"D12",11:"D6",12:"例",13:"D",14:"D1",15:"V",16:"D",17:"D12",18:"D",19:"休",20:"例",21:"D",22:"D4",23:"D14",24:"D2",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "羅秀如": {1:"D",2:"D",3:"D6",4:"D",5:"休",6:"例",7:"D12",8:"D",9:"D8",10:"D",11:"D",12:"休",13:"例",14:"D8",15:"D",16:"D10",17:"D",18:"D",19:"休",20:"例",21:"D",22:"D9",23:"D",24:"D14",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "程郁淳": {1:"D",2:"D5",3:"12-8",4:"D",5:"休",6:"例",7:"12-8",8:"12-8",9:"D",10:"12-8",11:"D",12:"休",13:"例",14:"國",15:"D9",16:"D",17:"D3",18:"休",19:"休",20:"例",21:"D5",22:"12-8",23:"D12",24:"D1",25:"國",26:"D★",27:"D",28:"例",29:"D",30:"D11"},
+  "楊衣甄": {1:"N★",2:"D",3:"D14",4:"D",5:"休",6:"D★",7:"D",8:"D12",9:"D",10:"D9",11:"例",12:"休",13:"例",14:"D",15:"D10",16:"D",17:"D14",18:"休",19:"例",20:"N★",21:"D",22:"D",23:"D",24:"D13",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D6"},
+  "黃淑嬅": {1:"V",2:"休",3:"D7",4:"D",5:"D",6:"例",7:"D14",8:"D",9:"D2",10:"D",11:"D",12:"休",13:"例",14:"D",15:"D1",16:"D",17:"D5",18:"D",19:"休",20:"例",21:"國",22:"D",23:"D",24:"D4",25:"D",26:"休",27:"例",28:"國",29:"D8",30:"D"},
+  "郭妍伶": {1:"D",2:"D2",3:"休",4:"D10",5:"D",6:"例",7:"D2",8:"D14",9:"D4",10:"D",11:"D7",12:"休",13:"例",14:"D",15:"D",16:"D",17:"D9",18:"D",19:"休",20:"例",21:"D7",22:"D13",23:"D",24:"D11",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "林靜子": {1:"N",2:"N★",3:"休",4:"V",5:"N★",6:"N★",7:"N★",8:"例",9:"國",10:"N★",11:"N★",12:"休",13:"例",14:"國",15:"N★",16:"N",17:"N★",18:"D12",19:"休",20:"例",21:"N★",22:"N",23:"休",24:"N",25:"N★",26:"N★",27:"N★",28:"N★",29:"例",30:"N★"},
+  "洪怡婷": {1:"D",2:"休",3:"DX",4:"D",5:"D",6:"例",7:"D5",8:"D10",9:"E",10:"V",11:"國",12:"休",13:"例",14:"D6",15:"12-8",16:"D",17:"休",18:"D",19:"D",20:"例",21:"D11",22:"D7",23:"D13",24:"D",25:"國",26:"休",27:"例",28:"D",29:"D4",30:"D"},
+  "陳玉茹": {1:"D3",2:"D",3:"D9",4:"D14",5:"休",6:"例",7:"D",8:"D",9:"D13",10:"D",11:"D",12:"例",13:"D★",14:"D5",15:"休",16:"D",17:"D4",18:"D",19:"休",20:"例",21:"V",22:"V",23:"D7",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D11",30:"D"},
+  "黃怡婷": {1:"V",2:"D4",3:"D",4:"D",5:"休",6:"例",7:"D6",8:"D",9:"D5",10:"D",11:"D10",12:"休",13:"例",14:"D3",15:"D11",16:"D13",17:"D11",18:"國",19:"休",20:"例",21:"D2",22:"D",23:"D",24:"D",25:"國",26:"D",27:"D★",28:"D★",29:"例",30:"D"},
+  "汪瑄柔": {1:"產",2:"產",3:"產",4:"產",5:"休",6:"例",7:"產",8:"產",9:"產",10:"產",11:"產",12:"休",13:"例",14:"產",15:"產",16:"產",17:"產",18:"產",19:"休",20:"例",21:"產",22:"D",23:"D10",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D",30:"12-8"},
+  "陳玥汝": {1:"D9",2:"D",3:"D",4:"D5",5:"休",6:"例",7:"D",8:"D2",9:"D14",10:"休",11:"D",12:"D",13:"例",14:"D10",15:"D12",16:"D7",17:"D",18:"D3",19:"休",20:"例",21:"國",22:"休",23:"D11",24:"D",25:"國",26:"休",27:"例",28:"D",29:"D14",30:"D"},
+  "林昕澄": {1:"D",2:"D11",3:"D",4:"D13",5:"休",6:"例",7:"D",8:"D13",9:"D1",10:"D",11:"D",12:"休",13:"例",14:"休",15:"D2",16:"D9",17:"D",18:"D",19:"例",20:"D★",21:"D14",22:"D10",23:"D",24:"D5",25:"國",26:"D",27:"例",28:"國",29:"休",30:"D7"},
+  "謝佩芳": {1:"V",2:"N",3:"N★",4:"N★",5:"休",6:"例",7:"休",8:"N★",9:"N★",10:"N",11:"例",12:"N★",13:"N★",14:"N★",15:"N",16:"N★",17:"休",18:"N★",19:"N★",20:"例",21:"N",22:"N★",23:"N★",24:"N★",25:"國",26:"休",27:"例",28:"國",29:"N★",30:"D9"},
+  "李宜鵑": {1:"D5",2:"D",3:"休",4:"12-8",5:"D",6:"例",7:"D",8:"D",9:"D6",10:"D",11:"V",12:"休",13:"例",14:"D9",15:"12-8",16:"D12",17:"D",18:"DX",19:"休",20:"例",21:"D3",22:"D11",23:"D1",24:"D",25:"國",26:"休",27:"例",28:"國",29:"D",30:"D"},
+  "黃玉秀": {1:"12-8",2:"12-8",3:"D",4:"V",5:"休",6:"例",7:"12-8",8:"12-8",9:"休",10:"12-8",11:"12-8",12:"D",13:"例",14:"休",15:"D",16:"12-8",17:"12-8",18:"12-8",19:"例",20:"D",21:"12-8",22:"12-8",23:"12-8",24:"12-8",25:"國",26:"休",27:"例",28:"國",29:"12-8",30:"12-8"},
+  "辜嬿潔": {1:"D",2:"休",3:"N",4:"N",5:"N",6:"例",7:"N",8:"N",9:"N",10:"休",11:"N",12:"N",13:"N",14:"N",15:"D",16:"例",17:"N",18:"N",19:"N",20:"例",21:"休",22:"國",23:"N",24:"D6",25:"D",26:"休",27:"例",28:"國",29:"N",30:"N"},
+  "陳金燕": {1:"休",2:"12-8",3:"D",4:"12-8",5:"D",6:"E",7:"例",8:"喪",9:"12-8",10:"12-8",11:"12-8",12:"E",13:"例",14:"12-8",15:"D",16:"12-8",17:"12-8",18:"12-8",19:"喪",20:"例",21:"休",22:"休",23:"12-8",24:"12-8",25:"國",26:"休",27:"例",28:"國",29:"12-8",30:"12-8"}
+};
+
+let currentEmp = null;
+let currentName = null;
+
+function getShiftClass(shift) {
+  if (!shift) return 'shift-休';
+  const s = String(shift).trim();
+  if (s.includes('E')) return 'shift-E';
+  if (s.includes('N')) return 'shift-N';
+  if (s === '12-8') return 'shift-128';
+  if (s.includes('D')) return 'shift-D';
+  if (['休','例','國','公','婚','喪','產'].includes(s)) return 'shift-休';
+  return 'shift-other';
+}
+
+function getShiftDisplay(shift) {
+  if (!shift) return '—';
+  const s = String(shift).trim();
+  if (s.includes('★')) return s.replace('★','') + ' <span class="star">★</span>';
+  return s;
+}
+
+function login() {
+  const pw = document.getElementById('password').value;
+  const id = document.getElementById('empId').value;
+  const err = document.getElementById('error');
+  
+  if (pw !== SHARED_PASSWORD) {
+    err.textContent = '密碼錯誤！';
+    err.style.display = 'block';
+    return;
+  }
+  
+  if (!EMP_NAMES[id]) {
+    err.textContent = '員編不存在！';
+    err.style.display = 'block';
+    return;
+  }
+  
+  currentEmp = id;
+  currentName = EMP_NAMES[id];
+  err.style.display = 'none';
+  
+  document.getElementById('loginArea').style.display = 'none';
+  document.getElementById('profileArea').style.display = 'block';
+  document.getElementById('calendarArea').style.display = 'block';
+  document.getElementById('empName').textContent = '👤 ' + currentName;
+  document.getElementById('empIdDisplay').textContent = id;
+  
+  renderCalendar();
+}
+
+function logout() {
+  currentEmp = null;
+  currentName = null;
+  document.getElementById('password').value = '';
+  document.getElementById('empId').value = '';
+  document.getElementById('loginArea').style.display = 'block';
+  document.getElementById('profileArea').style.display = 'none';
+  document.getElementById('calendarArea').style.display = 'none';
+}
+
+function renderCalendar() {
+  const sched = SCHEDULE_9月[currentName] || {};
+  let countD = 0, countE = 0, countN = 0, countOff = 0, countStar = 0;
+  
+  for (let i = 1; i <= 30; i++) {
+    const shift = sched[i];
+    const s = String(shift || '').trim();
+    if (s.includes('★')) countStar++;
+    if (s.includes('D') && !s.includes('E') && !s.includes('N')) countD++;
+    else if (s.includes('E')) countE++;
+    else if (s.includes('N')) countN++;
+    else if (['休','例','國','公','婚','喪','產','V'].includes(s)) countOff++;
+  }
+  
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-box"><div class="num">${countD}</div><div class="label">白班</div></div>
+    <div class="stat-box"><div class="num">${countE + countN}</div><div class="label">小/大夜</div></div>
+    <div class="stat-box"><div class="num">${countStar}</div><div class="label">控台次數</div></div>
+    <div class="stat-box"><div class="num">${countOff}</div><div class="label">休假</div></div>
+  `;
+  
+  let html = '';
+  for (let i = 1; i <= 30; i++) {
+    const shift = sched[i] || '—';
+    const shiftClass = getShiftClass(shift);
+    const shiftDisplay = getShiftDisplay(shift);
+    html += `
+      <div class="cal-day" onclick="alert('${i}日：${shift}')">
+        <div class="date">${i}日</div>
+        <div class="shift ${shiftClass}">${shiftDisplay}</div>
+      </div>
+    `;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+}
+</script>
+</body>
+</html>
