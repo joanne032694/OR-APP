@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>手術室班表管理系統</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.auth-overlay.hidden {
+  display: none;
+}
+.auth-box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 400px;
+}
+.auth-box h2 {
+  color: #1a56a0;
+  margin-bottom: 20px;
+}
+.auth-box p {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.auth-box input:focus {
+  outline: none;
+  border-color: #1a56a0;
+}
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  background: #1a56a0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.auth-box button:hover {
+  background: #0f3778;
+}
+.auth-error {
+  color: #c41e3a;
+  font-size: 13px;
+  margin-top: 10px;
+  display: none;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+.header {
+  background: linear-gradient(135deg, #1a56a0, #0f3778);
+  color: #fff;
+  padding: 30px;
+  text-align: center;
+}
+.header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+.header p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+.content {
+  padding: 30px;
+}
+.section {
+  margin-bottom: 40px;
+}
+.section h2 {
+  color: #1a56a0;
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.step-number {
+  background: #1a56a0;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.upload-area {
+  border: 3px dashed #1a56a0;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #f8f9ff;
+}
+.upload-area:hover {
+  background: #f0f4f8;
+  border-color: #0f3778;
+}
+.upload-area.drag-over {
+  background: #e8f0fa;
+  border-color: #0f3778;
+  transform: scale(1.02);
+}
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+.upload-text {
+  color: #666;
+  font-size: 16px;
+}
+.upload-hint {
+  color: #999;
+  font-size: 13px;
+  margin-top: 10px;
+}
+input[type="file"] {
+  display: none;
+}
+.preview-section {
+  display: none;
+}
+.preview-section.show {
+  display: block;
+}
+.info-box {
+  background: #f0f4f8;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #1a56a0;
+}
+.info-box strong {
+  color: #1a56a0;
+}
+.info-item {
+  margin: 8px 0;
+}
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  display: block;
+}
+.employee-table thead {
+  background: #1a56a0;
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+.employee-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+}
+.employee-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+}
+.employee-table tbody tr:hover {
+  background: #f9f9f9;
+}
+.employee-table tr:nth-child(even) {
+  background: #fafbfc;
+}
+.code-section {
+  display: none;
+}
+.code-section.show {
+  display: block;
+}
+.code-container {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 500px;
+  overflow-y: auto;
+  position: relative;
+  margin-top: 15px;
+}
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f0f4f8;
+  border-radius: 6px;
+}
+.code-size {
+  color: #666;
+  font-size: 13px;
+}
+.copy-btn {
+  background: #1a56a0;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.copy-btn:hover {
+  background: #0f3778;
+  transform: translateY(-2px);
+}
+.copy-btn.copied {
+  background: #28a745;
+}
+.month-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.month-btn {
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  text-align: center;
+}
+.month-btn:hover {
+  border-color: #1a56a0;
+  color: #1a56a0;
+}
+.month-btn.active {
+  background: #1a56a0;
+  color: #fff;
+  border-color: #1a56a0;
+}
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.btn-primary {
+  background: #1a56a0;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #0f3778;
+  transform: translateY(-2px);
+}
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: #5a6268;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.status {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: none;
+}
+.status.show {
+  display: block;
+}
+.status.success {
+  background: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+.status.error {
+  background: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #f5c6cb;
+}
+.status.info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border-left: 4px solid #17a2b8;
+}
+.instruction-box {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  color: #856404;
+}
+.instruction-box strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.instruction-box ol {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.instruction-box li {
+  margin: 8px 0;
+}
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+  }
+  .header h1 {
+    font-size: 24px;
+  }
+  .content {
+    padding: 20px;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+  .month-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- 密碼驗證層 -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <h2>🔐 管理員密碼</h2>
+    <p>此系統僅供班表管理員使用</p>
+    <input type="password" id="authPassword" placeholder="輸入管理員密碼" onkeyup="handleAuthKeyup(event)" />
+    <button onclick="verifyPassword()">登入</button>
+    <div class="auth-error" id="authError">密碼錯誤，請重試</div>
+  </div>
+</div>
+
+<div class="container" style="display: none;" id="mainContainer">
+  <div class="header">
+    <h1>📋 手術室班表管理系統</h1>
+    <p>每月只需上傳 Excel，自動生成班表代碼</p>
+  </div>
+
+  <div class="content">
+    
+    <!-- 說明 -->
+    <div class="instruction-box">
+      <strong>📖 使用說明</strong>
+      <ol>
+        <li>選擇要更新的月份（1-12月）</li>
+        <li>上傳包含班表的 Excel 檔案</li>
+        <li>系統自動解析員工數據</li>
+        <li>複製生成的代碼</li>
+        <li>貼到 GitHub 的 schedule/index.html</li>
+      </ol>
+    </div>
+
+    <!-- 第1步：月份選擇 -->
+    <div class="section">
+      <h2><span class="step-number">1</span> 選擇月份</h2>
+      <div class="month-selector">
+        <button class="month-btn active" onclick="selectMonth(1)">1月</button>
+        <button class="month-btn" onclick="selectMonth(2)">2月</button>
+        <button class="month-btn" onclick="selectMonth(3)">3月</button>
+        <button class="month-btn" onclick="selectMonth(4)">4月</button>
+        <button class="month-btn" onclick="selectMonth(5)">5月</button>
+        <button class="month-btn" onclick="selectMonth(6)">6月</button>
+        <button class="month-btn" onclick="selectMonth(7)">7月</button>
+        <button class="month-btn" onclick="selectMonth(8)">8月</button>
+        <button class="month-btn" onclick="selectMonth(9)">9月</button>
+        <button class="month-btn" onclick="selectMonth(10)">10月</button>
+        <button class="month-btn" onclick="selectMonth(11)">11月</button>
+        <button class="month-btn" onclick="selectMonth(12)">12月</button>
+      </div>
+    </div>
+
+    <!-- 第2步：上傳Excel -->
+    <div class="section">
+      <h2><span class="step-number">2</span> 上傳班表 Excel</h2>
+      <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">拖拖曳 Excel 檔案到此處<br/>或點擊選擇檔案</div>
+        <div class="upload-hint">（支援 .xlsx, .xls 格式）</div>
+      </div>
+      <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFileSelect(event)" />
+    </div>
+
+    <!-- 狀態提示 -->
+    <div class="status" id="status"></div>
+
+    <!-- 第3步：預覽 -->
+    <div class="section preview-section" id="previewSection">
+      <h2><span class="step-number">3</span> 預覽數據</h2>
+      <div class="info-box">
+        <div class="info-item">
+          <strong>月份：</strong>
+          <span id="previewMonth">1月</span>
+        </div>
+        <div class="info-item">
+          <strong>總員工數：</strong>
+          <span id="previewCount">0</span> 人
+        </div>
+        <div class="info-item">
+          <strong>天數：</strong>
+          <span id="previewDays">31</span> 天
+        </div>
+      </div>
+      
+      <div>
+        <strong>員工名單：</strong>
+        <table class="employee-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">序號</th>
+              <th style="width: 100px;">員編</th>
+              <th>姓名</th>
+              <th>班別樣本</th>
+            </tr>
+          </thead>
+          <tbody id="employeeList">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 第4步：生成代碼 -->
+    <div class="section code-section" id="codeSection">
+      <h2><span class="step-number">4</span> 生成的 JavaScript 代碼</h2>
+      <div class="code-header">
+        <span>const SCHEDULE_<span id="codeMonth">1</span> = { ... }</span>
+        <div>
+          <span class="code-size" id="codeSize">0 KB</span>
+          <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">📋 複製代碼</button>
+        </div>
+      </div>
+      <div class="code-container" id="codeContainer"></div>
+      
+      <div class="instruction-box" style="margin-top: 20px;">
+        <strong>📝 貼上步驟</strong>
+        <ol>
+          <li>在 GitHub 打開 <code>schedule/index.html</code></li>
+          <li>找到 <code>const SCHEDULE_<span id="replaceMonth">1</span> = { ... };</code></li>
+          <li>完整替換該行（從 <code>const</code> 到 <code>};</code>）</li>
+          <li>提交變更（Commit）</li>
+          <li>清除瀏覽器快取重新整理</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 按鈕組 -->
+    <div class="button-group" id="buttonGroup" style="display: none;">
+      <button class="btn btn-primary" onclick="downloadCode()">💾 下載代碼為 .js</button>
+      <button class="btn btn-secondary" onclick="resetAll()">🔄 重新開始</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentMonth = 1;
+let scheduleData = {};
+let employees = [];
+
+// 月份配置
+const MONTH_CONFIG = {
+  1: { name: '1月', days: 31 },
+  2: { name: '2月', days: 28 },
+  3: { name: '3月', days: 31 },
+  4: { name: '4月', days: 30 },
+  5: { name: '5月', days: 31 },
+  6: { name: '6月', days: 30 },
+  7: { name: '7月', days: 31 },
+  8: { name: '8月', days: 31 },
+  9: { name: '9月', days: 30 },
+  10: { name: '10月', days: 31 },
+  11: { name: '11月', days: 30 },
+  12: { name: '12月', days: 31 }
+};
+
+// 選擇月份
+function selectMonth(month) {
+  currentMonth = month;
+  document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  hideStatus();
+  resetPreview();
+}
+
+// 上傳區域拖拽
+function handleDragOver(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById('uploadArea').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  e.preventDefault();
+  document.getElementById('uploadArea').classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById('uploadArea').classList.remove('drag-over');
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    processFile(files[0]);
+  }
+}
+
+// 檔案選擇
+function handleFileSelect(e) {
+  const files = e.target.files;
+  if (files.length > 0) {
+    processFile(files[0]);
+  }
+}
+
+// 處理檔案
+function processFile(file) {
+  showStatus('info', '正在解析 Excel 檔案...');
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      
+      parseScheduleData(jsonData);
+      showStatus('success', `✅ 成功加載 ${employees.length} 位員工的班表`);
+      showPreview();
+      generateCode();
+      showCode();
+      
+    } catch (error) {
+      showStatus('error', `❌ 解析失敗：${error.message}`);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// 解析班表數據
+function parseScheduleData(jsonData) {
+  employees = [];
+  scheduleData = {};
+  
+  // 找標題行（應該在第3行或第4行）
+  let titleRow = -1;
+  let dataStartRow = 4;
+  
+  for (let i = 0; i < Math.min(5, jsonData.length); i++) {
+    const row = jsonData[i];
+    if (row && row[1] === '員編' || row[2] === '姓名') {
+      titleRow = i;
+      dataStartRow = i + 1;
+      break;
+    }
+  }
+  
+  // 如果找不到標題，假設第4行是數據開始
+  if (titleRow === -1) {
+    dataStartRow = 4;
+  }
+  
+  // 讀取員工數據
+  for (let i = dataStartRow; i < jsonData.length; i++) {
+    const row = jsonData[i];
+    if (!row || !row[2]) break;  // 員工名字在C列（索引2）
+    
+    const empId = row[1];  // B列
+    const name = String(row[2]).trim();
+    
+    // 篩選有效的員工
+    if (empId && name && name.length > 1 && !['D','E','N','12-8','休','例'].includes(name)) {
+      const daysInMonth = MONTH_CONFIG[currentMonth].days;
+      const schedule = {};
+      
+      // 提取班表（從D列開始）
+      for (let day = 1; day <= daysInMonth; day++) {
+        const colIndex = 3 + day - 1;  // D列是3
+        const shift = row[colIndex];
+        schedule[day] = shift ? String(shift).trim() : '—';
+      }
+      
+      employees.push({ id: empId, name: name });
+      scheduleData[name] = schedule;
+    }
+  }
+}
+
+// 顯示預覽
+function showPreview() {
+  document.getElementById('previewMonth').textContent = MONTH_CONFIG[currentMonth].name;
+  document.getElementById('previewCount').textContent = employees.length;
+  document.getElementById('previewDays').textContent = MONTH_CONFIG[currentMonth].days;
+  
+  const tbody = document.getElementById('employeeList');
+  tbody.innerHTML = '';
+  
+  employees.slice(0, 20).forEach((emp, idx) => {
+    const schedule = scheduleData[emp.name] || {};
+    const sample = Object.values(schedule).slice(0, 5).join(', ') || '無';
+    
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${idx + 1}</td>
+      <td>${emp.id}</td>
+      <td>${emp.name}</td>
+      <td style="color: #666; font-size: 12px;">${sample}...</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  
+  if (employees.length > 20) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td colspan="4" style="text-align: center; color: #999;">... 還有 ${employees.length - 20} 位員工</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+// 隱藏預覽
+function resetPreview() {
+  document.getElementById('previewSection').classList.remove('show');
+  document.getElementById('codeSection').classList.remove('show');
+  document.getElementById('buttonGroup').style.display = 'none';
+}
+
+// 生成代碼
+function generateCode() {
+  const daysInMonth = MONTH_CONFIG[currentMonth].days;
+  const code = generateScheduleCode(currentMonth, daysInMonth);
+  
+  const container = document.getElementById('codeContainer');
+  const formatted = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  container.innerHTML = `<pre>${formatted}</pre>`;
+  
+  const sizeKB = (code.length / 1024).toFixed(1);
+  document.getElementById('codeSize').textContent = `${sizeKB} KB`;
+  
+  // 更新月份標籤
+  document.getElementById('codeMonth').textContent = currentMonth;
+  document.getElementById('replaceMonth').textContent = currentMonth;
+}
+
+// 生成 JavaScript 代碼
+function generateScheduleCode(month, daysInMonth) {
+  let code = `const SCHEDULE_${month} = {\n`;
+  
+  employees.forEach((emp, idx) => {
+    const schedule = scheduleData[emp.name] || {};
+    const items = [];
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const shift = schedule[day] || '—';
+      items.push(`"${day}":"${shift.replace(/"/g, '\\"')}"`);
+    }
+    
+    code += `  "${emp.name}": {${items.join(',')}`;
+    code += idx < employees.length - 1 ? '},\n' : '}\n';
+  });
+  
+  code += '};';
+  return code;
+}
+
+// 顯示代碼區域
+function showCode() {
+  document.getElementById('codeSection').classList.add('show');
+  document.getElementById('buttonGroup').style.display = 'flex';
+}
+
+// 複製代碼
+function copyToClipboard() {
+  const codeContainer = document.getElementById('codeContainer');
+  const code = codeContainer.textContent;
+  
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ 已複製！';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      btn.textContent = '📋 複製代碼';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// 下載代碼
+function downloadCode() {
+  const codeContainer = document.getElementById('codeContainer');
+  const code = codeContainer.textContent;
+  const blob = new Blob([code], { type: 'text/javascript' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `SCHEDULE_${currentMonth}.js`;
+  a.click();
+}
+
+// 重新開始
+function resetAll() {
+  document.getElementById('fileInput').value = '';
+  document.getElementById('codeContainer').innerHTML = '';
+  resetPreview();
+  hideStatus();
+  employees = [];
+  scheduleData = {};
+}
+
+// 顯示狀態
+function showStatus(type, message) {
+  const status = document.getElementById('status');
+  status.className = `status show ${type}`;
+  status.textContent = message;
+}
+
+// 隱藏狀態
+function hideStatus() {
+  const status = document.getElementById('status');
+  status.classList.remove('show');
+}
+
+// ========== 密碼驗證 ==========
+const ADMIN_PASSWORD = 'A030';
+
+function verifyPassword() {
+  const password = document.getElementById('authPassword').value;
+  
+  if (password === ADMIN_PASSWORD) {
+    // 密碼正確
+    document.getElementById('authOverlay').classList.add('hidden');
+    document.getElementById('mainContainer').style.display = 'block';
+    localStorage.setItem('scheduleManagerAuth', 'true');
+  } else {
+    // 密碼錯誤
+    document.getElementById('authError').style.display = 'block';
+    document.getElementById('authPassword').value = '';
+  }
+}
+
+function handleAuthKeyup(event) {
+  if (event.key === 'Enter') {
+    verifyPassword();
+  }
+  // 清除錯誤提示
+  document.getElementById('authError').style.display = 'none';
+}
+
+// 頁面加載時檢查是否已認證
+window.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('scheduleManagerAuth') === 'true') {
+    document.getElementById('authOverlay').classList.add('hidden');
+    document.getElementById('mainContainer').style.display = 'block';
+  } else {
+    document.getElementById('authPassword').focus();
+  }
+});
+
+// 頁面離開時清除認證
+window.addEventListener('beforeunload', function() {
+  localStorage.removeItem('scheduleManagerAuth');
+});
+</script>
+
+</body>
+</html>
