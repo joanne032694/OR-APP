@@ -218,18 +218,19 @@ body {
   background: #c62828;
 }
 
+
 /* ============ CALENDAR GRID ============ */
 .calendar-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .day-labels {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-  margin-bottom: 10px;
+  gap: 2px;
+  margin-bottom: 8px;
 }
 
 .day-name {
@@ -238,53 +239,57 @@ body {
   font-weight: bold;
   color: white;
   background: var(--primary);
-  padding: 8px;
-  border-radius: 4px;
+  padding: 6px 2px;
+  border-radius: 3px;
+  min-width: 0;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-  margin-bottom: 15px;
+  gap: 2px;
+  margin-bottom: 12px;
 }
 
 .day-cell {
   aspect-ratio: 1;
-  border: 1.5px solid var(--border);
-  border-radius: 4px;
-  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   cursor: default;
   background: white;
-  position: relative;
+  min-width: 0;
+  overflow: hidden;
   transition: 0.2s;
 }
 
 .day-cell:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .day-cell .date {
-  font-size: 11px;
+  font-size: 9px;
   color: #999;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+  line-height: 1;
 }
 
 .day-cell .shift {
-  font-size: 14px;
+  font-size: 11px;
   display: block;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
 
 /* 班别颜色 */
@@ -348,6 +353,7 @@ body {
   cursor: not-allowed;
 }
 
+
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -390,9 +396,180 @@ body {
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 15px;
+  body {
+    padding: 5px;
   }
+  
+  .container {
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  h1 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .user-info {
+    padding: 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .control-bar {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .control-bar select {
+    padding: 8px;
+    font-size: 13px;
+    flex: 1;
+  }
+  
+  .control-bar button {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-width: auto;
+  }
+  
+  .control-bar button.logout {
+    margin-left: auto;
+  }
+  
+  .calendar-wrapper {
+    gap: 1px;
+  }
+  
+  .day-labels {
+    gap: 1px;
+    margin-bottom: 6px;
+  }
+  
+  .day-name {
+    padding: 4px 1px;
+    font-size: 11px;
+  }
+  
+  .calendar-grid {
+    gap: 1px;
+    margin-bottom: 10px;
+  }
+  
+  .day-cell {
+    padding: 1px;
+    font-size: 11px;
+    border: 0.8px solid var(--border);
+  }
+  
+  .day-cell .date {
+    font-size: 8px;
+    margin-bottom: 0px;
+  }
+  
+  .day-cell .shift {
+    font-size: 10px;
+  }
+  
+  .legend {
+    gap: 10px;
+    padding: 10px;
+    font-size: 11px;
+    margin-top: 15px;
+  }
+  
+  .legend-box {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .legend-item {
+    gap: 4px;
+  }
+  
+  .login-screen {
+    padding: 20px 15px;
+    max-width: 100%;
+    margin: 10px;
+  }
+  
+  .login-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+  
+  .login-screen h1 {
+    font-size: 20px;
+  }
+  
+  .login-screen .subtitle {
+    font-size: 12px;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .login-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 3px;
+  }
+  
+  .container {
+    padding: 8px;
+  }
+  
+  h1 {
+    font-size: 16px;
+  }
+  
+  .subtitle {
+    font-size: 11px;
+  }
+  
+  .user-info {
+    padding: 8px;
+    font-size: 11px;
+  }
+  
+  .control-bar {
+    gap: 5px;
+    flex-direction: column;
+  }
+  
+  .control-bar select {
+    width: 100%;
+  }
+  
+  .control-bar button {
+    width: 100%;
+    margin-left: 0 !important;
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  .calendar-grid {
+    gap: 1px;
+  }
+  
+  .day-cell {
+    aspect-ratio: auto;
+    min-height: 35px;
+  }
+}
+
   
   h1 {
     font-size: 20px;
